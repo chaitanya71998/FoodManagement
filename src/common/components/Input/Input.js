@@ -3,14 +3,18 @@ import { InputFiled } from './styledComponent'
 class Input extends React.Component {
     static defaultProps = {
         type: 'text',
-        placeholder: "Input"
+        placeholder: "Input",
+        value: ""
     };
     render() {
-        const { type, placeholder } = this.props
+        const { type, placeholder, value, onChange, onKeyDown } = this.props
         return (
             <InputFiled 
             type={type}
             placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
             />
         )
     }

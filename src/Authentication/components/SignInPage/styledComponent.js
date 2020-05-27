@@ -19,16 +19,18 @@ const SignInContainer = styled.div `${tw `flex justify-center items-center flex-
 ${{
   borderRadius:"8px",
   backgroundColor:White,
-}}`
+}}
+`
 
 const Logo = styled.img `${tw ``}`
 
-const HeadingContainer = styled.div `
-${{width: "214px",
+const HeadingContainer = styled.div `${tw `flex justify-center items-center`}
+${{width: "100%",
   height: "80px"}}`
 
 const Heading = styled(Typo32DarkBlueGrayRubik)
-`${tw ``}`
+`${tw ``}
+`
 
 const InputField = styled.div `${tw `m-3`}`
 
@@ -38,7 +40,8 @@ const Lable = styled(Typo12SteelHKGrotesk)
 
 const PasswordFeild = styled.div `${tw `m-3 `}`
 
-const ButtonContainer = styled.div `${tw `m-3`}`
+const ButtonContainer = styled.div `${tw `m-3 flex justify-center`}
+width:85%`
 
 const ErrorMessage = styled(Typo12NeonRedHKGrotesk)
 `${tw ``}

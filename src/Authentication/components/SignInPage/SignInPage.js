@@ -1,4 +1,10 @@
 import React from 'react'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
+import SignInStrings from '../../i18n/strings.json'
+import { Input } from '../../../common/components/Input'
+import { Button } from '../../../common/components/Button'
+import { BrightBlue } from '../../themes/Colors'
 import {
     Container,
     SignInContainer,
@@ -13,17 +19,35 @@ import {
     ButtonText
 }
 from './styledComponent'
-import SignInStrings from '../../i18n/strings.json'
-import { Input } from '../../../common/components/Input'
-import { Button } from '../../../common/components/Button'
-import { BrightBlue } from '../../themes/Colors'
+
+@observer
 class SignInPage extends React.Component {
+    // userNameRef = React.createRef();
+    // passwordRef = React.createRef();
+    // componentDidMount() {
+    //     this.userNameRef.current.focus()
+    // }
+
     static defaultProps = {
-        errorMessage: "userName already exists "
+        errorMessageForPassword: "",
+        errorMessageForUserName: ""
     }
 
+
     render() {
-        const { errorMessage } = this.props
+        const {
+            errorMessageForUserName,
+            errorMessageForPassword,
+            onChangeUsername,
+            onChangePassword,
+            onClickLoginIn,
+            username,
+            password,
+            getUserSignInAPIStatus,
+
+
+
+        } = this.props
         return (
             <Container>
             
@@ -43,22 +67,35 @@ class SignInPage extends React.Component {
             <Lable>
             {SignInStrings.signInPage.userName}
             </Lable>
-            <Input type="text" placeholder="UserName" />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            <Input 
+            type="text" 
+            placeholder="UserName"
+            ref={this.userNameRef}
+            value={username}
+            onChange={onChangeUsername}
+            onKeyDown={onChangeUsername}
+            />
+            <ErrorMessage>{errorMessageForUserName}</ErrorMessage>
             </InputField>
             
             <PasswordFeild>
             <Lable>
             {SignInStrings.signInPage.password}
             </Lable>
-            <Input type="password" placeholder="Password" />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
+            <Input type="password" placeholder="Password" 
+            ref={this.passwordRef}
+            value={password}
+            onChange={onChangePassword}
+            onKeyPress={onChangePassword}/>
+            <ErrorMessage>{errorMessageForPassword}</ErrorMessage>
             </PasswordFeild>
             
             <ButtonContainer>
             <Button 
             backgroundColor={BrightBlue}
-            width="320px"
+            width="inherit"
+            onClick={onClickLoginIn}
+            
             ><ButtonText>{SignInStrings.signInPage.login}</ButtonText></Button>
             </ButtonContainer>
             

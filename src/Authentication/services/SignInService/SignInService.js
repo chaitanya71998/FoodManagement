@@ -18,4 +18,4 @@ class SignInService {
     }
 }
 
-export default SignInService
+export { SignInService }

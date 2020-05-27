@@ -3,7 +3,7 @@ import { API_INITIAL, API_FETCHING, API_SUCCESS, API_FAILED } from '@ib/api-cons
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { setAccessToken, clearUserSession, getAccessToken } from '../../utils/StorageUtils'
 
-class SignStore {
+class SignInStore {
     @observable getUserSignInAPIStatus
     @observable getUserSignInAPIError
     constructor(SignInAPIService) {
@@ -18,11 +18,20 @@ class SignStore {
     }
 
     @action.bound
-    userSignIn() {
+    userSignIn(onSuccess, onFailure) {
         const userSignInAPI = this.signInAPIService.getUserSignInAPI()
         return bindPromiseWithOnSuccess(userSignInAPI)
-            .to(this.setGetUserSignInAPIStatus, this.setGetUserSignInAPIResponse)
-            .catch(this.setGetUserSignInAPIError)
+            .to(this.setGetUserSignInAPIStatus, (response) => {
+                this.setGetUserSignInAPIResponse(response);
+                onSuccess()
+            })
+            .catch((error) => { this.setGetUserSignInAPIError(error);
+                onFailure() })
+    }
+
+    @action.bound
+    success() {
+
     }
 
     @action.bound
@@ -49,4 +58,4 @@ class SignStore {
     }
 }
 
-export default SignStore
+export { SignInStore }
