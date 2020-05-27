@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "../../logo.svg";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import logo from '../../logo.svg'
 
 function App() {
-  return (
-    <div className="App">
+    return (
+        <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -22,7 +22,7 @@ function App() {
         <Link to="/food-management-dashboard">FoodManagementDashBoard</Link>
       </header>
     </div>
-  );
+    );
 }
 
-export default App;
+export default App
