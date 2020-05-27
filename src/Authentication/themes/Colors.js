@@ -7,3 +7,5 @@ export const White = "#ffffff"
 export const Steel = "#7e858e"
 
 export const BrightBlue = "#0b69ff"
+
+export const NeonRed = "#ff0b37"

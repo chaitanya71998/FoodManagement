@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
 import tw from 'tailwind.macro';
-import { IceBlue, White } from '../../themes/Colors'
-import { Typo32DarkBlueGrayRubik, Typo12SteelHKGrotesk } from '../../../styleGuide/Typos'
+import { IceBlue, White, NeonRed } from '../../themes/Colors'
+import {
+  Typo32DarkBlueGrayRubik,
+  Typo12SteelHKGrotesk,
+  Typo12NeonRedHKGrotesk,
+  Typo14WhiteRubikMedium
+}
+from '../../../styleGuide/Typos'
 
 const Container = styled.div `${tw `flex justify-center items-center h-screen w-screen`}
 ${{
@@ -34,14 +40,22 @@ const PasswordFeild = styled.div `${tw `m-3 `}`
 
 const ButtonContainer = styled.div `${tw `m-3`}`
 
+const ErrorMessage = styled(Typo12NeonRedHKGrotesk)
+`${tw ``}
+`
+const ButtonText = styled(Typo14WhiteRubikMedium)
+`${tw ``}`
+
 export {
-    Container,
-    SignInContainer,
-    Logo,
-    Heading,
-    Lable,
-    InputField,
-    PasswordFeild,
-    HeadingContainer,
-    ButtonContainer
+  Container,
+  SignInContainer,
+  Logo,
+  Heading,
+  Lable,
+  InputField,
+  PasswordFeild,
+  HeadingContainer,
+  ButtonContainer,
+  ErrorMessage,
+  ButtonText
 }

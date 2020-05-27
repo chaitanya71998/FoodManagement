@@ -8,16 +8,11 @@ import {
     InputField,
     PasswordFeild,
     HeadingContainer,
-    ButtonContainer
+    ButtonContainer,
+    ErrorMessage,
+    ButtonText
 }
 from './styledComponent'
-import {
-    Typo32DarkBlueGrayRubik,
-    Typo12SteelHKGrotesk,
-    Typo14WhiteRubikMedium
-
-}
-from '../../../styleGuide/Typos'
 import SignInStrings from '../../i18n/strings.json'
 import { Input } from '../../../common/components/Input'
 import { Button } from '../../../common/components/Button'
@@ -49,6 +44,7 @@ class SignInPage extends React.Component {
             {SignInStrings.signInPage.userName}
             </Lable>
             <Input type="text" placeholder="UserName" />
+            <ErrorMessage>{errorMessage}</ErrorMessage>
             </InputField>
             
             <PasswordFeild>
@@ -56,13 +52,14 @@ class SignInPage extends React.Component {
             {SignInStrings.signInPage.password}
             </Lable>
             <Input type="password" placeholder="Password" />
+            <ErrorMessage>{errorMessage}</ErrorMessage>
             </PasswordFeild>
             
             <ButtonContainer>
             <Button 
             backgroundColor={BrightBlue}
             width="320px"
-            ><Typo14WhiteRubikMedium>{SignInStrings.signInPage.login}</Typo14WhiteRubikMedium></Button>
+            ><ButtonText>{SignInStrings.signInPage.login}</ButtonText></Button>
             </ButtonContainer>
             
             

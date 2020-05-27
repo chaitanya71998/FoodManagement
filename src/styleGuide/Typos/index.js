@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { DarkBlueGrey, Steel, White } from '../../Authentication/themes/Colors'
+import { DarkBlueGrey, Steel, White, NeonRed } from '../../Authentication/themes/Colors'
 export const Typo32DarkBlueGrayRubik = styled.h1 `
 width: 214px;
   height: 80px;
@@ -32,4 +32,14 @@ export const Typo14WhiteRubikMedium = styled.span `
   line-height: 1.71;
   letter-spacing: normal;
   color:${White};
+`
+export const Typo12NeonRedHKGrotesk = styled.div `
+  font-family: HKGrotesk;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color:${NeonRed};
 `
