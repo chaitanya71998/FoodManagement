@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { SignInPage } from './Authentication/components/SignInPage'
 import HomePage from "./components/HomePage";
 import Page1 from "./components/Page1";
 
@@ -12,6 +12,9 @@ const App = () => {
       <Switch>
         <Route exact path="/page-1">
           <Page1 />
+        </Route>
+        <Route exact path="/signin">
+          <SignInPage />
         </Route>
         <Route path="/">
           <HomePage />

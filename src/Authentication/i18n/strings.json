@@ -1,0 +1,9 @@
+{
+    "signInPage": {
+        "signUp": "SIGNUP",
+        "login": "LOGIN",
+        "hiTherePleaseSignUp": "Hi there, please sign up",
+        "userName": "USERNAME",
+        "password": "PASSWORD"
+    }
+}
