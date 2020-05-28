@@ -5,5 +5,5 @@ const signInService = new SignInService()
 const signInStore = new SignInStore(signInService)
 
 export default {
-    signInStore
+   signInStore
 }

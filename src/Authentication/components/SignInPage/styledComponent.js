@@ -1,64 +1,87 @@
-import styled from '@emotion/styled';
-import tw from 'tailwind.macro';
+import styled from '@emotion/styled'
+import tw from 'tailwind.macro'
 import { IceBlue, White, NeonRed } from '../../themes/Colors'
 import {
-  Typo32DarkBlueGrayRubik,
-  Typo12SteelHKGrotesk,
-  Typo12NeonRedHKGrotesk,
-  Typo14WhiteRubikMedium
+   Typo32DarkBlueGrayRubik,
+   Typo12SteelHKGrotesk,
+   Typo12NeonRedHKGrotesk,
+   Typo14WhiteRubikMedium
 }
 from '../../../styleGuide/Typos'
 
-const Container = styled.div `${tw `flex justify-center items-center h-screen w-screen`}
-${{
-  backgroundColor: IceBlue,
-  
-}}`
-
-const SignInContainer = styled.div `${tw `flex justify-center items-center flex-col w-2/6 p-10`}
-${{
-  borderRadius:"8px",
-  backgroundColor:White,
-}}
+const Container = styled.div `
+   ${tw`flex justify-center items-center h-screen w-screen`}
+   ${{
+      backgroundColor: IceBlue
+   }}
 `
 
-const Logo = styled.img `${tw ``}`
+const SignInContainer = styled.div `
+   ${tw`flex justify-center items-center flex-col w-2/6 p-10`}
+   ${{
+      borderRadius: '8px',
+      backgroundColor: White
+   }}
+`
 
-const HeadingContainer = styled.div `${tw `flex justify-center items-center`}
-${{width: "100%",
-  height: "80px"}}`
+const Logo = styled.img `
+   ${tw``}
+`
+
+const HeadingContainer = styled.div `
+   ${tw`flex justify-center items-center`}
+   ${{ width: '100%', height: '80px' }}
+common
+`
 
 const Heading = styled(Typo32DarkBlueGrayRubik)
-`${tw ``}
+`
+   ${tw``}
 `
 
-const InputField = styled.div `${tw `m-3`}`
+const InputContainer = styled.div `
+   ${tw``}
+   width:100%;
+` //todo error icon
 
+const InputField = styled.div `
+   ${tw`m-3`}
+`
 
 const Lable = styled(Typo12SteelHKGrotesk)
-`${tw `m-1`}`
+`
+   ${tw`m-1`}
+`
 
-const PasswordFeild = styled.div `${tw `m-3 `}`
+const PasswordFeild = styled.div `
+   ${tw`m-3 `}
+`
 
-const ButtonContainer = styled.div `${tw `m-3 flex justify-center`}
-width:85%`
+const ButtonContainer = styled.div `
+   ${tw`m-3 flex justify-center`}
+   ${{width:"70%"}}
+`
 
 const ErrorMessage = styled(Typo12NeonRedHKGrotesk)
-`${tw ``}
+`
+   ${tw``}
 `
 const ButtonText = styled(Typo14WhiteRubikMedium)
-`${tw ``}`
+`
+   ${tw``}
+`
 
 export {
-  Container,
-  SignInContainer,
-  Logo,
-  Heading,
-  Lable,
-  InputField,
-  PasswordFeild,
-  HeadingContainer,
-  ButtonContainer,
-  ErrorMessage,
-  ButtonText
+   Container,
+   SignInContainer,
+   Logo,
+   Heading,
+   Lable,
+   InputField,
+   PasswordFeild,
+   HeadingContainer,
+   ButtonContainer,
+   ErrorMessage,
+   ButtonText,
+   InputContainer
 }
