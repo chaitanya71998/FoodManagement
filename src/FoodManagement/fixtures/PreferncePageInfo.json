@@ -1,9 +1,9 @@
 [{
-        "meal_preference": "FullMeal",
+        "meal_preference": "Full meal",
         "meal_items": [{
                 "meal_item_id": 0,
                 "item_name": "Poori",
-                "serving_size_unit": "piece",
+                "serving_size_unit": "pieces",
                 "category": "Indian bread",
                 "quantity": 4
             },
@@ -31,7 +31,7 @@
         ]
     },
     {
-        "meal_preference": "HalfMeal",
+        "meal_preference": "Half meal",
         "meal_items": [{
                 "meal_item_id": 0,
                 "item_name": "Poori",

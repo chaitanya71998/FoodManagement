@@ -6,8 +6,10 @@ import Page1 from './components/Page1'
 import AuthStore from './Authentication/stores'
 import FoodManagementDashBoardStore from './FoodManagement/stores'
 import { SignInPageRoute } from './Authentication/routes'
-import { ProtectedRoutes } from './FoodManagement/routes/ProtectedRoutes'
+import { ProtectedRouteForDashBoard } from './FoodManagement/routes/ProtectedRouteForDashBoard'
+import { ProtectedRouteForPreferencePage } from './FoodManagement/routes/ProtectedRouteForPreferencePage'
 import { FoodManagementDashBoardRoute } from './FoodManagement/routes/FoodManageMentDashBoardRoute'
+import { PreferencePageRoute } from './FoodManagement/routes/PreferencePageRoute'
 import './App.css'
 
 const App = () => {
@@ -19,10 +21,15 @@ const App = () => {
                   <Page1 />
                </Route>
                {SignInPageRoute}
-               <ProtectedRoutes
+               <ProtectedRouteForDashBoard
                   exact
                   path='/food-management-dashboard'
                   component={FoodManagementDashBoardRoute}
+               />
+               <ProtectedRouteForPreferencePage
+                  exact
+                  path={`/food-management-dashboard/:mealType`}
+                  component={PreferencePageRoute}
                />
                <Route path='/'>
                   <HomePage />

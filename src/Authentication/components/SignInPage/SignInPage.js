@@ -23,12 +23,6 @@ from './styledComponent'
 
 @observer
 class SignInPage extends React.Component {
-   // userNameRef = React.createRef();
-   // passwordRef = React.createRef();
-   // componentDidMount() {
-   //     this.userNameRef.current.focus()
-   // }
-
    static defaultProps = {
       errorMessageForPassword: '',
       errorMessageForUserName: ''
@@ -43,7 +37,7 @@ class SignInPage extends React.Component {
          onClickLoginIn,
          username,
          password,
-         getUserSignInAPIStatus
+         getUserSignInAPIStatus //not use get
       } = this.props
       return (
          <Container>
@@ -91,7 +85,7 @@ class SignInPage extends React.Component {
                   <Button
                      backgroundColor={BrightBlue}
                      width='100%'
-                     onClick = { onClickLoginIn }
+                     onClick={onClickLoginIn}
                      getAPIStatus={getUserSignInAPIStatus}
                   >
                      <ButtonText>{SignInStrings.signInPage.login}</ButtonText>

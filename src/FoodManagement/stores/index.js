@@ -5,5 +5,5 @@ const mealInfoAPIService = new MealInfoAPIService()
 const mealInfoStore = new MealInfoStore(mealInfoAPIService)
 
 export default {
-    mealInfoStore
+   mealInfoStore
 }

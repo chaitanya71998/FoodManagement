@@ -1,4 +1,4 @@
-import { observable, action, computed, reaction, autorun } from 'mobx'
+import { observable, action } from 'mobx'
 import {
    API_INITIAL,
    API_FETCHING,
@@ -7,12 +7,7 @@ import {
 }
 from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import {
-   setAccessToken,
-   clearUserSession,
-   getAccessToken
-}
-from '../../utils/StorageUtils'
+import { setAccessToken, clearUserSession } from '../../utils/StorageUtils'
 
 class SignInStore {
    @observable getUserSignInAPIStatus
@@ -36,12 +31,10 @@ class SignInStore {
             this.setGetUserSignInAPIResponse(response)
             onSuccess()
          })
-         .catch(
-            this.setGetUserSignInAPIError)
+         .catch(this.setGetUserSignInAPIError)
    }
 
-   @action.bound
-   success() {}
+
 
    @action.bound
    setGetUserSignInAPIResponse(response) {

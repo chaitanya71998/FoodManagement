@@ -54,12 +54,10 @@ class SignInRoute extends React.Component {
                 this.errorMessage = "Network Error"
             }*/
          this.getAuthStore().userSignIn(this.onSuccess, this.onFailure)
-      }
-      else if (this.username === '') {
+      } else if (this.username === '') {
          this.errorMessageForUserName = 'Please enter username'
          // this.signFormRef.current.userNameRef.current.focus()
-      }
-      else {
+      } else {
          this.errorMessageForPassword = 'Please enter password'
          // this.signFormRef.current.passwordRef.current.focus()
       }

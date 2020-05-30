@@ -11,14 +11,26 @@ class Button extends React.Component {
       getAPIStatus: 0
    }
    render() {
-      const { width, backgroundColor, children, color, onClick, getAPIStatus } = this.props
+      const {
+         width,
+         backgroundColor,
+         children,
+         color,
+         onClick,
+         getAPIStatus
+      } = this.props
       return (
          <ButtonKind
             width={width}
             backgroundColor={backgroundColor}
             color={color}
-            onClick={onClick}>
-           {(getAPIStatus===100)?<Loader type="Oval" color="white" height={30} width={30} />:<ButtonText>{children}</ButtonText>}
+            onClick={onClick}
+         >
+            {getAPIStatus === 100 ? (
+               <Loader type='Oval' color='white' height={30} width={30} />
+            ) : (
+               <ButtonText>{children}</ButtonText>
+            )}
          </ButtonKind>
       )
    }

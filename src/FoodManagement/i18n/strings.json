@@ -1,5 +1,14 @@
 {
     "mealCard": {
         "edit": "Edit"
+    },
+    "preferenceCard": {
+        "skipMeal": "Skip Meal",
+        "back": "Back",
+        "save": "Save"
+    },
+    "foodManagementDashBoard": {
+        "yourResponseIsCaptured": "Your Response is captured",
+        "somethingWentWrong": "something went wrong!"
     }
 }

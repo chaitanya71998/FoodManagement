@@ -6,17 +6,16 @@ import {
    Typo12SteelHKGrotesk,
    Typo12NeonRedHKGrotesk,
    Typo14WhiteRubikMedium
-}
-from '../../../styleGuide/Typos'
+} from '../../../styleGuide/Typos'
 
-const Container = styled.div `
+const Container = styled.div`
    ${tw`flex justify-center items-center h-screen w-screen`}
    ${{
       backgroundColor: IceBlue
    }}
 `
 
-const SignInContainer = styled.div `
+const SignInContainer = styled.div`
    ${tw`flex justify-center items-center flex-col w-2/6 p-10`}
    ${{
       borderRadius: '8px',
@@ -24,50 +23,46 @@ const SignInContainer = styled.div `
    }}
 `
 
-const Logo = styled.img `
+const Logo = styled.img`
    ${tw``}
 `
 
-const HeadingContainer = styled.div `
+const HeadingContainer = styled.div`
    ${tw`flex justify-center items-center`}
    ${{ width: '100%', height: '80px' }}
 common
 `
 
-const Heading = styled(Typo32DarkBlueGrayRubik)
-`
+const Heading = styled(Typo32DarkBlueGrayRubik)`
    ${tw``}
 `
 
-const InputContainer = styled.div `
+const InputContainer = styled.div`
    ${tw``}
    width:100%;
 ` //todo error icon
 
-const InputField = styled.div `
+const InputField = styled.div`
    ${tw`m-3`}
 `
 
-const Lable = styled(Typo12SteelHKGrotesk)
-`
+const Lable = styled(Typo12SteelHKGrotesk)`
    ${tw`m-1`}
 `
 
-const PasswordFeild = styled.div `
+const PasswordFeild = styled.div`
    ${tw`m-3 `}
 `
 
-const ButtonContainer = styled.div `
+const ButtonContainer = styled.div`
    ${tw`m-3 flex justify-center`}
-   ${{width:"70%"}}
+   ${{ width: '70%' }}
 `
 
-const ErrorMessage = styled(Typo12NeonRedHKGrotesk)
-`
+const ErrorMessage = styled(Typo12NeonRedHKGrotesk)`
    ${tw``}
 `
-const ButtonText = styled(Typo14WhiteRubikMedium)
-`
+const ButtonText = styled(Typo14WhiteRubikMedium)`
    ${tw``}
 `
 
