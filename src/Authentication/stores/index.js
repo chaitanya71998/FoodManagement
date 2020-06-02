@@ -1,9 +1,9 @@
-import { SignInStore } from './SignInStore'
-import { SignInService } from '../services/SignInService'
+import { AuthStore } from './AuthStore'
+import { AuthServices } from '../services/AuthServices'
 
-const signInService = new SignInService()
-const signInStore = new SignInStore(signInService)
+const authServices = new AuthServices()
+const authStore = new AuthStore(authServices)
 
 export default {
-   signInStore
+    authStore
 }

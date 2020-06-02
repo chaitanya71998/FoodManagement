@@ -1,11 +1,11 @@
-export const IceBlue = '#f1f7ff'
+export const iceBlue = '#f1f7ff'
 
-export const DarkBlueGrey = '#171f46'
+export const darkBlueGrey = '#171f46'
 
-export const White = '#ffffff'
+export const white = '#ffffff'
 
-export const Steel = '#7e858e'
+export const steel = '#7e858e'
 
-export const BrightBlue = '#0b69ff'
+export const brightBlue = '#0b69ff'
 
-export const NeonRed = '#ff0b37'
+export const neonRed = '#ff0b37'

@@ -1,16 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { MealTabs } from '../MealTabs'
 import { SetCarousel } from '../../../common/components/SetCarousel'
 import { Header } from '../../common/components/Header'
 import { PreferenceCard } from '../PreferenceCard'
+import { ReviewCard } from '../ReviewCard'
 import {
    Container,
    Banner,
-   DateWrapper,
    HeaderWrapper,
-   SelectDate,
-   MealCards,
    SuccessWrapper,
    LoadingWrapper,
    PreferenceCardWrapper
@@ -23,13 +20,13 @@ class PreferencePage extends React.Component {
    renderMealInfo = observer(() => {
       const {
          selectedMealInfo,
-         date,
+         selectedDate,
          onChangeDate,
          getSelectedPreference,
          onSaveMealPreference,
          onClickBackButton,
       } = this.props
-
+      console.log("selectedDate", selectedDate)
       if (selectedMealInfo.length === 0) {
          return <NoDataView />
       }
@@ -40,10 +37,10 @@ class PreferencePage extends React.Component {
                   <SetCarousel />
                </Banner>
                <PreferenceCardWrapper>
-                  <PreferenceCard
+                 <PreferenceCard
                      selectedMealInfo={selectedMealInfo}
                      onChangeDate={onChangeDate}
-                     date={date}
+                     selectedDate={selectedDate}
                      getSelectedPreference={getSelectedPreference}
                      onSaveMealPreference={onSaveMealPreference}
                      onClickBackButton={onClickBackButton}
@@ -56,14 +53,8 @@ class PreferencePage extends React.Component {
 
    render() {
       const {
-         selectedMealInfo,
-         getmealPreferenceInfoAPIError,
-         getmealPreferenceInfoAPIStatus,
-         date,
-         onChangeDate,
-         getSelectedPreference,
-         onSaveMealPreference,
-         onClickBackButton,
+         selectedMealTypeInfoAPIError,
+         selectedMealTypeInfoAPIStatus,
          doNetworkCalls,
          gotoHome,
          onClickSignOut
@@ -75,8 +66,8 @@ class PreferencePage extends React.Component {
             </HeaderWrapper>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
-                  apiStatus={getmealPreferenceInfoAPIStatus}
-                  apiError={getmealPreferenceInfoAPIError}
+                  apiStatus={selectedMealTypeInfoAPIStatus}
+                  apiError={selectedMealTypeInfoAPIError}
                   onRetryClick={doNetworkCalls}
                   renderSuccessUI={this.renderMealInfo}
                />
@@ -87,3 +78,21 @@ class PreferencePage extends React.Component {
 }
 
 export default PreferencePage
+/*
+<PreferenceCard
+                     selectedMealInfo={selectedMealInfo}
+                     onChangeDate={onChangeDate}
+                     selectedDate={selectedDate}
+                     getSelectedPreference={getSelectedPreference}
+                     onSaveMealPreference={onSaveMealPreference}
+                     onClickBackButton={onClickBackButton}
+                  />*/
+/*
+<PreferenceCard
+                     selectedMealInfo={selectedMealInfo}
+                     onChangeDate={onChangeDate}
+                     selectedDate={selectedDate}
+                     getSelectedPreference={getSelectedPreference}
+                     onSaveMealPreference={onSaveMealPreference}
+                     onClickBackButton={onClickBackButton}
+                  />*/

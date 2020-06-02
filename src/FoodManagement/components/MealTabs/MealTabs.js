@@ -10,7 +10,8 @@ import {
    Category,
    Quantity,
    ItemNameCategory,
-   ServingSizes
+   ServingSizes,
+   CounterWrapper
 }
 from './styledComponents'
 
@@ -44,16 +45,26 @@ class MealTabs extends React.Component {
                   <Category>{item.category}</Category>
                </ItemNameCategory>
                <Quantity>
+               <CounterWrapper>
                   <CounterApp
                      key={item.mealPreferenceId}
                      onChangeQuantity={item.onChangeQuantity}
                   />
+                  </CounterWrapper>
                   <ServingSizes>{item.servingSizeUnit}</ServingSizes>
                </Quantity>
             </Wrapper>
          )
       })
    }
+
+   renderTabs = () => {
+      const { selectedMealInformation } = this.props
+      return selectedMealInformation.map(mealInfo => {
+         return <Tab style={{color:"rgba(0, 0, 0, 0.55)"}}>{mealInfo.mealPreference}</Tab>
+      })
+   }
+
 
    render() {
       const { selectedMealInformation, getSelectedPreference } = this.props
@@ -68,9 +79,7 @@ class MealTabs extends React.Component {
             }}
          >
             <TabList>
-               <Tab>{selectedMealInformation[0].mealPreference}</Tab>
-               <Tab>{selectedMealInformation[1].mealPreference}</Tab>
-               <Tab>{selectedMealInformation[2].mealPreference}</Tab>
+            {this.renderTabs()}
             </TabList>
 
             <TabPanel>

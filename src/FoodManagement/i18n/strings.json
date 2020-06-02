@@ -10,5 +10,12 @@
     "foodManagementDashBoard": {
         "yourResponseIsCaptured": "Your Response is captured",
         "somethingWentWrong": "something went wrong!"
+    },
+    "reviewCard": {
+        "review": "Review",
+        "quality": "Quality",
+        "taste": "Taste",
+        "done": "Done",
+        "writeReview": "write review"
     }
 }

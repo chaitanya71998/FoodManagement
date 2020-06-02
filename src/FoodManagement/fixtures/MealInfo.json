@@ -21,10 +21,11 @@
                 "item_name": "Upma"
             }
         ],
-        "meal_preference": "FullMeal",
-        "meal_preference_deadline": "2020-05-28T08:46:18.010Z",
-        "meal_starttime": "7:00",
-        "meal_endtime": "10:00"
+        "meal_preference": "Skipped",
+        "meal_preference_deadline": "2020-06-02 15:03:00",
+        "meal_starttime": "15:06:00",
+        "meal_endtime": "10:00:00",
+        "is_eaten": false
     },
     {
         "meal_type": "Lunch",
@@ -54,9 +55,10 @@
             }
         ],
         "meal_preference": "FullMeal",
-        "meal_preference_deadline": "2020-05-28T08:46:18.010Z",
-        "meal_starttime": "12:30",
-        "meal_endtime": "14:00"
+        "meal_preference_deadline": "2020-05-28 13:00:00",
+        "meal_starttime": "12:30:00",
+        "meal_endtime": "14:00:00",
+        "is_eaten": false
     },
     {
         "meal_type": "Dinner",
@@ -86,8 +88,9 @@
             }
         ],
         "meal_preference": "FullMeal",
-        "meal_preference_deadline": "2020-05-28T08:46:18.010Z",
-        "meal_starttime": "19:30",
-        "meal_endtime": "22:00"
+        "meal_preference_deadline": "2020-05-28 13:00:00",
+        "meal_starttime": "19:30:00",
+        "meal_endtime": "22:00:00",
+        "is_eaten": false
     }
 ]

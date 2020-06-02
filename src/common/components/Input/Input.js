@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputFiled } from './styledComponent'
+import { InputFiled } from './styledComponents'
 class Input extends React.Component {
    static defaultProps = {
       type: 'text',

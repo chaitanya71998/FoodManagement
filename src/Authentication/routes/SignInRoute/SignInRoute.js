@@ -6,7 +6,7 @@ import { getAccessToken } from '../../utils/StorageUtils'
 //import { SignInPage } from '../../components/SignInPage';
 import { SignInPage } from '../../components/SignInPage'
 
-@inject('signInStore')
+@inject('authStore')
 @observer
 class SignInRoute extends React.Component {
    signFormRef = React.createRef()
@@ -22,7 +22,7 @@ class SignInRoute extends React.Component {
         */
 
    getAuthStore = () => {
-      return this.props.signInStore
+      return this.props.authStore
    }
 
    onChangeUsername = event => {
@@ -49,21 +49,33 @@ class SignInRoute extends React.Component {
       event.preventDefault()
       if (this.username !== '' && this.password !== '') {
          this.errorMessageForUserName = ''
+         const requestObject = {
+            "username": this.username,
+            "password": this.password
+         }
+         console.log("requestObject", requestObject)
          /*
             if (!window.navigator.onLine) {
                 this.errorMessage = "Network Error"
             }*/
-         this.getAuthStore().userSignIn(this.onSuccess, this.onFailure)
-      } else if (this.username === '') {
+         this.getAuthStore().userSignIn(requestObject, this.onSuccess)
+      }
+      else if (this.username === '') {
          this.errorMessageForUserName = 'Please enter username'
          // this.signFormRef.current.userNameRef.current.focus()
-      } else {
-         this.errorMessageForPassword = 'Please enter password'
-         // this.signFormRef.current.passwordRef.current.focus()
       }
+      else {
+         this.errorMessageForPassword = 'Please enter password'
+         // this.signFormRef.current.userNameRef.current.focus()
+      }
+      // else {
+      //    this.errorMessageForPassword = 'Please enter password'
+      //    // this.signFormRef.current.passwordRef.current.focus()
+      // }
    }
 
    onSuccess = () => {
+      console.log("login")
       const { history } = this.props
       history.replace('/food-management-dashboard')
    }

@@ -5,7 +5,7 @@ import { MealTabs } from '../MealTabs'
 import { Button } from '../../../common/components/Button'
 import { SetDate } from '../../../common/components/SetDate'
 import strings from '../../i18n/strings.json'
-import { White, DarkBlueGrey } from '../../themes/Colors'
+import { white, darkBlueGrey } from '../../themes/Colors'
 import {
    Container,
    Header,
@@ -18,7 +18,8 @@ import {
    SaveButtonWrapper,
    TabsAndDateWrapper,
    Image
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class PreferenceCard extends React.Component {
@@ -30,11 +31,11 @@ class PreferenceCard extends React.Component {
    render() {
       const {
          selectedMealInfo,
-         date,
+         selectedDate,
          onChangeDate,
          getSelectedPreference,
          onSaveMealPreference,
-         onClickBackButton
+         onClickBackButton,
       } = this.props
       const selectedMealInformation = [...selectedMealInfo]
       if (selectedMealInformation.length != 0) {
@@ -44,8 +45,8 @@ class PreferenceCard extends React.Component {
                   <Heading>{this.mealType}</Heading>
                   <SkipButtonWrapper>
                      <Button
-                        backgroundColor={White}
-                        color={DarkBlueGrey}
+                        backgroundColor={white}
+                        color={darkBlueGrey}
                         width='100%'
                      >
                         {strings.preferenceCard.skipMeal}
@@ -60,15 +61,15 @@ class PreferenceCard extends React.Component {
                      />
                   </TabsWrapper>
                   <DateWrapper>
-                     <SetDate date={date} onChangeDate={onChangeDate} />
+                     <SetDate selectedDate={selectedDate} onChangeDate={onChangeDate} />
                      <Image src='https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/90cfd3e2-22b8-44bc-be42-4d62a7a0a7c3.png' />
                   </DateWrapper>
                </TabsAndDateWrapper>
                <Footer>
                   <BackButtonWrapper>
                      <Button
-                        backgroundColor={White}
-                        color={DarkBlueGrey}
+                        backgroundColor={white}
+                        color={darkBlueGrey}
                         width='100%'
                         onClick={onClickBackButton}
                      >
@@ -83,7 +84,8 @@ class PreferenceCard extends React.Component {
                </Footer>
             </Container>
          )
-      } else {
+      }
+      else {
          return null
       }
    }

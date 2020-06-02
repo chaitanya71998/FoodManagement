@@ -1,6 +1,5 @@
 import React from 'react'
-import { ButtonKind, ButtonText } from './styledComponent'
-import { BrightBlue } from '../../themes/Colors'
+import { ButtonKind, ButtonText } from './styledComponents'
 import Loader from 'react-loader-spinner'
 class Button extends React.Component {
    static defaultProps = {
@@ -8,7 +7,8 @@ class Button extends React.Component {
       backgroundColor: '#1db05f',
       children: 'buttonName',
       color: 'white',
-      getAPIStatus: 0
+      getAPIStatus: 0,
+      disabled: false
    }
    render() {
       const {
@@ -17,7 +17,8 @@ class Button extends React.Component {
          children,
          color,
          onClick,
-         getAPIStatus
+         getAPIStatus,
+         disabled
       } = this.props
       return (
          <ButtonKind
@@ -25,6 +26,7 @@ class Button extends React.Component {
             backgroundColor={backgroundColor}
             color={color}
             onClick={onClick}
+            disabled={disabled}
          >
             {getAPIStatus === 100 ? (
                <Loader type='Oval' color='white' height={30} width={30} />

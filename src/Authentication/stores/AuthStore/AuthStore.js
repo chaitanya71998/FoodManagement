@@ -9,7 +9,7 @@ from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { setAccessToken, clearUserSession } from '../../utils/StorageUtils'
 
-class SignInStore {
+class AuthStore {
    @observable getUserSignInAPIStatus
    @observable getUserSignInAPIError
    constructor(SignInAPIService) {
@@ -24,8 +24,8 @@ class SignInStore {
    }
 
    @action.bound
-   userSignIn(onSuccess) {
-      const userSignInAPI = this.signInAPIService.getUserSignInAPI()
+   userSignIn(requestObject, onSuccess) {
+      const userSignInAPI = this.signInAPIService.getUserSignInAPI(requestObject)
       return bindPromiseWithOnSuccess(userSignInAPI)
          .to(this.setGetUserSignInAPIStatus, response => {
             this.setGetUserSignInAPIResponse(response)
@@ -58,4 +58,4 @@ class SignInStore {
    }
 }
 
-export { SignInStore }
+export { AuthStore }

@@ -7,28 +7,21 @@ import {
 }
 from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import { MealInfoModel } from './model/MealInfoModel'
-import { MealPreferenceModel } from './model/MealPreferenceModel'
+import { MealPreference } from './model/MealPreference'
 
 class MealInfoStore {
-   @observable getMealInfoAPIStatus
-   @observable getMealInfoAPIError
+   @observable mealInfoAPIStatus
+   @observable mealInfoAPIError
    @observable mealInfo = []
-   @observable date
+   @observable selectedDate
+   @observable selectedMealInfo = null
    @observable mealType
-   @observable getmealPreferenceInfoAPIStatus
-   @observable getmealPreferenceInfoAPIError
-   @observable selectedMealInfo = []
-   @observable selectedPreference = null
-   @observable getUpdatedPreferenceFullOrHalfMealAPIStatus
-   @observable getUpdatedPreferenceFullOrHalfMealAPIError
-   @observable getUpdatedPreferenceCustomMealAPIStatus
-   @observable getUpdatedPreferenceCustomMealAPIError
 
    constructor(mealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService
       this.init()
       this.setDateFormate()
+
    }
 
    @action.bound
@@ -41,230 +34,89 @@ class MealInfoStore {
       if (month.length < 2) month = '0' + month
       if (day.length < 2) day = '0' + day
 
-      this.date = [year, month, day].join('-')
+      this.selectedDate = [year, month, day].join('-')
    }
 
    init() {
       this.mealInfo = []
-      this.selectedMealInfo = []
-      this.getMealInfoAPIStatus = API_INITIAL
-      this.getMealInfoAPIError = null
-      this.selectedPreference = null
-      this.getmealPreferenceInfoAPIStatus = API_INITIAL
-      this.getmealPreferenceInfoAPIError = null
-      this.getUpdatedPreferenceFullOrHalfMealAPIStatus = API_INITIAL
-      this.getUpdatedPreferenceCustomMealAPIStatus = API_INITIAL
-      this.getUpdatedPreferenceFullOrHalfMealAPIError = null
-      this.getUpdatedPreferenceCustomMealAPIError = null
+      this.mealInfoAPIStatus = API_INITIAL
+      this.mealInfoAPIError = null
    }
 
    @action.bound
    onChangeDateInDashBoard(event) {
-      this.date = event.target.value
-      this.clearStore()
+      this.selectedDate = event.target.value
+      this.clearMealInfo()
       this.getMealInfoAsPerDate()
    }
 
+
    @action.bound
    onChangeDateInPreferenceCard(event) {
-      this.date = event.target.value
-      this.clearStore()
-      this.getmealPreferenceInfo(this.mealType)
+      this.selectedDate = event.target.value
+      this.selectedMealInfo.getSelectedMealTypeInfo(this.mealType)
    }
+
 
    @action.bound
    getMealInfoAsPerDate() {
-      const MealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(this.date)
+      const MealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(this.selectedDate)
       return bindPromiseWithOnSuccess(MealInfoAPI)
-         .to(this.setGetMealInfoAPIStatus, this.setGetMealInfoResponse)
-         .catch(this.setGetMealInfoAPIError)
+         .to(this.setMealInfoAPIStatus, this.setMealInfoResponse)
+         .catch(this.setMealInfoAPIError)
    }
 
    @action.bound
-   setGetMealInfoAPIStatus(apiStatus) {
-      this.getMealInfoAPIStatus = apiStatus
+   setMealInfoAPIStatus(apiStatus) {
+      this.mealInfoAPIStatus = apiStatus
    }
 
    @action.bound
-   setGetMealInfoResponse(response) {
+   setMealInfoResponse(response) {
       const mealInfo = response
-      mealInfo.map(perticularMealInfo =>
-         this.getPerticularMealInfo(perticularMealInfo)
+      mealInfo.map(mealTypeInfo =>
+         this.getMealTypeInfo(mealTypeInfo)
       )
    }
 
    @action.bound
-   setGetMealInfoAPIError(error) {
-      console.log("error", error)
-      this.getMealInfoAPIError = error
+   setMealInfoAPIError(error) {
+      this.mealInfoAPIError = error
    }
 
    @action.bound
-   getPerticularMealInfo(perticularMealInfo) {
-      const PerticularMealInfo = {
-         mealType: perticularMealInfo.meal_type,
-         mealItems: perticularMealInfo.meal_items,
-         mealPreference: perticularMealInfo.meal_preference,
-         mealPreferenceDeadline: perticularMealInfo.meal_preference_deadline,
-         mealStarttime: perticularMealInfo.meal_starttime,
-         mealEndtime: perticularMealInfo.meal_endtime
-      }
-
-      const mealInfoModel = new MealInfoModel(PerticularMealInfo)
-      this.mealInfo.push(mealInfoModel)
-   }
-
-   @action.bound
-   getmealPreferenceInfo(mealType) {
-      this.mealType = mealType
-      const mealPreferenceInfoAPI = this.mealInfoAPIService.getmealPreferenceInfoAPI(
-         this.date,
-         mealType
-      )
-      return bindPromiseWithOnSuccess(mealPreferenceInfoAPI)
-         .to(
-            this.setGetmealPreferenceInfoStatus,
-            this.setGetmealPreferenceInfoResponse
-         )
-         .catch(this.setGetmealPreferenceInfoError)
-   }
-
-   @action.bound
-   setGetmealPreferenceInfoStatus(status) {
-      this.getmealPreferenceInfoAPIStatus = status
-   }
-
-   @action.bound
-   setGetmealPreferenceInfoError(error) {
-      this.getmealPreferenceInfoAPIError = error
-   }
-
-   @action.bound
-   setGetmealPreferenceInfoResponse(response) {
-      const mealPreferenceInfo = response
-      mealPreferenceInfo.map(mealPreference =>
-         this.getSelectedMealInfo(mealPreference)
-      )
-   }
-
-   @action.bound
-   getSelectedMealInfo(mealPreference) {
-      const PerticularMealPreference = {
-         mealPreference: mealPreference.meal_preference,
-         mealItems: mealPreference.meal_items
-      }
-      const mealPreferenceModel = new MealPreferenceModel(
-         PerticularMealPreference
-      )
-      this.selectedMealInfo.push(mealPreferenceModel)
-   }
-
-   @action.bound
-   onSaveMealPreference(onSuccess, onFailure) {
-      const mealItemsInfo = [...this.selectedMealInfo[0].mealItems]
-      let selectedPreferenceInfo = {}
-      if (
-         this.selectedPreference === 'Full meal' ||
-         this.selectedPreference === 'Half meal'
-      ) {
-         selectedPreferenceInfo.meal_type = this.mealType
-         selectedPreferenceInfo.meal_preference = this.selectedPreference
-         selectedPreferenceInfo.date = this.date
-         this.setSelectedPreferenceAsFullOrHalfMeal(
-            selectedPreferenceInfo,
-            onSuccess,
-            onFailure
-         )
-      }
-      else {
-         selectedPreferenceInfo.meal_type = this.mealType
-         selectedPreferenceInfo.meal_items = []
-         mealItemsInfo.forEach(itemInfo => {
-            let item = {
-               meal_item_id: itemInfo.mealItemId,
-               quantity: itemInfo.quantity,
-               serving_size_unit: itemInfo.servingSizeUnit
+   getMealTypeInfo(mealType) {
+      let mealItems = []
+      let mealTypeInfo = {
+         mealType: mealType.meal_type,
+         mealPreference: mealType.meal_preference,
+         mealPreferenceDeadline: mealType.meal_preference_deadline,
+         mealStarttime: mealType.meal_starttime,
+         mealEndtime: mealType.meal_endtime,
+         mealItems: mealType.meal_items.map(mealItem => {
+            const item = {
+               mealItemId: mealItem.meal_item_id,
+               itemName: mealItem.item_name
             }
-            selectedPreferenceInfo.meal_items.push(item)
-         })
-         selectedPreferenceInfo.date = this.date
-         this.setSelectedPreferenceAsCustomMeal(
-            selectedPreferenceInfo,
-            onSuccess,
-            onFailure
-         )
+            mealItems.push(item)
+         }),
+         isEaten: mealType.is_eaten
       }
+      mealTypeInfo.mealItems = mealItems
+      this.mealInfo.push(mealTypeInfo)
    }
 
    @action.bound
-   setSelectedPreferenceAsFullOrHalfMeal(
-      selectedPreferenceInfo,
-      onSuccess,
-      onFailure
-   ) {
-      const setSelectedPreference = this.mealInfoAPIService.setSelectedPreferenceAsFullOrHalfMeal(
-         selectedPreferenceInfo
-      )
-      return bindPromiseWithOnSuccess(setSelectedPreference)
-         .to(this.setGetUpdatedPreferenceFullOrHalfMealAPIStatus, response => {
-            this.setGetUpdatedPreferenceFullOrHalfMealAPIResponse(response)
-            onSuccess()
-         })
-         .catch(error => {
-            this.setGetUpdatedPreferenceFullOrHalfMealAPIError(error)
-            onFailure()
-         })
+   onClickEditPreference(mealType) {
+      this.mealType = mealType
+      this.selectedMealInfo = new MealPreference(this.mealInfoAPIService, this.selectedDate)
+      this.selectedMealInfo.getSelectedMealTypeInfo(mealType)
    }
 
-   @action.bound
-   setGetUpdatedPreferenceFullOrHalfMealAPIStatus(status) {
-      this.getUpdatedPreferenceFullOrHalfMealAPIStatus = status
-   }
 
    @action.bound
-   setGetUpdatedPreferenceFullOrHalfMealAPIResponse() {}
-
-   @action.bound
-   setGetUpdatedPreferenceFullOrHalfMealAPIError(error) {
-      this.getUpdatedPreferenceFullOrHalfMealAPIError = error
-   }
-
-   @action.bound
-   setSelectedPreferenceAsCustomMeal(
-      selectedPreferenceInfo,
-      onSuccess,
-      onFailure
-   ) {
-      const setSelectedPreference = this.mealInfoAPIService.setSelectedPreferenceAsCustomMeal(
-         selectedPreferenceInfo
-      )
-      return bindPromiseWithOnSuccess(setSelectedPreference)
-         .to(this.setGetUpdatedPreferenceCustomMealAPIStatus, response => {
-            this.setGetUpdatedPreferenceCustomMealAPIResponse(response)
-            onSuccess()
-         })
-         .catch(error => {
-            this.setGetUpdatedPreferenceCustomMealAPIError(error)
-            onFailure()
-         })
-   }
-
-   @action.bound
-   setGetUpdatedPreferenceCustomMealAPIStatus(status) {
-      this.getUpdatedPreferenceCustomMealAPIStatus = status
-   }
-
-   @action.bound
-   setGetUpdatedPreferenceCustomMealAPIResponse() {}
-
-   @action.bound
-   setGetUpdatedPreferenceCustomMealAPIError(error) {
-      this.getUpdatedPreferenceCustomMealAPIError = error
-   }
-
-   @action.bound
-   getSelectedPreference(preference) {
-      this.selectedPreference = preference
+   clearMealInfo() {
+      this.mealInfo = []
    }
 
    @action.bound

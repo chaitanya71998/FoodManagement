@@ -1,7 +1,7 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { clearUserSession } from '../../../Authentication/utils/StorageUtils'
@@ -19,14 +19,15 @@ class PreferencePageRoute extends React.Component {
 
    doNetworkCalls = () => {
       this.getMealInfoStore().clearStore()
-      this.getMealInfoStore().getmealPreferenceInfo(this.mealType)
+      this.getMealInfoStore().selectedMealInfo.getSelectedMealTypeInfo(this.mealType)
+      //this.getMealInfoStore().getmealPreferenceInfo(this.mealType)
    }
 
    getMealInfoStore = () => {
       return this.props.mealInfoStore
    }
    onSaveMealPreference = () => {
-      this.getMealInfoStore().onSaveMealPreference(
+      this.getMealInfoStore().selectedMealInfo.onSaveMealPreference(
          this.onSuccess,
          this.onFailure
       )
@@ -61,7 +62,8 @@ class PreferencePageRoute extends React.Component {
       let messageInfo = null
       if (message == 'failure') {
          messageInfo = strings.foodManagementDashBoard.somethingWentWrong
-      } else {
+      }
+      else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
       }
       toast.success(messageInfo, {
@@ -72,19 +74,20 @@ class PreferencePageRoute extends React.Component {
    }
 
    render() {
+
       return (
          <PreferencePage
-            selectedMealInfo={this.getMealInfoStore().selectedMealInfo}
-            getmealPreferenceInfoAPIStatus={
-               this.getMealInfoStore().getmealPreferenceInfoAPIStatus
+            selectedMealInfo={this.getMealInfoStore().selectedMealInfo.preferencesInfo}
+            selectedMealTypeInfoAPIStatus={
+               this.getMealInfoStore().selectedMealInfo.selectedMealTypeInfoAPIStatus
             }
-            getmealPreferenceInfoAPIError={
-               this.getMealInfoStore().getmealPreferenceInfoAPIError
+            selectedMealTypeInfoAPIError={
+               this.getMealInfoStore().selectedMealInfo.selectedMealTypeInfoAPIError
             }
-            date={this.getMealInfoStore().date}
+            selectedDate={this.getMealInfoStore().selectedDate}
             onChangeDate={this.getMealInfoStore().onChangeDateInPreferenceCard}
             getSelectedPreference={
-               this.getMealInfoStore().getSelectedPreference
+               this.getMealInfoStore().selectedMealInfo.getSelectedPreference
             }
             onSaveMealPreference={this.onSaveMealPreference}
             onClickBackButton={this.onClickBackButton}
