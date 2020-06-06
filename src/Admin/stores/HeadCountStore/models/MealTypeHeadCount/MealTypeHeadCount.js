@@ -4,8 +4,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 class MealTypeHeadCount {
    @observable headCountAPIStatus
@@ -15,7 +14,7 @@ class MealTypeHeadCount {
    @observable headCountInfo
    constructor(mealInfoAPIService, mealType, date) {
       this.mealInfoAPIService = mealInfoAPIService
-      this.selectedDate = mealType;
+      this.selectedDate = mealType
       this.mealType = date
       this.init()
    }

@@ -8,8 +8,7 @@ import {
    API_FAILED,
    API_FETCHING,
    API_INITIAL
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 
 import { AuthServices } from '../../services/AuthServices'
 import getUserSignInResponse from '../../fixtures/getUserSignInResponse.json'
@@ -57,7 +56,7 @@ describe('AuthStore Tests', () => {
       expect(authStore.userSignInAPIStatus).toBe(API_FETCHING)
    })
 
-   it('should test userSignInAPI success state', async() => {
+   it('should test userSignInAPI success state', async () => {
       const mockSuccessPromise = new Promise((resolve, reject) => {
          resolve(getUserSignInResponse)
       })
@@ -66,18 +65,18 @@ describe('AuthStore Tests', () => {
       authServices.signInAPI = mockSignInAPI
       const onSuccess = jest.fn()
       const onFailure = jest.fn()
-      const requestObject = { username: "a", password: "b" }
+      const requestObject = { username: 'a', password: 'b' }
       await authStore.userSignIn(requestObject, onSuccess, onFailure)
       expect(authStore.userSignInAPIStatus).toBe(API_SUCCESS)
       //expect(mockSetCookie).toBeCalled()
    })
 
-   it('should test userSignInAPI failure state', async() => {
+   it('should test userSignInAPI failure state', async () => {
       jest
          .spyOn(authServices, 'getUserSignInAPI')
          .mockImplementation(() => Promise.reject())
       authStore = new AuthStore(authServices)
-      const requestObject = { username: "a", password: "b" }
+      const requestObject = { username: 'a', password: 'b' }
       const onSuccess = jest.fn()
       const onFailure = jest.fn()
       await authStore.userSignIn(requestObject, onSuccess, onFailure)

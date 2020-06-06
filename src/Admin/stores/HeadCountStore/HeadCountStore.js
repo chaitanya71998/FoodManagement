@@ -4,8 +4,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 import { setDateFormate } from '../../../Common/utils/TimeUtils'
 import { MealTypeHeadCount } from './models/MealTypeHeadCount'
 

@@ -12,17 +12,19 @@ import {
    SuccessWrapper,
    LoadingWrapper,
    ReviewCardWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 @observer
 class ReviewPage extends React.Component {
    renderMealReviewInfo = observer(() => {
-      const { selectedMealTypeInfoReview, onSaveMealReview, isLoadingOnDone } = this.props
+      const {
+         selectedMealTypeInfoReview,
+         onSaveMealReview,
+         isLoadingOnDone
+      } = this.props
       if (!selectedMealTypeInfoReview) {
          return <NoDataView />
-      }
-      else {
+      } else {
          return (
             <SuccessWrapper>
                <ReviewCardWrapper>
@@ -51,8 +53,8 @@ class ReviewPage extends React.Component {
                <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
             </HeaderWrapper>
             <Banner>
-                  <SetCarousel />
-               </Banner>
+               <SetCarousel />
+            </Banner>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
                   apiStatus={selectedMealTypeReviewInfoAPIStatus}

@@ -6,8 +6,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 class MealReview {
    @observable mealType
    @observable selectedMealTypeReviewInfoAPIStatus
@@ -48,7 +47,7 @@ class MealReview {
 
    @action.bound
    setSelectedMealTypeReviewInfoAPIStatus(status) {
-      console.log("status", status)
+      console.log('status', status)
       this.selectedMealTypeReviewInfoAPIStatus = status
    }
 
@@ -96,15 +95,18 @@ class MealReview {
    setMealReview(reviewInfo, onSuccess, onFailure) {
       const setReviewInfo = this.mealInfoAPIService.setReviewInfo(reviewInfo)
       return bindPromiseWithOnSuccess(setReviewInfo)
-         .to((status) => {
-            this.setUpdatedReviewAPIStatus(status);
-            if (status === API_FETCHING) {
-               this.isLoadingOnDone = true
+         .to(
+            status => {
+               this.setUpdatedReviewAPIStatus(status)
+               if (status === API_FETCHING) {
+                  this.isLoadingOnDone = true
+               }
+            },
+            response => {
+               this.setUpdatedReviewAPIResponse(response)
+               onSuccess()
             }
-         }, response => {
-            this.setUpdatedReviewAPIResponse(response)
-            onSuccess()
-         })
+         )
          .catch(error => {
             this.setUpdatedReviewAPIError(error)
             onFailure()

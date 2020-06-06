@@ -8,8 +8,7 @@ import {
    WeeklyMenu,
    Profile,
    SignOut
-}
-from './styledComponents'
+} from './styledComponents'
 
 class Header extends React.Component {
    render() {

@@ -31,7 +31,6 @@ class ReviewPageRoute extends React.Component {
          this.onSuccess,
          this.onFailure
       )
-
    }
 
    gotoHome = () => {
@@ -64,8 +63,7 @@ class ReviewPageRoute extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -95,11 +93,12 @@ class ReviewPageRoute extends React.Component {
                doNetworkCalls={this.doNetworkCalls}
                gotoHome={this.gotoHome}
                onClickSignOut={this.onClickSignOut}
-               isLoadingOnDone={this.getMealInfoStore().selectedMealInfoReview.isLoadingOnDone}
+               isLoadingOnDone={
+                  this.getMealInfoStore().selectedMealInfoReview.isLoadingOnDone
+               }
             />
          )
-      }
-      else {
+      } else {
          return null
       }
    }

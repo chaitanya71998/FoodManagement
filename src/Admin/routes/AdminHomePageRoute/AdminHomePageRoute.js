@@ -29,31 +29,33 @@ class AdminHomePageRoute extends React.Component {
       history.replace({ pathname: '/sign-in-page' })
    }
 
-
-
    render() {
       if (this.getheadCountStore().selectedMealTypeheadCount) {
-
          return (
             <HeadCountPage
-               headCountAPIStatus={this.getheadCountStore().selectedMealTypeheadCount.headCountAPIStatus}
-               headCountAPIError={this.getheadCountStore().selectedMealTypeheadCount.headCountAPIError}
-                  selectedMealTypeheadCount={
-                     this.getheadCountStore().selectedMealTypeheadCount
-                        .headCountInfo
-                  }
-                  onChangeMealTypeTab={
-                     this.getheadCountStore().onChangeMealTypeTab
-                  }
-                  onRetry={this.doNetworkCalls}
-                  onClickSignOut={this.onClickSignOut}
-                  gotoHome={this.gotoHome}
-                  onChangeDate={this.getheadCountStore().onChangeDate}
-                  selectedDate={this.getheadCountStore().selectedDate}
-               />
+               headCountAPIStatus={
+                  this.getheadCountStore().selectedMealTypeheadCount
+                     .headCountAPIStatus
+               }
+               headCountAPIError={
+                  this.getheadCountStore().selectedMealTypeheadCount
+                     .headCountAPIError
+               }
+               selectedMealTypeheadCount={
+                  this.getheadCountStore().selectedMealTypeheadCount
+                     .headCountInfo
+               }
+               onChangeMealTypeTab={
+                  this.getheadCountStore().onChangeMealTypeTab
+               }
+               onRetry={this.doNetworkCalls}
+               onClickSignOut={this.onClickSignOut}
+               gotoHome={this.gotoHome}
+               onChangeDate={this.getheadCountStore().onChangeDate}
+               selectedDate={this.getheadCountStore().selectedDate}
+            />
          )
-      }
-      else {
+      } else {
          return null
       }
    }

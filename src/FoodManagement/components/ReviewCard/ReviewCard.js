@@ -17,8 +17,7 @@ import {
    TasteRating,
    TextAreaForReview,
    DoneButtonWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 class ReviewCard extends Component {
    renderEachItemReview = () => {

@@ -12,8 +12,7 @@ import {
    SuccessWrapper,
    LoadingWrapper,
    PreferenceCardWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 @observer
 class PreferencePage extends React.Component {
@@ -28,14 +27,11 @@ class PreferencePage extends React.Component {
          onClickSkipButton,
          isLoadingOnSave,
          isLoadingOnSkipped
-
       } = this.props
       if (selectedMealInfo.length === 0) {
          return <NoDataView />
-      }
-      else {
+      } else {
          return (
-
             <SuccessWrapper>
                <PreferenceCardWrapper>
                   <PreferenceCard
@@ -48,7 +44,6 @@ class PreferencePage extends React.Component {
                      onClickSkipButton={onClickSkipButton}
                      isLoadingOnSave={isLoadingOnSave}
                      isLoadingOnSkipped={isLoadingOnSkipped}
-                     
                   />
                </PreferenceCardWrapper>
             </SuccessWrapper>
@@ -62,7 +57,7 @@ class PreferencePage extends React.Component {
          selectedMealTypeInfoAPIStatus,
          doNetworkCalls,
          gotoHome,
-         onClickSignOut,
+         onClickSignOut
       } = this.props
       return (
          <Container>
@@ -70,8 +65,8 @@ class PreferencePage extends React.Component {
                <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
             </HeaderWrapper>
             <Banner>
-                  <SetCarousel />
-               </Banner>
+               <SetCarousel />
+            </Banner>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
                   apiStatus={selectedMealTypeInfoAPIStatus}

@@ -6,8 +6,7 @@ import {
    API_FAILED,
    API_FETCHING,
    API_INITIAL
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 import { waitFor } from '@testing-library/react'
 import { MealInfoAPIService } from '../../services/MealInfoAPIService'
 import { MealInfoStore } from './'
@@ -41,7 +40,7 @@ describe('MealInfoStore Tests', () => {
       expect(mealInfoStore.mealInfoAPIStatus).toBe(API_FETCHING)
    })
 
-   it('should test MealInfoAPI success state', async() => {
+   it('should test MealInfoAPI success state', async () => {
       const mockSuccessPromise = new Promise(resolve => {
          resolve(mealInfo)
       })
@@ -52,7 +51,7 @@ describe('MealInfoStore Tests', () => {
       expect(mealInfoStore.mealInfoAPIStatus).toBe(API_SUCCESS)
    })
 
-   it('should test MealInfoAPI failure state', async() => {
+   it('should test MealInfoAPI failure state', async () => {
       jest
          .spyOn(mealInfoAPIService, 'getMealInfoAPI')
          .mockImplementation(() => Promise.reject())
@@ -72,7 +71,7 @@ describe('MealInfoStore Tests', () => {
       )
    })
 
-   it('should test the getSelectedMealTypeInfo success', async() => {
+   it('should test the getSelectedMealTypeInfo success', async () => {
       const mockSuccessPromise = new Promise(resolve =>
          resolve(preferencePageInfo)
       )
@@ -88,7 +87,7 @@ describe('MealInfoStore Tests', () => {
       })
    })
 
-   it('should test the getSelectedMealTypeInfo failed', async() => {
+   it('should test the getSelectedMealTypeInfo failed', async () => {
       const mockFailurePromise = new Promise((_, reject) => reject())
       const mockMealInfoAPI = jest.fn()
       mockMealInfoAPI.mockReturnValue(mockFailurePromise)
@@ -111,11 +110,11 @@ describe('MealInfoStore Tests', () => {
       mealInfoStore.onClickReviewButton(mealType)
       expect(
          mealInfoStore.selectedMealInfoReview
-         .selectedMealTypeReviewInfoAPIStatus
+            .selectedMealTypeReviewInfoAPIStatus
       ).toBe(API_FETCHING)
    })
 
-   it('should test the getSelectedMealTypeReviewInfo success', async() => {
+   it('should test the getSelectedMealTypeReviewInfo success', async () => {
       const mockSuccessPromise = new Promise(resolve => resolve(reviewInfo))
       const mockMealInfoAPI = jest.fn()
       mockMealInfoAPI.mockReturnValue(mockSuccessPromise)
@@ -125,12 +124,12 @@ describe('MealInfoStore Tests', () => {
       waitFor(() => {
          expect(
             mealInfoStore.selectedMealInfoReview
-            .selectedMealTypeReviewInfoAPIStatus
+               .selectedMealTypeReviewInfoAPIStatus
          ).toBe(API_SUCCESS)
       })
    })
 
-   it('should test the getSelectedMealTypeReviewInfo failure state', async() => {
+   it('should test the getSelectedMealTypeReviewInfo failure state', async () => {
       jest
          .spyOn(mealInfoAPIService, 'getmealTypeInfoAPI')
          .mockImplementation(() => Promise.reject())
@@ -139,7 +138,7 @@ describe('MealInfoStore Tests', () => {
       waitFor(() => {
          expect(
             mealInfoStore.mealInfoStore.selectedMealInfoReview
-            .selectedMealTypeReviewInfoAPIStatus
+               .selectedMealTypeReviewInfoAPIStatus
          ).toBe(API_FAILED)
       })
    })

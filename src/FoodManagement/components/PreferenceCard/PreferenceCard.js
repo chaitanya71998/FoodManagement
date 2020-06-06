@@ -20,9 +20,8 @@ import {
    TabsAndDateWrapper,
    Image,
    Group,
-   ImageWrapper,
-}
-from './styledComponents'
+   ImageWrapper
+} from './styledComponents'
 
 @observer
 class PreferenceCard extends React.Component {
@@ -32,7 +31,6 @@ class PreferenceCard extends React.Component {
       this.mealType = match.params.mealType.slice(1)
    }
    render() {
-
       const {
          selectedMealInfo,
          selectedDate,
@@ -70,15 +68,15 @@ class PreferenceCard extends React.Component {
                      />
                   </TabsWrapper>
                   <Group>
-                  <DateWrapper>
-                     <SetDate
-                        selectedDate={selectedDate}
-                        onChangeDate={onChangeDate}
-                     />
+                     <DateWrapper>
+                        <SetDate
+                           selectedDate={selectedDate}
+                           onChangeDate={onChangeDate}
+                        />
                      </DateWrapper>
                      <ImageWrapper>
-                     <Image src='https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/90cfd3e2-22b8-44bc-be42-4d62a7a0a7c3.png' />
-                  </ImageWrapper>
+                        <Image src='https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/90cfd3e2-22b8-44bc-be42-4d62a7a0a7c3.png' />
+                     </ImageWrapper>
                   </Group>
                </TabsAndDateWrapper>
                <Footer>
@@ -93,16 +91,18 @@ class PreferenceCard extends React.Component {
                      </Button>
                   </BackButtonWrapper>
                   <SaveButtonWrapper>
-                     <Button width='100%' onClick={onSaveMealPreference}
-                     isLoading={isLoadingOnSave}>
+                     <Button
+                        width='100%'
+                        onClick={onSaveMealPreference}
+                        isLoading={isLoadingOnSave}
+                     >
                         {strings.preferenceCard.save}
                      </Button>
                   </SaveButtonWrapper>
                </Footer>
             </Container>
          )
-      }
-      else {
+      } else {
          return null
       }
    }

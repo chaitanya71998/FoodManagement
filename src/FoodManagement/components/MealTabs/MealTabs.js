@@ -13,9 +13,7 @@ import {
    ServingSizes,
    CounterWrapper,
    Container
-}
-from './styledComponents'
-
+} from './styledComponents'
 
 const color = 'blue'
 @observer
@@ -29,8 +27,7 @@ class MealTabs extends React.Component {
          mealInfo.mealPreference === 'HalfMeal'
       ) {
          return this.renderFullOrHalfMealDetails(mealInfo)
-      }
-      else {
+      } else {
          return this.renderCustomDetails(mealInfo)
       }
    }

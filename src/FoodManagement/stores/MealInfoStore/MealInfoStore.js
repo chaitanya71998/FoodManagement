@@ -4,8 +4,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { MealPreference } from './models/MealPreference'
 import { MealReview } from './models/MealReview'
@@ -49,12 +48,12 @@ class MealInfoStore {
       this.getMealInfoAsPerDate()
    }
 
-
-
    @action.bound
    getMealInfoAsPerDate() {
       this.clearMealInfo()
-      const mealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(this.selectedDate)
+      const mealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(
+         this.selectedDate
+      )
       return bindPromiseWithOnSuccess(mealInfoAPI)
          .to(this.setMealInfoAPIStatus, this.setMealInfoResponse)
          .catch(this.setMealInfoAPIError)
@@ -69,9 +68,7 @@ class MealInfoStore {
    setMealInfoResponse(response) {
       console.log(response)
       const mealInfo = response
-      mealInfo.map(mealTypeInfo =>
-         this.getMealTypeInfo(mealTypeInfo)
-      )
+      mealInfo.map(mealTypeInfo => this.getMealTypeInfo(mealTypeInfo))
    }
 
    @action.bound
@@ -105,14 +102,22 @@ class MealInfoStore {
    @action.bound
    onClickEditPreference(mealType) {
       this.mealType = mealType
-      this.selectedMealInfo = new MealPreference(this.mealInfoAPIService, this.selectedDate, mealType)
+      this.selectedMealInfo = new MealPreference(
+         this.mealInfoAPIService,
+         this.selectedDate,
+         mealType
+      )
       this.selectedMealInfo.getSelectedMealTypeInfo()
    }
 
    @action.bound
    onClickReviewButton(mealType) {
       this.mealType = mealType
-      this.selectedMealInfoReview = new MealReview(this.mealInfoAPIService, this.selectedDate, mealType)
+      this.selectedMealInfoReview = new MealReview(
+         this.mealInfoAPIService,
+         this.selectedDate,
+         mealType
+      )
       this.selectedMealInfoReview.getSelectedMealTypeReviewInfo()
    }
 
@@ -128,19 +133,15 @@ class MealInfoStore {
          id
       )
       return bindPromiseWithOnSuccess(userMealStatusAPI)
-         .to(
-            this.setUserMealAPIStatus,
-            (response) => {
-               this.setUserMealAPIResponse(response)
-               onSuccess()
-            }
-         )
-         .catch((error) => {
+         .to(this.setUserMealAPIStatus, response => {
+            this.setUserMealAPIResponse(response)
+            onSuccess()
+         })
+         .catch(error => {
             this.setUserMealAPIError(error)
             onFailure()
          })
    }
-
 
    @action.bound
    setUserMealAPIStatus(status) {
@@ -155,12 +156,11 @@ class MealInfoStore {
       this.userMealAPIError = error
    }
 
-
    @action.bound
    onClickISkipped(mealType, onSuccess, onFailure) {
       const userPreference = {
          meal_type: mealType,
-         meal_preference: "Skipped",
+         meal_preference: 'Skipped',
          date: this.selectedDate
       }
       this.setUserPreferenceAsSkipped(userPreference, onSuccess, onFailure)
@@ -168,21 +168,19 @@ class MealInfoStore {
 
    @action.bound
    setUserPreferenceAsSkipped(userPreference, onSuccess, onFailure) {
-      const selectedPreference = this.mealInfoAPIService.setSelectedPreference(userPreference)
+      const selectedPreference = this.mealInfoAPIService.setSelectedPreference(
+         userPreference
+      )
       return bindPromiseWithOnSuccess(selectedPreference)
-         .to(
-            this.setUserPreferenceAPIStatus,
-            (response) => {
-               this.setUserPreferenceAPIResponse(response)
-               onSuccess()
-            }
-         )
-         .catch((error) => {
+         .to(this.setUserPreferenceAPIStatus, response => {
+            this.setUserPreferenceAPIResponse(response)
+            onSuccess()
+         })
+         .catch(error => {
             this.setUserPreferenceAPIError(error)
             onFailure()
          })
    }
-
 
    @action.bound
    setUserPreferenceAPIStatus(status) {
@@ -190,9 +188,7 @@ class MealInfoStore {
    }
 
    @action.bound
-   setUserPreferenceAPIResponse() {
-
-   }
+   setUserPreferenceAPIResponse() {}
 
    @action.bound
    setUserPreferenceAPIError(error) {

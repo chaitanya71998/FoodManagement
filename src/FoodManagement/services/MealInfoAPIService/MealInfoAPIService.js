@@ -12,14 +12,16 @@ class MealInfoService {
    getMealInfoAPI(date) {
       return networkCallWithApisauce(
          this.api,
-         `/meal_info/v1/?date=${date}`, {},
+         `/meal_info/v1/?date=${date}`,
+         {},
          apiMethods.get
       )
    }
    getmealTypeInfoAPI(date, mealType) {
       return networkCallWithApisauce(
          this.api,
-         `/my_meal/v1/?date=${date}&meal_type=${mealType}`, {},
+         `/my_meal/v1/?date=${date}&meal_type=${mealType}`,
+         {},
          apiMethods.get
       )
    }
@@ -45,7 +47,8 @@ class MealInfoService {
    getmealTypeReviewInfoAPI(date, mealType) {
       return networkCallWithApisauce(
          this.api,
-         `/meal/feedback/v1/?date=${date}&meal_type=${mealType}`, {},
+         `/meal/feedback/v1/?date=${date}&meal_type=${mealType}`,
+         {},
          apiMethods.get
       )
    }
@@ -61,7 +64,8 @@ class MealInfoService {
    setUserMealStatusAPI(isEaten, id) {
       return networkCallWithApisauce(
          this.api,
-         `/${id}/${isEaten}/v1/`, {},
+         `/${id}/${isEaten}/v1/`,
+         {},
          apiMethods.post
       )
    }

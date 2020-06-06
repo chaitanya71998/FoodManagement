@@ -6,8 +6,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 class MealPreference {
    @observable preferencesInfo = []
    @observable selectedPreference
@@ -113,8 +112,7 @@ class MealPreference {
             onFailure,
             button
          )
-      }
-      else {
+      } else {
          selectedPreferenceInfo.meal_type = this.mealType
          selectedPreferenceInfo.meal_items = []
          mealItemsInfo.forEach(itemInfo => {
@@ -129,7 +127,8 @@ class MealPreference {
          this.setSelectedPreferenceAsCustomMeal(
             selectedPreferenceInfo,
             onSuccess,
-            onFailure, button
+            onFailure,
+            button
          )
       }
    }
@@ -141,30 +140,27 @@ class MealPreference {
    }
 
    @action.bound
-   setSelectedPreference(
-      selectedPreferenceInfo,
-      onSuccess,
-      onFailure,
-      button
-   ) {
+   setSelectedPreference(selectedPreferenceInfo, onSuccess, onFailure, button) {
       const setSelectedPreference = this.mealInfoAPIService.setSelectedPreference(
          selectedPreferenceInfo
       )
       return bindPromiseWithOnSuccess(setSelectedPreference)
-         .to((status) => {
-            this.setUpdatedPreferenceAPIStatus
-            if (status === API_FETCHING) {
-               if (button === "Skipped") {
-                  this.isLoadingOnSkipped = true
+         .to(
+            status => {
+               this.setUpdatedPreferenceAPIStatus
+               if (status === API_FETCHING) {
+                  if (button === 'Skipped') {
+                     this.isLoadingOnSkipped = true
+                  } else {
+                     this.isLoadingOnSave = true
+                  }
                }
-               else {
-                  this.isLoadingOnSave = true
-               }
+            },
+            response => {
+               this.setUpdatedPreferenceAPIResponse(response)
+               onSuccess()
             }
-         }, response => {
-            this.setUpdatedPreferenceAPIResponse(response)
-            onSuccess()
-         })
+         )
          .catch(error => {
             this.setUpdatedPreferenceAPIError(error)
             onFailure()
@@ -200,20 +196,22 @@ class MealPreference {
          selectedPreferenceInfo
       )
       return bindPromiseWithOnSuccess(setSelectedPreference)
-         .to((status) => {
-            this.setUpdatedCustomMealAPIStatus(status)
-            if (status === API_FETCHING) {
-               if (button === "Skipped") {
-                  this.isLoadingOnSkipped = true
+         .to(
+            status => {
+               this.setUpdatedCustomMealAPIStatus(status)
+               if (status === API_FETCHING) {
+                  if (button === 'Skipped') {
+                     this.isLoadingOnSkipped = true
+                  } else {
+                     this.isLoadingOnSave = true
+                  }
                }
-               else {
-                  this.isLoadingOnSave = true
-               }
+            },
+            response => {
+               this.setUpdatedCustomMealAPIResponse(response)
+               onSuccess()
             }
-         }, response => {
-            this.setUpdatedCustomMealAPIResponse(response)
-            onSuccess()
-         })
+         )
          .catch(error => {
             this.setUpdatedCustomMealAPIError(error)
             onFailure()

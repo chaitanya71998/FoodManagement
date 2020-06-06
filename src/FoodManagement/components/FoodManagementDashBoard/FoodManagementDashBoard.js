@@ -15,8 +15,7 @@ import {
    MealCards,
    SuccessWrapper,
    LoadingWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 @observer
 class FoodManagementDashBoard extends React.Component {
@@ -64,8 +63,7 @@ class FoodManagementDashBoard extends React.Component {
       const mealInfo = [...mealInformation]
       if (mealInfo.length === 0) {
          return <NoDataView />
-      }
-      else {
+      } else {
          return (
             <SuccessWrapper>
                <MealCards>{this.renderMealCards()}</MealCards>
@@ -88,17 +86,17 @@ class FoodManagementDashBoard extends React.Component {
       return (
          <Container>
             <HeaderWrapper>
-                                       <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
-                                    </HeaderWrapper>
+               <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
+            </HeaderWrapper>
             <Banner>
-                  <SetCarousel />
-               </Banner>
-               <DateWrapper>
-                  <SetDate
-                     selectedDate={selectedDate}
-                     onChangeDate={onChangeDate}
-                  />
-               </DateWrapper>
+               <SetCarousel />
+            </Banner>
+            <DateWrapper>
+               <SetDate
+                  selectedDate={selectedDate}
+                  onChangeDate={onChangeDate}
+               />
+            </DateWrapper>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
                   apiStatus={mealInfoAPIStatus}

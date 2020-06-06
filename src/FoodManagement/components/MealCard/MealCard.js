@@ -3,9 +3,12 @@ import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { RiTimer2Line } from 'react-icons/ri';
+import { RiTimer2Line } from 'react-icons/ri'
 
-import { getTimeDistanceInWords, isTimeBeforeDeadLine } from '../../../Common/utils/TimeUtils'
+import {
+   getTimeDistanceInWords,
+   isTimeBeforeDeadLine
+} from '../../../Common/utils/TimeUtils'
 import { Button } from '../../../Common/components/Button'
 import { brightBlue, white, darkBlueGrey } from '../../themes/Colors'
 import strings from '../../i18n/strings.json'
@@ -26,11 +29,7 @@ import {
    AteOrSkippedButtonWrapper,
    ReviewWrapper,
    TimerIcon
-}
-from './styledComponents'
-
-
-
+} from './styledComponents'
 
 @observer
 class MealCard extends React.Component {
@@ -47,44 +46,49 @@ class MealCard extends React.Component {
       this.setTimerForEnablingIAteItAndSkippedButtons()
    }
 
-
    componentWillUnmount() {
-      clearInterval(this.intervalForShowingEditButton);
-      clearInterval(this.intervalForShowingDisabledStates);
-      clearInterval(this.intervalForShowingEnablingTheStates);
+      clearInterval(this.intervalForShowingEditButton)
+      clearInterval(this.intervalForShowingDisabledStates)
+      clearInterval(this.intervalForShowingEnablingTheStates)
    }
 
    setTimerForShowingEditButton = () => {
       const { mealTypeInfo } = this.props
       this.intervalForShowingEditButton = setInterval(() => {
-         this.timeLeftForEditPreference = getTimeDistanceInWords(mealTypeInfo.mealPreferenceDeadline)
+         this.timeLeftForEditPreference = getTimeDistanceInWords(
+            mealTypeInfo.mealPreferenceDeadline
+         )
          if (!isTimeBeforeDeadLine(mealTypeInfo.mealPreferenceDeadline)) {
             this.isTimeLeftForEditing = false
-            clearInterval(this.intervalForShowingEditButton);
+            clearInterval(this.intervalForShowingEditButton)
          }
-      }, 1000);
+      }, 1000)
    }
 
    setTimerForShowingDisabledStates = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingDisabledStates = setInterval(() => {
-         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealStarttime}`)) {
+         if (
+            !isTimeBeforeDeadLine(
+               `${selectedDate} ${mealTypeInfo.mealStarttime}`
+            )
+         ) {
             this.isTimeForEating = true
-            clearInterval(this.intervalForShowingDisabledStates);
+            clearInterval(this.intervalForShowingDisabledStates)
          }
-
       }, 1000)
    }
 
    setTimerForEnablingIAteItAndSkippedButtons = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingEnablingTheStates = setInterval(() => {
-         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
+         if (
+            !isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)
+         ) {
             this.isTimeForEating = false
             this.isTimeForReview = true
-            clearInterval(this.intervalForShowingEnablingTheStates);
+            clearInterval(this.intervalForShowingEnablingTheStates)
          }
-
       })
    }
 
@@ -93,9 +97,14 @@ class MealCard extends React.Component {
       const { mealTypeInfo, onClickIAteIt } = this.props
       this.isTimeForReview = true
       if (!mealTypeInfo.isEaten) {
-         userStatus = "True"
+         userStatus = 'True'
       }
-      onClickIAteIt(mealTypeInfo.mealId, userStatus, this.onSuccess, this.onFailure)
+      onClickIAteIt(
+         mealTypeInfo.mealId,
+         userStatus,
+         this.onSuccess,
+         this.onFailure
+      )
    }
 
    onClickISkipped = () => {
@@ -122,8 +131,7 @@ class MealCard extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -132,10 +140,6 @@ class MealCard extends React.Component {
          })
       }
    }
-
-
-
-
 
    renderMealItems = () => {
       const { mealTypeInfo } = this.props
@@ -159,56 +163,76 @@ class MealCard extends React.Component {
                <Icon src={mealIcon} />
                <HeadingAndTime>
                   <MealType>{mealTypeInfo.mealType}</MealType>
-                  <Time>{mealTypeInfo.mealStarttime}-{mealTypeInfo.mealEndtime}</Time>
+                  <Time>
+                     {mealTypeInfo.mealStarttime}-{mealTypeInfo.mealEndtime}
+                  </Time>
                </HeadingAndTime>
-               <MealPreference
-                  mealPreference={mealTypeInfo.mealPreference}
-               >
+               <MealPreference mealPreference={mealTypeInfo.mealPreference}>
                   {mealTypeInfo.mealPreference}
                </MealPreference>
             </MealTypeInfo>
             <MealData>{this.renderMealItems()}</MealData>
-            {(!this.isTimeForReview)?
-            (this.isTimeLeftForEditing)?
-            
-            
-               <EditButtonWrapper>
-               <Button
-                  backgroundColor={brightBlue}
-                  width='80%'
-                  onClick={()=>onClickEditPreference(mealTypeInfo.mealType)}
-                  getAPIStatus={selectedMealTypeInfoAPIStatus}
-               >
-                 <EditButtonText>
-                 {strings.mealCard.edit} 
-                 <TimerWrapper>
-                 <TimerIcon><RiTimer2Line/></TimerIcon>
-                 {this.timeLeftForEditPreference}{strings.mealCard.left}</TimerWrapper>
-                 </EditButtonText>
-               </Button>
-            </EditButtonWrapper>
-            :<AteOrSkippedButtonWrapper>
-            <Button
-            backgroundColor={brightBlue}
-            width="40%"
-            disabled={(!(this.isTimeForEating&&mealTypeInfo.mealPreference!=="Skipped"))}
-            onClick={this.onClickIAteIt}
-            >{strings.mealCard.iAteIt}</Button>
-            <Button 
-            backgroundColor={white}
-            width="40%"
-            disabled={!this.isTimeForEating}
-            color={darkBlueGrey}
-            onClick={this.onClickISkipped}
-            >{strings.mealCard.iSkipped}</Button>
-            </AteOrSkippedButtonWrapper>:<ReviewWrapper><Button
-            backgroundColor={white}
-            width="40%"
-            color={darkBlueGrey}
-            onClick={()=>onClickReviewButton(mealTypeInfo.mealType)}
-            >{strings.mealCard.review}
-            </Button></ReviewWrapper>}
-            
+            {!this.isTimeForReview ? (
+               this.isTimeLeftForEditing ? (
+                  <EditButtonWrapper>
+                     <Button
+                        backgroundColor={brightBlue}
+                        width='80%'
+                        onClick={() =>
+                           onClickEditPreference(mealTypeInfo.mealType)
+                        }
+                        getAPIStatus={selectedMealTypeInfoAPIStatus}
+                     >
+                        <EditButtonText>
+                           {strings.mealCard.edit}
+                           <TimerWrapper>
+                              <TimerIcon>
+                                 <RiTimer2Line />
+                              </TimerIcon>
+                              {this.timeLeftForEditPreference}
+                              {strings.mealCard.left}
+                           </TimerWrapper>
+                        </EditButtonText>
+                     </Button>
+                  </EditButtonWrapper>
+               ) : (
+                  <AteOrSkippedButtonWrapper>
+                     <Button
+                        backgroundColor={brightBlue}
+                        width='40%'
+                        disabled={
+                           !(
+                              this.isTimeForEating &&
+                              mealTypeInfo.mealPreference !== 'Skipped'
+                           )
+                        }
+                        onClick={this.onClickIAteIt}
+                     >
+                        {strings.mealCard.iAteIt}
+                     </Button>
+                     <Button
+                        backgroundColor={white}
+                        width='40%'
+                        disabled={!this.isTimeForEating}
+                        color={darkBlueGrey}
+                        onClick={this.onClickISkipped}
+                     >
+                        {strings.mealCard.iSkipped}
+                     </Button>
+                  </AteOrSkippedButtonWrapper>
+               )
+            ) : (
+               <ReviewWrapper>
+                  <Button
+                     backgroundColor={white}
+                     width='40%'
+                     color={darkBlueGrey}
+                     onClick={() => onClickReviewButton(mealTypeInfo.mealType)}
+                  >
+                     {strings.mealCard.review}
+                  </Button>
+               </ReviewWrapper>
+            )}
          </Container>
       )
    }

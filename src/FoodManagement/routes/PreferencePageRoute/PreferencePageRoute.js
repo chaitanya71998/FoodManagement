@@ -29,17 +29,15 @@ class PreferencePageRoute extends React.Component {
       this.getMealInfoStore().selectedMealInfo.onSaveMealPreference(
          this.onSuccess,
          this.onFailure,
-         "Save"
+         'Save'
       )
-
    }
 
    onClickSkipButton = () => {
       this.getMealInfoStore().selectedMealInfo.onClickSkipButton(
          this.onSuccess,
          this.onFailure,
-         "Skipped"
-
+         'Skipped'
       )
    }
 
@@ -57,8 +55,6 @@ class PreferencePageRoute extends React.Component {
       const { history } = this.props
       history.replace({ pathname: '/sign-in-page' })
    }
-
-
 
    onSuccess = () => {
       this.handelToast('success')
@@ -78,8 +74,7 @@ class PreferencePageRoute extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -120,12 +115,15 @@ class PreferencePageRoute extends React.Component {
                   this.getMealInfoStore().selectedMealInfo
                      .onChangeDateInPreferenceCard
                }
-              isLoadingOnSave={this.getMealInfoStore().selectedMealInfo.isLoadingOnSave}
-              isLoadingOnSkipped={this.getMealInfoStore().selectedMealInfo.isLoadingOnSkipped}
+               isLoadingOnSave={
+                  this.getMealInfoStore().selectedMealInfo.isLoadingOnSave
+               }
+               isLoadingOnSkipped={
+                  this.getMealInfoStore().selectedMealInfo.isLoadingOnSkipped
+               }
             />
          )
-      }
-      else {
+      } else {
          return null
       }
    }
