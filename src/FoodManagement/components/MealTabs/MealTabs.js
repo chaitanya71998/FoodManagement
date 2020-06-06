@@ -1,9 +1,9 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import 'react-tabs/style/react-tabs.css'
-import { CounterApp } from '../../../common/components/CounterApp'
+import 'semantic-ui-css/semantic.min.css'
+import { Tab } from 'semantic-ui-react'
+import { CounterApp } from '../../../Common/components/CounterApp'
 import {
    Wrapper,
    ItemName,
@@ -11,16 +11,31 @@ import {
    Quantity,
    ItemNameCategory,
    ServingSizes,
-   CounterWrapper
+   CounterWrapper,
+   Container
 }
 from './styledComponents'
 
+
+const color = 'blue'
 @observer
 class MealTabs extends React.Component {
    @observable tabIndex = 0
+   panes = []
 
-   renderPreferenceDetails = mealPreference => {
-      return mealPreference.mealItems.map(item => {
+   renderPreferenceDetails = mealInfo => {
+      if (
+         mealInfo.mealPreference === 'FullMeal' ||
+         mealInfo.mealPreference === 'HalfMeal'
+      ) {
+         return this.renderFullOrHalfMealDetails(mealInfo)
+      }
+      else {
+         return this.renderCustomDetails(mealInfo)
+      }
+   }
+   renderFullOrHalfMealDetails = mealInfo => {
+      return mealInfo.mealItems.map(item => {
          return (
             <Wrapper key={item.mealPreferenceId}>
                <ItemNameCategory>
@@ -36,8 +51,8 @@ class MealTabs extends React.Component {
       })
    }
 
-   renderCustomDetails = mealPreference => {
-      return mealPreference.mealItems.map(item => {
+   renderCustomDetails = mealInfo => {
+      return mealInfo.mealItems.map(item => {
          return (
             <Wrapper key={item.mealPreferenceId}>
                <ItemNameCategory>
@@ -45,11 +60,11 @@ class MealTabs extends React.Component {
                   <Category>{item.category}</Category>
                </ItemNameCategory>
                <Quantity>
-               <CounterWrapper>
-                  <CounterApp
-                     key={item.mealPreferenceId}
-                     onChangeQuantity={item.onChangeQuantity}
-                  />
+                  <CounterWrapper>
+                     <CounterApp
+                        key={item.mealPreferenceId}
+                        onChangeQuantity={item.onChangeQuantity}
+                     />
                   </CounterWrapper>
                   <ServingSizes>{item.servingSizeUnit}</ServingSizes>
                </Quantity>
@@ -60,38 +75,37 @@ class MealTabs extends React.Component {
 
    renderTabs = () => {
       const { selectedMealInformation } = this.props
-      return selectedMealInformation.map(mealInfo => {
-         return <Tab style={{color:"rgba(0, 0, 0, 0.55)"}}>{mealInfo.mealPreference}</Tab>
+      this.panes = []
+      selectedMealInformation.forEach(mealInfo => {
+         let eachPreference = {
+            menuItem: mealInfo.mealPreference,
+            render: () => (
+               <Tab.Pane attached={false}>
+                  {this.renderPreferenceDetails(mealInfo)}
+               </Tab.Pane>
+            )
+         }
+         this.panes.push(eachPreference)
       })
    }
 
+   onTabChange = (event, data) => {
+      const { getSelectedPreference, selectedMealInformation } = this.props
+      getSelectedPreference(
+         selectedMealInformation[data.activeIndex].mealPreference
+      )
+   }
 
    render() {
-      const { selectedMealInformation, getSelectedPreference } = this.props
       return (
-         <Tabs
-            selectedIndex={this.tabIndex}
-            onSelect={tabIndex => {
-               this.tabIndex = tabIndex
-               getSelectedPreference(
-                  selectedMealInformation[this.tabIndex].mealPreference
-               )
-            }}
-         >
-            <TabList>
+         <Container>
             {this.renderTabs()}
-            </TabList>
-
-            <TabPanel>
-               {this.renderPreferenceDetails(selectedMealInformation[0])}
-            </TabPanel>
-            <TabPanel>
-               {this.renderPreferenceDetails(selectedMealInformation[1])}
-            </TabPanel>
-            <TabPanel>
-               {this.renderCustomDetails(selectedMealInformation[2])}
-            </TabPanel>
-         </Tabs>
+            <Tab
+               menu={{ color, pointing: false }}
+               panes={this.panes}
+               onTabChange={this.onTabChange}
+            />
+         </Container>
       )
    }
 }

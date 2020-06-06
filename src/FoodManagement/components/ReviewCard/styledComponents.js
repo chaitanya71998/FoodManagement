@@ -1,92 +1,103 @@
 import styled from '@emotion/styled'
 import tw from 'tailwind.macro'
-import { white, black, darkBlueGrey, lightBlueGrey, darkBlueGrey16 } from '../../themes/Colors'
-const Container = styled.div `
+import { white, lightBlueGrey, darkBlueGrey16 } from '../../themes/Colors'
+import {
+   Typo18SteelHKGrotesk,
+   Typo20BlackHKGrotesk,
+   Typo32darkBlueGreyHKGrotesk
+} from '../../../styleGuide/Typos'
+const Container = styled.div`
    ${tw`flex  flex-col`}
-  width: 782px;
-  height: 530px;
-  border-radius: 6px;
-  box-shadow: 0 4px 40px 0 ${darkBlueGrey16};
-  border: solid 1px ${lightBlueGrey};
-  background-color: ${white};
+   width: 100%;
+   height: 530px;
+   border-radius: 6px;
+   box-shadow: 0 4px 40px 0 ${darkBlueGrey16};
+   border: solid 1px ${lightBlueGrey};
+   background-color: ${white};
 `
 
-const Header = styled.div `${tw `m-1`}
-  width: 147px;
-  height: 41px;
-  font-family: HKGrotesk;
-  font-size: 32px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.25;
-  letter-spacing: normal;
-  color: ${darkBlueGrey};`
-
-const RatingWrapper = styled.div `
-width:80%;
-height:60%`
-
-const Quality = styled.div `${tw `ml-32`}
-  font-family: HKGrotesk;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.6;
-  letter-spacing: normal;
-  color: ${black};`
-
-const Taste = styled.div `
-font-family: HKGrotesk;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.6;
-  letter-spacing: normal;
-  color: ${black};`
-
-const Headings = styled.div `${tw `flex justify-around items-center`}
+const Header = styled(Typo32darkBlueGreyHKGrotesk)`
+   ${tw`m-1 `}
+   width:100px;
+   border-bottom: 2px solid #667eea;
 `
 
-const ItemsFeedBack = styled.div `${tw `flex flex-col m-3`}
-border:1px solid grey;
-flex-grow:0.5
+const RatingWrapper = styled.div`
+   ${tw`flex flex-col`}
+   border-collapse: collapse;
+   width: 80%;
+   height: 60%;
 `
 
-const EachItemFeedBack = styled.div `${tw `flex justify-around`}
+const Quality = styled(Typo20BlackHKGrotesk)`
+   ${tw`ml-32 flex justify-center`}
+   flex-grow:0.3;
 `
 
-const ItemName = styled.div `${tw ``}
+const Taste = styled(Typo20BlackHKGrotesk)`
+   ${tw`flex justify-center`}
+   flex-grow:0.3;
 `
 
-const QualityRating = styled.div `${tw ``}
+const Item = styled.div`
+   ${tw``}
 `
 
-const TasteRating = styled.div `${tw ``}
+const Headings = styled.div`
+   ${tw`flex justify-around items-center`}
 `
-const TextAreaForReview = styled.textarea `${tw `m-2`}
-width: 516px;
-  height: 81px;
-  border-radius: 2px;
-  border: solid 1px ${lightBlueGrey};
-  background-color: ${white};`
 
-const DoneButtonWrapper = styled.div `${tw `flex justify-center`}`
+const ItemsFeedBack = styled.div`
+   ${tw`flex flex-col m-3`}
+   flex-grow:0.5
+`
+
+const EachItemFeedBack = styled.div`
+   ${tw`flex justify-around mb-6`}
+`
+
+const ItemName = styled(Typo18SteelHKGrotesk)`
+   ${tw``}
+   width:100px;
+`
+
+const QualityRating = styled.div`
+   ${tw`flex justify-center`}
+   flex-grow:0.3;
+   text-align: center;
+`
+
+const TasteRating = styled.div`
+   ${tw`flex justify-center`}
+   flex-grow:0.3;
+   text-align: center;
+`
+const TextAreaForReview = styled.textarea`
+   ${tw`m-2`}
+   width: 516px;
+   height: 81px;
+   border-radius: 2px;
+   border: solid 1px ${lightBlueGrey};
+   background-color: ${white};
+`
+
+const DoneButtonWrapper = styled.div`
+   ${tw`flex justify-center`}
+`
 
 export {
-  Container,
-  Header,
-  RatingWrapper,
-  Quality,
-  Taste,
-  Headings,
-  ItemsFeedBack,
-  EachItemFeedBack,
-  ItemName,
-  QualityRating,
-  TasteRating,
-  TextAreaForReview,
-  DoneButtonWrapper
+   Container,
+   Header,
+   RatingWrapper,
+   Quality,
+   Taste,
+   Headings,
+   ItemsFeedBack,
+   EachItemFeedBack,
+   ItemName,
+   QualityRating,
+   TasteRating,
+   TextAreaForReview,
+   DoneButtonWrapper,
+   Item
 }

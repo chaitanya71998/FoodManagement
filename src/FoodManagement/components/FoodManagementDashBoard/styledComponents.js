@@ -3,16 +3,19 @@ import tw from 'tailwind.macro'
 
 const Container = styled.div `
    ${tw`flex justify-center flex-col items-center`}
+   position:sticky,
+   position:-webkit-sticky,
+   top:0
 `
 
 const HeaderWrapper = styled.div `
-   ${tw`w-full`}
+   ${tw`w-full sticky`}
    height:90px
 `
 
 const Banner = styled.div `
    ${tw` w-full`}
-   height:350px
+   height:300px
 `
 
 const DateWrapper = styled.div `
@@ -24,7 +27,7 @@ const SelectDate = styled.input `
 `
 
 const MealCards = styled.div `
-   ${tw`flex w-full justify-around m-1`}
+   ${tw`flex w-full justify-around m-1 flex-wrap`}
 `
 
 const SuccessWrapper = styled.div `

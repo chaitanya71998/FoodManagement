@@ -15,12 +15,11 @@ class PreferencePageRoute extends React.Component {
    componentDidMount() {
       const { match } = this.props
       this.mealType = match.params.mealType.slice(1)
+      this.doNetworkCalls()
    }
 
    doNetworkCalls = () => {
-      this.getMealInfoStore().clearStore()
-      this.getMealInfoStore().selectedMealInfo.getSelectedMealTypeInfo(this.mealType)
-      //this.getMealInfoStore().getmealPreferenceInfo(this.mealType)
+      this.getMealInfoStore().onClickEditPreference(this.mealType)
    }
 
    getMealInfoStore = () => {
@@ -29,11 +28,19 @@ class PreferencePageRoute extends React.Component {
    onSaveMealPreference = () => {
       this.getMealInfoStore().selectedMealInfo.onSaveMealPreference(
          this.onSuccess,
-         this.onFailure
+         this.onFailure,
+         "Save"
       )
-      //this.handleToast()
-      const { history } = this.props
-      history.replace('/food-management-dashboard')
+
+   }
+
+   onClickSkipButton = () => {
+      this.getMealInfoStore().selectedMealInfo.onClickSkipButton(
+         this.onSuccess,
+         this.onFailure,
+         "Skipped"
+
+      )
    }
 
    onClickBackButton = () => {
@@ -51,8 +58,12 @@ class PreferencePageRoute extends React.Component {
       history.replace({ pathname: '/sign-in-page' })
    }
 
+
+
    onSuccess = () => {
       this.handelToast('success')
+      const { history } = this.props
+      history.replace('/food-management-dashboard')
    }
 
    onFailure = () => {
@@ -62,40 +73,61 @@ class PreferencePageRoute extends React.Component {
       let messageInfo = null
       if (message == 'failure') {
          messageInfo = strings.foodManagementDashBoard.somethingWentWrong
+         toast.warn(messageInfo, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+            closeButton: false
+         })
       }
       else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
+         toast.success(messageInfo, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+            closeButton: false
+         })
       }
-      toast.success(messageInfo, {
-         position: toast.POSITION.BOTTOM_CENTER,
-         hideProgressBar: true,
-         closeButton: false
-      })
    }
 
    render() {
-
-      return (
-         <PreferencePage
-            selectedMealInfo={this.getMealInfoStore().selectedMealInfo.preferencesInfo}
-            selectedMealTypeInfoAPIStatus={
-               this.getMealInfoStore().selectedMealInfo.selectedMealTypeInfoAPIStatus
-            }
-            selectedMealTypeInfoAPIError={
-               this.getMealInfoStore().selectedMealInfo.selectedMealTypeInfoAPIError
-            }
-            selectedDate={this.getMealInfoStore().selectedDate}
-            onChangeDate={this.getMealInfoStore().onChangeDateInPreferenceCard}
-            getSelectedPreference={
-               this.getMealInfoStore().selectedMealInfo.getSelectedPreference
-            }
-            onSaveMealPreference={this.onSaveMealPreference}
-            onClickBackButton={this.onClickBackButton}
-            doNetworkCalls={this.doNetworkCalls}
-            gotoHome={this.gotoHome}
-            onClickSignOut={this.onClickSignOut}
-         />
-      )
+      if (this.getMealInfoStore().selectedMealInfo) {
+         return (
+            <PreferencePage
+               selectedMealInfo={
+                  this.getMealInfoStore().selectedMealInfo.preferencesInfo
+               }
+               selectedMealTypeInfoAPIStatus={
+                  this.getMealInfoStore().selectedMealInfo
+                     .selectedMealTypeInfoAPIStatus
+               }
+               selectedMealTypeInfoAPIError={
+                  this.getMealInfoStore().selectedMealInfo
+                     .selectedMealTypeInfoAPIError
+               }
+               selectedDate={
+                  this.getMealInfoStore().selectedMealInfo.selectedDate
+               }
+               getSelectedPreference={
+                  this.getMealInfoStore().selectedMealInfo.getSelectedPreference
+               }
+               onSaveMealPreference={this.onSaveMealPreference}
+               onClickBackButton={this.onClickBackButton}
+               doNetworkCalls={this.doNetworkCalls}
+               gotoHome={this.gotoHome}
+               onClickSignOut={this.onClickSignOut}
+               onClickSkipButton={this.onClickSkipButton}
+               onChangeDate={
+                  this.getMealInfoStore().selectedMealInfo
+                     .onChangeDateInPreferenceCard
+               }
+              isLoadingOnSave={this.getMealInfoStore().selectedMealInfo.isLoadingOnSave}
+              isLoadingOnSkipped={this.getMealInfoStore().selectedMealInfo.isLoadingOnSkipped}
+            />
+         )
+      }
+      else {
+         return null
+      }
    }
 }
 

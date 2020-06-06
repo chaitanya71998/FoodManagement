@@ -1,0 +1,49 @@
+{
+    "items": [{
+            "name": "Poori",
+            "category": "Indian Bread",
+            "quantity": 1200,
+            "measuring_quantity": "Piece"
+        },
+        {
+            "name": "Aloo",
+            "category": "Curry",
+            "quantity": 200,
+            "measuring_quantity": "Kg"
+        },
+        {
+            "name": "Poori",
+            "category": "Indian Bread",
+            "quantity": 1200,
+            "measuring_quantity": "Piece"
+        },
+        {
+            "name": "Aloo",
+            "category": "Curry",
+            "quantity": 200,
+            "measuring_quantity": "Kg"
+        },
+        {
+            "name": "Poori",
+            "category": "Indian Bread",
+            "quantity": 1200,
+            "measuring_quantity": "Piece"
+        },
+        {
+            "name": "Aloo",
+            "category": "Curry",
+            "quantity": 200,
+            "measuring_quantity": "Kg"
+        }
+    ],
+    "head_count": {
+        "full_meal_head_count": 100,
+        "half_meal_head_count": 200,
+        "custom_meal_head_count": 10,
+        "skipped_meal_head_count": 0
+    },
+    "summary": {
+        "total_meal_head_count": 1000,
+        "completed_meal_head_count": 500
+    }
+}

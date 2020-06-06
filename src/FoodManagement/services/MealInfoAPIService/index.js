@@ -1,3 +1,3 @@
-import MealInfoAPIService from './MealInfoAPIServiceFixture'
+import MealInfoAPIService from './MealInfoAPIService'
 
 export { MealInfoAPIService }

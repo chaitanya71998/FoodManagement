@@ -7,7 +7,9 @@ import {
 }
 from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import { MealPreference } from './model/MealPreference'
+import { MealPreference } from './models/MealPreference'
+import { MealReview } from './models/MealReview'
+import { setDateFormate } from '../../../Common/utils/TimeUtils'
 
 class MealInfoStore {
    @observable mealInfoAPIStatus
@@ -15,53 +17,45 @@ class MealInfoStore {
    @observable mealInfo = []
    @observable selectedDate
    @observable selectedMealInfo = null
+   @observable selectedMealInfoReview = null
    @observable mealType
+   @observable userMealAPIStatus
+   @observable userMealAPIError
+   @observable userPreferenceAPIError
+   @observable userPreferenceAPIStatus
 
    constructor(mealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService
+      this.selectedDate = setDateFormate(new Date())
       this.init()
-      this.setDateFormate()
-
    }
 
    @action.bound
-   setDateFormate() {
-      let date = new Date(),
-         month = '' + (date.getMonth() + 1),
-         day = '' + date.getDate(),
-         year = date.getFullYear()
-
-      if (month.length < 2) month = '0' + month
-      if (day.length < 2) day = '0' + day
-
-      this.selectedDate = [year, month, day].join('-')
-   }
-
    init() {
       this.mealInfo = []
       this.mealInfoAPIStatus = API_INITIAL
       this.mealInfoAPIError = null
+      this.selectedMealInfo = null
+      this.selectedMealInfoReview = null
+      this.userMealAPIStatus = API_INITIAL
+      this.userMealAPIError = null
+      this.userPreferenceAPIStatus = API_INITIAL
+      this.userPreferenceAPIError = null
    }
 
    @action.bound
-   onChangeDateInDashBoard(event) {
-      this.selectedDate = event.target.value
-      this.clearMealInfo()
+   onChangeDateInDashBoard(value) {
+      this.selectedDate = value
       this.getMealInfoAsPerDate()
    }
 
 
-   @action.bound
-   onChangeDateInPreferenceCard(event) {
-      this.selectedDate = event.target.value
-      this.selectedMealInfo.getSelectedMealTypeInfo(this.mealType)
-   }
-
 
    @action.bound
    getMealInfoAsPerDate() {
-      const MealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(this.selectedDate)
-      return bindPromiseWithOnSuccess(MealInfoAPI)
+      this.clearMealInfo()
+      const mealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(this.selectedDate)
+      return bindPromiseWithOnSuccess(mealInfoAPI)
          .to(this.setMealInfoAPIStatus, this.setMealInfoResponse)
          .catch(this.setMealInfoAPIError)
    }
@@ -73,6 +67,7 @@ class MealInfoStore {
 
    @action.bound
    setMealInfoResponse(response) {
+      console.log(response)
       const mealInfo = response
       mealInfo.map(mealTypeInfo =>
          this.getMealTypeInfo(mealTypeInfo)
@@ -100,7 +95,8 @@ class MealInfoStore {
             }
             mealItems.push(item)
          }),
-         isEaten: mealType.is_eaten
+         isEaten: mealType.is_eaten,
+         mealId: mealType.meal_id
       }
       mealTypeInfo.mealItems = mealItems
       this.mealInfo.push(mealTypeInfo)
@@ -109,10 +105,99 @@ class MealInfoStore {
    @action.bound
    onClickEditPreference(mealType) {
       this.mealType = mealType
-      this.selectedMealInfo = new MealPreference(this.mealInfoAPIService, this.selectedDate)
-      this.selectedMealInfo.getSelectedMealTypeInfo(mealType)
+      this.selectedMealInfo = new MealPreference(this.mealInfoAPIService, this.selectedDate, mealType)
+      this.selectedMealInfo.getSelectedMealTypeInfo()
    }
 
+   @action.bound
+   onClickReviewButton(mealType) {
+      this.mealType = mealType
+      this.selectedMealInfoReview = new MealReview(this.mealInfoAPIService, this.selectedDate, mealType)
+      this.selectedMealInfoReview.getSelectedMealTypeReviewInfo()
+   }
+
+   @action.bound
+   onClickIAteIt(id, userStatus, onSuccess, onFailure) {
+      this.setUserMealStatus(userStatus, id, onSuccess, onFailure)
+   }
+
+   @action.bound
+   setUserMealStatus(userStatus, id, onSuccess, onFailure) {
+      const userMealStatusAPI = this.mealInfoAPIService.setUserMealStatusAPI(
+         userStatus,
+         id
+      )
+      return bindPromiseWithOnSuccess(userMealStatusAPI)
+         .to(
+            this.setUserMealAPIStatus,
+            (response) => {
+               this.setUserMealAPIResponse(response)
+               onSuccess()
+            }
+         )
+         .catch((error) => {
+            this.setUserMealAPIError(error)
+            onFailure()
+         })
+   }
+
+
+   @action.bound
+   setUserMealAPIStatus(status) {
+      this.userMealAPIStatus = status
+   }
+
+   @action.bound
+   setUserMealAPIResponse(response) {}
+
+   @action.bound
+   setUserMealAPIError(error) {
+      this.userMealAPIError = error
+   }
+
+
+   @action.bound
+   onClickISkipped(mealType, onSuccess, onFailure) {
+      const userPreference = {
+         meal_type: mealType,
+         meal_preference: "Skipped",
+         date: this.selectedDate
+      }
+      this.setUserPreferenceAsSkipped(userPreference, onSuccess, onFailure)
+   }
+
+   @action.bound
+   setUserPreferenceAsSkipped(userPreference, onSuccess, onFailure) {
+      const selectedPreference = this.mealInfoAPIService.setSelectedPreference(userPreference)
+      return bindPromiseWithOnSuccess(selectedPreference)
+         .to(
+            this.setUserPreferenceAPIStatus,
+            (response) => {
+               this.setUserPreferenceAPIResponse(response)
+               onSuccess()
+            }
+         )
+         .catch((error) => {
+            this.setUserPreferenceAPIError(error)
+            onFailure()
+         })
+   }
+
+
+   @action.bound
+   setUserPreferenceAPIStatus(status) {
+      this.userPreferenceAPIStatus = status
+   }
+
+   @action.bound
+   setUserPreferenceAPIResponse() {
+
+   }
+
+   @action.bound
+   setUserPreferenceAPIError(error) {
+      this.userPreferenceAPIError = error
+   }
 
    @action.bound
    clearMealInfo() {

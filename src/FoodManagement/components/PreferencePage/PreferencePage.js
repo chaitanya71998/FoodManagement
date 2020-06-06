@@ -1,9 +1,10 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { SetCarousel } from '../../../common/components/SetCarousel'
+import LoadingWrapperWithFailure from '../../../Common/components/LoadingWrapperWithFailure'
+import NoDataView from '../../../Common/components/NoDataView'
+import { SetCarousel } from '../../../Common/components/SetCarousel'
 import { Header } from '../../common/components/Header'
 import { PreferenceCard } from '../PreferenceCard'
-import { ReviewCard } from '../ReviewCard'
 import {
    Container,
    Banner,
@@ -13,7 +14,6 @@ import {
    PreferenceCardWrapper
 }
 from './styledComponents'
-import LoadingWrapperWithFailure from '../../../common/LoadingWrapperWithFailure'
 
 @observer
 class PreferencePage extends React.Component {
@@ -25,25 +25,30 @@ class PreferencePage extends React.Component {
          getSelectedPreference,
          onSaveMealPreference,
          onClickBackButton,
+         onClickSkipButton,
+         isLoadingOnSave,
+         isLoadingOnSkipped
+
       } = this.props
-      console.log("selectedDate", selectedDate)
       if (selectedMealInfo.length === 0) {
          return <NoDataView />
       }
       else {
          return (
+
             <SuccessWrapper>
-               <Banner>
-                  <SetCarousel />
-               </Banner>
                <PreferenceCardWrapper>
-                 <PreferenceCard
+                  <PreferenceCard
                      selectedMealInfo={selectedMealInfo}
                      onChangeDate={onChangeDate}
                      selectedDate={selectedDate}
                      getSelectedPreference={getSelectedPreference}
                      onSaveMealPreference={onSaveMealPreference}
                      onClickBackButton={onClickBackButton}
+                     onClickSkipButton={onClickSkipButton}
+                     isLoadingOnSave={isLoadingOnSave}
+                     isLoadingOnSkipped={isLoadingOnSkipped}
+                     
                   />
                </PreferenceCardWrapper>
             </SuccessWrapper>
@@ -57,13 +62,16 @@ class PreferencePage extends React.Component {
          selectedMealTypeInfoAPIStatus,
          doNetworkCalls,
          gotoHome,
-         onClickSignOut
+         onClickSignOut,
       } = this.props
       return (
          <Container>
             <HeaderWrapper>
                <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
             </HeaderWrapper>
+            <Banner>
+                  <SetCarousel />
+               </Banner>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
                   apiStatus={selectedMealTypeInfoAPIStatus}
@@ -78,21 +86,3 @@ class PreferencePage extends React.Component {
 }
 
 export default PreferencePage
-/*
-<PreferenceCard
-                     selectedMealInfo={selectedMealInfo}
-                     onChangeDate={onChangeDate}
-                     selectedDate={selectedDate}
-                     getSelectedPreference={getSelectedPreference}
-                     onSaveMealPreference={onSaveMealPreference}
-                     onClickBackButton={onClickBackButton}
-                  />*/
-/*
-<PreferenceCard
-                     selectedMealInfo={selectedMealInfo}
-                     onChangeDate={onChangeDate}
-                     selectedDate={selectedDate}
-                     getSelectedPreference={getSelectedPreference}
-                     onSaveMealPreference={onSaveMealPreference}
-                     onClickBackButton={onClickBackButton}
-                  />*/

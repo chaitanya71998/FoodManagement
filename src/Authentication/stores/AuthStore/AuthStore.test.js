@@ -42,8 +42,8 @@ describe('AuthStore Tests', () => {
    })
 
    it('should test initialising signIn store', () => {
-      expect(authStore.getUserSignInAPIStatus).toBe(API_INITIAL)
-      expect(authStore.getUserSignInAPIError).toBe(null)
+      expect(authStore.userSignInAPIStatus).toBe(API_INITIAL)
+      expect(authStore.userSignInAPIError).toBe(null)
    })
 
    it('should test userSignInAPI data fetching state', () => {
@@ -51,44 +51,43 @@ describe('AuthStore Tests', () => {
       const mockSignInAPI = jest.fn()
       mockSignInAPI.mockReturnValue(mockLoadingPromise)
       authServices.signInAPI = mockSignInAPI
-
-      authStore.userSignIn()
-      expect(authStore.getUserSignInAPIStatus).toBe(API_FETCHING)
+      const requestObject = { username: 'a', password: 'b' }
+      const onSuccess = jest.fn()
+      authStore.userSignIn(requestObject, onSuccess)
+      expect(authStore.userSignInAPIStatus).toBe(API_FETCHING)
    })
 
    it('should test userSignInAPI success state', async() => {
-      const mockSuccessPromise = new Promise(function(resolve, reject) {
+      const mockSuccessPromise = new Promise((resolve, reject) => {
          resolve(getUserSignInResponse)
       })
       const mockSignInAPI = jest.fn()
       mockSignInAPI.mockReturnValue(mockSuccessPromise)
       authServices.signInAPI = mockSignInAPI
       const onSuccess = jest.fn()
-      await authStore.userSignIn(onSuccess)
-      expect(authStore.getUserSignInAPIStatus).toBe(API_SUCCESS)
-      expect(mockSetCookie).toBeCalled()
+      const onFailure = jest.fn()
+      const requestObject = { username: "a", password: "b" }
+      await authStore.userSignIn(requestObject, onSuccess, onFailure)
+      expect(authStore.userSignInAPIStatus).toBe(API_SUCCESS)
+      //expect(mockSetCookie).toBeCalled()
    })
 
    it('should test userSignInAPI failure state', async() => {
       jest
          .spyOn(authServices, 'getUserSignInAPI')
          .mockImplementation(() => Promise.reject())
-      /*
-        const mockFailurePromise = new Promise(function(resolve, reject) {
-            reject();
-        });
-        const mockSignInAPI = jest.fn();
-        mockSignInAPI.mockReturnValue(mockFailurePromise);
-        authAPI.signInAPI = mockSignInAPI;*/
       authStore = new AuthStore(authServices)
+      const requestObject = { username: "a", password: "b" }
       const onSuccess = jest.fn()
-      await authStore.userSignIn(onSuccess)
-      expect(authStore.getUserSignInAPIStatus).toBe(API_FAILED)
+      const onFailure = jest.fn()
+      await authStore.userSignIn(requestObject, onSuccess, onFailure)
+      expect(authStore.userSignInAPIStatus).toBe(API_FAILED)
    })
+
    it('should test user sign-out', () => {
       authStore.userSignOut()
       expect(mockRemoveCookie).toBeCalled()
-      expect(authStore.getUserSignInAPIStatus).toBe(API_INITIAL)
-      expect(authStore.getUserSignInAPIError).toBe(null)
+      expect(authStore.userSignInAPIStatus).toBe(API_INITIAL)
+      expect(authStore.userSignInAPIError).toBe(null)
    })
 })

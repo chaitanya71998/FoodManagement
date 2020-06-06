@@ -2,12 +2,7 @@
 /*global expect*/
 /*global getByTestId */
 import React from 'react'
-import {
-   render,
-   fireEvent,
-   waitFor,
-}
-from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import { Router, Route, withRouter } from 'react-router-dom'
 import { Provider } from 'mobx-react'
 import { createMemoryHistory } from 'history'
@@ -15,12 +10,10 @@ import { createMemoryHistory } from 'history'
 import {
    SIGN_IN_PATH,
    FOOD_MANAGEMENT_DASHBOARD
-}
-from '../../../constants/APIConstants'
+} from '../../../constants/APIConstants'
 import { AuthServices } from '../../services/AuthServices'
 import { AuthStore } from '../../stores/AuthStore'
 import '@testing-library/jest-dom/extend-expect'
-
 
 import getUserSignInResponse from '../../fixtures/getUserSignInResponse.json'
 
@@ -43,115 +36,116 @@ describe('SignInRoute Tests', () => {
       jest.resetAllMocks()
    })
 
-   it("should render username empty error message", () => {
+   it('should render username empty error message', () => {
       const { getByText, getByRole } = render(
          <Router history={createMemoryHistory()}>
-                   <SignInRoute authStore={authStore} />
-                  </Router>
-      );
-      const signInButton = getByRole("button", { name: "LOGIN" });
-      fireEvent.click(signInButton);
+            <SignInRoute authStore={authStore} />
+         </Router>
+      )
+      const signInButton = getByRole('button', { name: 'LOGIN' })
+      fireEvent.click(signInButton)
 
-      getByText(/Please enter username/i);
-   });
+      getByText(/Please enter username/i)
+   })
 
-   it("should render password empty error message", () => {
+   it('should render password empty error message', () => {
       const { getByText, getByPlaceholderText, getByRole } = render(
          <Router history={createMemoryHistory()}>
             <SignInRoute authStore={authStore} />
          </Router>
-      );
-      const username = "test-user";
-      const usernameField = getByPlaceholderText("UserName");
-      const signInButton = getByRole("button", { name: "LOGIN" });
+      )
+      const username = 'test-user'
+      const usernameField = getByPlaceholderText('UserName')
+      const signInButton = getByRole('button', { name: 'LOGIN' })
 
-      fireEvent.change(usernameField, { target: { value: username } });
-      fireEvent.click(signInButton);
+      fireEvent.change(usernameField, { target: { value: username } })
+      fireEvent.click(signInButton)
 
-      getByText(/Please enter password/i);
-   });
-   it("should submit sign-in on press enter", async() => {
+      getByText(/Please enter password/i)
+   })
+   it('should submit sign-in on press enter', async () => {
       const { getByLabelText, getByPlaceholderText, getByRole, debug } = render(
          <Router history={createMemoryHistory()}>
             <SignInRoute authStore={authStore} />
          </Router>
-      );
-      const username = "test-user";
-      const password = "test-password";
+      )
+      const username = 'test-user'
+      const password = 'test-password'
 
-      const usernameField = getByPlaceholderText("UserName");
-      const passwordField = getByPlaceholderText("Password");
-      const signInButton = getByRole("button", { name: "LOGIN" });
+      const usernameField = getByPlaceholderText('UserName')
+      const passwordField = getByPlaceholderText('Password')
+      const signInButton = getByRole('button', { name: 'LOGIN' })
 
-      fireEvent.change(usernameField, { target: { value: username } });
-      fireEvent.change(passwordField, { target: { value: password } });
-      fireEvent.click(signInButton);
-      await waitFor(() => getByLabelText("audio-loading"));
+      fireEvent.change(usernameField, { target: { value: username } })
+      fireEvent.change(passwordField, { target: { value: password } })
+      fireEvent.click(signInButton)
+      await waitFor(() => getByLabelText('audio-loading'))
+   })
 
-   });
-
-   it("should render signInRoute loading state", async() => {
-      const { getByTestId, getByPlaceholderText, getByRole, getByLabelText } = render(
+   it('should render signInRoute loading state', async () => {
+      const {
+         getByTestId,
+         getByPlaceholderText,
+         getByRole,
+         getByLabelText
+      } = render(
          <Router history={createMemoryHistory()}>
-               <SignInRoute authStore={authStore} />
-             </Router>
-      );
-      const username = "test-user";
-      const password = "test-password";
+            <SignInRoute authStore={authStore} />
+         </Router>
+      )
+      const username = 'test-user'
+      const password = 'test-password'
 
-      const usernameField = getByPlaceholderText("UserName");
-      const passwordField = getByPlaceholderText("Password");
-      const signInButton = getByRole("button", { name: "LOGIN" });
+      const usernameField = getByPlaceholderText('UserName')
+      const passwordField = getByPlaceholderText('Password')
+      const signInButton = getByRole('button', { name: 'LOGIN' })
 
-      const mockLoadingPromise = new Promise(function(resolve, reject) {});
-      const mockSignInAPI = jest.fn();
-      mockSignInAPI.mockReturnValue(mockLoadingPromise);
-      authServices.signInAPI = mockSignInAPI;
+      const mockLoadingPromise = new Promise(function(resolve, reject) {})
+      const mockSignInAPI = jest.fn()
+      mockSignInAPI.mockReturnValue(mockLoadingPromise)
+      authServices.signInAPI = mockSignInAPI
 
-      fireEvent.change(usernameField, { target: { value: username } });
-      fireEvent.change(passwordField, { target: { value: password } });
-      fireEvent.click(signInButton);
-      expect(authStore.getUserSignInAPIStatus).toBe(100);
-      getByLabelText("audio-loading");
+      fireEvent.change(usernameField, { target: { value: username } })
+      fireEvent.change(passwordField, { target: { value: password } })
+      fireEvent.click(signInButton)
+      expect(authStore.getUserSignInAPIStatus).toBe(100)
+      getByLabelText('audio-loading')
       //getByRole("button", { disabled: true });
-   });
+   })
 
-   it("should render signInRoute failure state", async() => {
+   it('should render signInRoute failure state', async () => {
       const { getByText, getByPlaceholderText, getByRole, debug } = render(
          <Router history={createMemoryHistory()}>
             <SignInRoute authStore={authStore} />
          </Router>
-      );
+      )
 
-      const username = "test-user";
-      const password = "test-password";
+      const username = 'test-user'
+      const password = 'test-password'
 
-      const usernameField = getByPlaceholderText("UserName");
-      const passwordField = getByPlaceholderText("Password");
-      const signInButton = getByRole("button", { name: "LOGIN" });
+      const usernameField = getByPlaceholderText('UserName')
+      const passwordField = getByPlaceholderText('Password')
+      const signInButton = getByRole('button', { name: 'LOGIN' })
       const mockFailurePromise = new Promise(function(resolve, reject) {
-         reject();
-      }).catch(() => {});
-      const mockSignInAPI = jest.fn();
-      mockSignInAPI.mockReturnValue(mockFailurePromise);
-      authServices.getUserSignInAPI = mockSignInAPI;
+         reject()
+      }).catch(() => {})
+      const mockSignInAPI = jest.fn()
+      mockSignInAPI.mockReturnValue(mockFailurePromise)
+      authServices.getUserSignInAPI = mockSignInAPI
 
-      fireEvent.change(usernameField, { target: { value: username } });
-      fireEvent.change(passwordField, { target: { value: password } });
-      fireEvent.click(signInButton);
-      await waitFor(() => expect(authStore.getUserSignInAPIStatus).toBe(400));
+      fireEvent.change(usernameField, { target: { value: username } })
+      fireEvent.change(passwordField, { target: { value: password } })
+      fireEvent.click(signInButton)
+      await waitFor(() => expect(authStore.getUserSignInAPIStatus).toBe(400))
       //await waitFor(() => getByText(/server-error/i));
-   });
+   })
 
-   it('should render signInRoute success state', async() => {
+   it('should render signInRoute success state', async () => {
       const history = createMemoryHistory()
       const route = SIGN_IN_PATH
       history.push(route)
 
-      const {
-         getByPlaceholderText,
-         getByRole,
-      } = render(
+      const { getByPlaceholderText, getByRole } = render(
          <Provider authStore={authStore}>
             <Router history={history}>
                <Route path={SIGN_IN_PATH}>

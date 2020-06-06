@@ -1,9 +1,14 @@
 import React from 'react'
 import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { Button } from '../../../common/components/Button'
-import { SetTimer } from '../../../common/components/SetTimer'
-import eachHourOfInterval from 'date-fns/eachHourOfInterval'
+import { observer } from 'mobx-react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { RiTimer2Line } from 'react-icons/ri';
+
+import { getTimeDistanceInWords, isTimeBeforeDeadLine } from '../../../Common/utils/TimeUtils'
+import { Button } from '../../../Common/components/Button'
+import { brightBlue, white, darkBlueGrey } from '../../themes/Colors'
+import strings from '../../i18n/strings.json'
 import {
    Container,
    MenuBar,
@@ -18,91 +23,119 @@ import {
    EditButtonWrapper,
    EditButtonText,
    TimerWrapper,
-   AteOrSkippedButtonWrapper
+   AteOrSkippedButtonWrapper,
+   ReviewWrapper,
+   TimerIcon
 }
 from './styledComponents'
 
-import { brightBlue } from '../../themes/Colors'
-import strings from '../../i18n/strings.json'
 
-import isBefore from 'date-fns/isBefore'
-//var moment = require('moment');
-//import differenceInHours from 'date-fns/difference_in_hours'
+
 
 @observer
 class MealCard extends React.Component {
    @observable isTimeForEating = false
    @observable timeLeftForEditPreference = null
-   @observable isTimeLeftForEditing = false
+   @observable isTimeLeftForEditing = true
    @observable isDisabledIAteItButton = true
    @observable isDisabledISkippedButton = true
-   @observable intervals = []
-   constructor(props) {
-      super(props)
-      //this.ZoneDifference = moment.duration("05:30:00")
-      // let result = differenceInHours(
-      //    new Date(2014, 6, 2, 19, 0),
-      //    new Date(2014, 6, 2, 6, 50)
-      // )
-      // console.log("result", result)
+   @observable isTimeForReview = false
 
-   }
-   static defaultProps = {
-      mealIconForBreakFast: 'https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/ff7ee48c-8f6d-473d-848b-9042fc296211.svg'
-   }
    componentDidMount() {
-      const { mealTypeInfo } = this.props
-      this.deadLine = mealTypeInfo.mealPreferenceDeadline
-      console.log("deadLineDate", new Date(this.deadLine) + '   ' + new Date());
-      console.log('time diffrence+=======')
-      console.log(new Date(this.deadLine) - new Date())
-      //this.setTimerForShowingEditButton()
-
-      //this.setTimerForShowingDisabledStates()
-      //this.setTimerForEnablingIAteItAndSkippedButtons()
+      this.setTimerForShowingEditButton()
+      this.setTimerForShowingDisabledStates()
+      this.setTimerForEnablingIAteItAndSkippedButtons()
    }
 
 
    componentWillUnmount() {
-      //clearInterval(this.intervalForShowingEditButton);
+      clearInterval(this.intervalForShowingEditButton);
+      clearInterval(this.intervalForShowingDisabledStates);
+      clearInterval(this.intervalForShowingEnablingTheStates);
    }
 
-   // setTimerForShowingEditButton = () => {
-   //    const { mealTypeInfo } = this.props
-   //    this.intervalForShowingEditButton = setInterval(() => {
-   //       this.currentDateAndTime = moment().format('YYYY-MM-DD HH:mm:ss')
-   //       this.deadLineForEditing = moment(mealTypeInfo.mealPreferenceDeadline)
-   //       this.deadLineinMilliSecondsFormate = moment(mealTypeInfo.mealPreferenceDeadline, 'YYYY-MM-DD HH:mm:ss').valueOf()
-   //       this.currentTimeInMilliSecondsFormate = moment(this.currentDateAndTime, 'YYYY-MM-DD HH:mm:ss').valueOf()
-   //       this.isTimeLeftForEditing = this.deadLineinMilliSecondsFormate > this.currentTimeInMilliSecondsFormate
-   //       this.deadLineForEditing.subtract(this.ZoneDifference);
-   //       this.timeLeftForEditPreference = moment(this.deadLineForEditing.diff(this.currentDateAndTime)).format("HH:mm:ss");
-   //       if (!this.isTimeLeftForEditing) {
-   //          this.timeLeftForEditPreference = '00:00:00'
-   //          clearInterval(this.intervalForShowingEditButton);
-   //       }
-   //    }, 1000);
-   // }
+   setTimerForShowingEditButton = () => {
+      const { mealTypeInfo } = this.props
+      this.intervalForShowingEditButton = setInterval(() => {
+         this.timeLeftForEditPreference = getTimeDistanceInWords(mealTypeInfo.mealPreferenceDeadline)
+         if (!isTimeBeforeDeadLine(mealTypeInfo.mealPreferenceDeadline)) {
+            this.isTimeLeftForEditing = false
+            clearInterval(this.intervalForShowingEditButton);
+         }
+      }, 1000);
+   }
 
-   // setTimerForShowingDisabledStates = () => {
-   //    console.log("called")
-   //    const { selectedDate, mealTypeInfo } = this.props
-   //    this.intervalForShowingDisabledStates = setInterval(() => {
-   //       this.currentDateAndTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-   //       this.mealstartTime = moment(`${selectedDate} ${mealTypeInfo.mealStarttime}`)
-   //       this.mealstartTimeinMilliSecondsFormate = moment(this.mealstartTime, 'YYYY-MM-DD HH:mm:ss').valueOf()
-   //       this.currentTimeInMilliSecondsFormate = moment(this.currentDateAndTime, 'YYYY-MM-DD HH:mm:ss').valueOf()
-   //       this.isTimeForEating = this.mealstartTimeinMilliSecondsFormate - this.currentTimeInMilliSecondsFormate
-   //       console.log("isTimeForEating", this.isTimeForEating)
-   //       // if (this.isTimeForEating) {
-   //       //    console.log("intervals", this.intervals.length)
-   //       //    this.intervals.forEach(clearInterval);
+   setTimerForShowingDisabledStates = () => {
+      const { selectedDate, mealTypeInfo } = this.props
+      this.intervalForShowingDisabledStates = setInterval(() => {
+         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealStarttime}`)) {
+            this.isTimeForEating = true
+            clearInterval(this.intervalForShowingDisabledStates);
+         }
 
-   //       // }
-   //    }, 1000)
+      }, 1000)
+   }
+
+   setTimerForEnablingIAteItAndSkippedButtons = () => {
+      const { selectedDate, mealTypeInfo } = this.props
+      this.intervalForShowingEnablingTheStates = setInterval(() => {
+         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
+            this.isTimeForEating = false
+            this.isTimeForReview = true
+            clearInterval(this.intervalForShowingEnablingTheStates);
+         }
+
+      })
+   }
+
+   onClickIAteIt = () => {
+      let userStatus = 'False'
+      const { mealTypeInfo, onClickIAteIt } = this.props
+      this.isTimeForReview = true
+      if (!mealTypeInfo.isEaten) {
+         userStatus = "True"
+      }
+      onClickIAteIt(mealTypeInfo.mealId, userStatus, this.onSuccess, this.onFailure)
+   }
+
+   onClickISkipped = () => {
+      const { onClickISkipped, mealTypeInfo } = this.props
+      this.isTimeForReview = true
+      onClickISkipped(mealTypeInfo.mealType, this.onSuccess, this.onFailure)
+   }
+
+   onSuccess = () => {
+      const { doNetworkCalls } = this.props
+      this.handelToast('success')
+      doNetworkCalls()
+   }
+
+   onFailure = () => {
+      this.handelToast('failure')
+   }
+   handelToast = message => {
+      let messageInfo = null
+      if (message == 'failure') {
+         messageInfo = strings.foodManagementDashBoard.somethingWentWrong
+         toast.warn(messageInfo, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+            closeButton: false
+         })
+      }
+      else {
+         messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
+         toast.success(messageInfo, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            hideProgressBar: true,
+            closeButton: false
+         })
+      }
+   }
 
 
-   // }
+
+
 
    renderMealItems = () => {
       const { mealTypeInfo } = this.props
@@ -112,14 +145,12 @@ class MealCard extends React.Component {
    }
 
    render() {
-      console.log("time", this.timeDifferenceInMilliSeconds)
-      console.log("timeLeftIn render", this.timeLeftForEditPreference)
       const {
          mealIcon,
-         mealTimings,
          onClickEditPreference,
          mealTypeInfo,
-         timeLeftForEditPreference
+         onClickReviewButton,
+         selectedMealTypeInfoAPIStatus
       } = this.props
       return (
          <Container>
@@ -137,16 +168,22 @@ class MealCard extends React.Component {
                </MealPreference>
             </MealTypeInfo>
             <MealData>{this.renderMealItems()}</MealData>
-            {(true)?
+            {(!this.isTimeForReview)?
+            (this.isTimeLeftForEditing)?
+            
+            
                <EditButtonWrapper>
                <Button
                   backgroundColor={brightBlue}
                   width='80%'
                   onClick={()=>onClickEditPreference(mealTypeInfo.mealType)}
+                  getAPIStatus={selectedMealTypeInfoAPIStatus}
                >
                  <EditButtonText>
                  {strings.mealCard.edit} 
-                 <TimerWrapper>{this.timeLeftForEditPreference}</TimerWrapper>
+                 <TimerWrapper>
+                 <TimerIcon><RiTimer2Line/></TimerIcon>
+                 {this.timeLeftForEditPreference}{strings.mealCard.left}</TimerWrapper>
                  </EditButtonText>
                </Button>
             </EditButtonWrapper>
@@ -154,14 +191,23 @@ class MealCard extends React.Component {
             <Button
             backgroundColor={brightBlue}
             width="40%"
-            disabled={(!this.isTimeForEating&&mealTypeInfo.mealPreference!=="Skipped")}
-            >I Ate it</Button>
+            disabled={(!(this.isTimeForEating&&mealTypeInfo.mealPreference!=="Skipped"))}
+            onClick={this.onClickIAteIt}
+            >{strings.mealCard.iAteIt}</Button>
             <Button 
-            backgroundColor={brightBlue}
+            backgroundColor={white}
             width="40%"
             disabled={!this.isTimeForEating}
-            >I skipped</Button>
-            </AteOrSkippedButtonWrapper>}
+            color={darkBlueGrey}
+            onClick={this.onClickISkipped}
+            >{strings.mealCard.iSkipped}</Button>
+            </AteOrSkippedButtonWrapper>:<ReviewWrapper><Button
+            backgroundColor={white}
+            width="40%"
+            color={darkBlueGrey}
+            onClick={()=>onClickReviewButton(mealTypeInfo.mealType)}
+            >{strings.mealCard.review}
+            </Button></ReviewWrapper>}
             
          </Container>
       )
@@ -169,15 +215,3 @@ class MealCard extends React.Component {
 }
 
 export { MealCard }
-/*
-<MenuBar>
-            </MenuBar>
-            <MealTypeInfo>
-            <Icon></Icon>
-            <HeadingAndTime></HeadingAndTime>
-            <MealPreference></MealPreference>
-            </MealTypeInfo>
-            <MealData>
-            </MealData>
-            <ButtonWrapper></ButtonWrapper>*/
-//this.timeLeftForEditPreference!='00:00:00'

@@ -1,0 +1,35 @@
+{
+    "meal_id": 0,
+    "meal_review": "",
+    "meal_items": [{
+            "meal_item_id": 0,
+            "item_name": "poori",
+            "quality": 0,
+            "taste": 0
+        },
+        {
+            "meal_item_id": 1,
+            "item_name": "chutney",
+            "quality": 0,
+            "taste": 0
+        },
+        {
+            "meal_item_id": 2,
+            "item_name": "poori",
+            "quality": 0,
+            "taste": 0
+        },
+        {
+            "meal_item_id": 3,
+            "item_name": "poori",
+            "quality": 0,
+            "taste": 0
+        },
+        {
+            "meal_item_id": 4,
+            "item_name": "poori",
+            "quality": 0,
+            "taste": 0
+        }
+    ]
+}

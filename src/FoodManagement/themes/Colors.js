@@ -16,10 +16,10 @@ export const lightBlueGrey = '#d7dfe9'
 
 export const darkBlueGrey16 = '#171f46'
 
-export const black = "#000000"
+export const black = '#000000'
 
-export const tomato = "#f13838"
+export const tomato = '#f13838'
 
-export const coolGrey = "#b5b7c4"
+export const coolGrey = '#b5b7c4'
 
 export const steel = '#7e858e'

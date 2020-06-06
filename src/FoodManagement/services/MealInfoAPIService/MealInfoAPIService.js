@@ -1,22 +1,68 @@
 import { create } from 'apisauce'
-import { networkCallWithApisauce } from '../../utils/APIUtils'
+import { networkCallWithApisauce } from '../../../Common/utils/APIUtils'
 import { apiMethods } from '../../constants/APIConstants'
-
 class MealInfoService {
    constructor() {
-      this.api1 = create({
+      this.api = create({
          //baseURL: 'https://5ea1a14db9f5ca00166c1f27.mockapi.io/api/'
-         baseURL:
-            'https://9ba0cd3ggi.execute-api.ap-south-1.amazonaws.com/ecommerce/'
+         baseURL: 'https://e36f2278a8e8.ngrok.io/api/food_management'
       })
    }
 
    getMealInfoAPI(date) {
       return networkCallWithApisauce(
-         this.api1,
-         `products?date=${date}`,
-         {},
+         this.api,
+         `/meal_info/v1/?date=${date}`, {},
          apiMethods.get
+      )
+   }
+   getmealTypeInfoAPI(date, mealType) {
+      return networkCallWithApisauce(
+         this.api,
+         `/my_meal/v1/?date=${date}&meal_type=${mealType}`, {},
+         apiMethods.get
+      )
+   }
+
+   setSelectedPreference(selectedPreferenceInfo) {
+      return networkCallWithApisauce(
+         this.api,
+         `/my_meal/v1/`,
+         selectedPreferenceInfo,
+         apiMethods.post
+      )
+   }
+
+   setSelectedPreferenceAsCustomMeal(selectedPreferenceInfo) {
+      return networkCallWithApisauce(
+         this.api,
+         `/my_meal/custom/v1/`,
+         selectedPreferenceInfo,
+         apiMethods.post
+      )
+   }
+
+   getmealTypeReviewInfoAPI(date, mealType) {
+      return networkCallWithApisauce(
+         this.api,
+         `/meal/feedback/v1/?date=${date}&meal_type=${mealType}`, {},
+         apiMethods.get
+      )
+   }
+   setReviewInfo(reviewInfo) {
+      return networkCallWithApisauce(
+         this.api,
+         `/meal/feedback/v1/`,
+         reviewInfo,
+         apiMethods.post
+      )
+   }
+
+   setUserMealStatusAPI(isEaten, id) {
+      return networkCallWithApisauce(
+         this.api,
+         `/${id}/${isEaten}/v1/`, {},
+         apiMethods.post
       )
    }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import strings from '../../i18n/strings.json'
 import {
    Container,
    Image,
@@ -9,7 +10,7 @@ import {
    SignOut
 }
 from './styledComponents'
-import strings from '../../i18n/strings.json'
+
 class Header extends React.Component {
    render() {
       const { onClickSignOut, gotoHome } = this.props

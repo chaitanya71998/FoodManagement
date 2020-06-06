@@ -1,11 +1,12 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
-import { MealTabs } from '../MealTabs'
-import { Button } from '../../../common/components/Button'
-import { SetDate } from '../../../common/components/SetDate'
+
+import { Button } from '../../../Common/components/Button'
+import { SetDate } from '../../../Common/components/SetDate'
 import strings from '../../i18n/strings.json'
 import { white, darkBlueGrey } from '../../themes/Colors'
+import { MealTabs } from '../MealTabs'
 import {
    Container,
    Header,
@@ -17,7 +18,9 @@ import {
    BackButtonWrapper,
    SaveButtonWrapper,
    TabsAndDateWrapper,
-   Image
+   Image,
+   Group,
+   ImageWrapper,
 }
 from './styledComponents'
 
@@ -29,6 +32,7 @@ class PreferenceCard extends React.Component {
       this.mealType = match.params.mealType.slice(1)
    }
    render() {
+
       const {
          selectedMealInfo,
          selectedDate,
@@ -36,6 +40,9 @@ class PreferenceCard extends React.Component {
          getSelectedPreference,
          onSaveMealPreference,
          onClickBackButton,
+         onClickSkipButton,
+         isLoadingOnSave,
+         isLoadingOnSkipped
       } = this.props
       const selectedMealInformation = [...selectedMealInfo]
       if (selectedMealInformation.length != 0) {
@@ -48,6 +55,8 @@ class PreferenceCard extends React.Component {
                         backgroundColor={white}
                         color={darkBlueGrey}
                         width='100%'
+                        onClick={onClickSkipButton}
+                        isLoading={isLoadingOnSkipped}
                      >
                         {strings.preferenceCard.skipMeal}
                      </Button>
@@ -60,10 +69,17 @@ class PreferenceCard extends React.Component {
                         getSelectedPreference={getSelectedPreference}
                      />
                   </TabsWrapper>
+                  <Group>
                   <DateWrapper>
-                     <SetDate selectedDate={selectedDate} onChangeDate={onChangeDate} />
+                     <SetDate
+                        selectedDate={selectedDate}
+                        onChangeDate={onChangeDate}
+                     />
+                     </DateWrapper>
+                     <ImageWrapper>
                      <Image src='https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/90cfd3e2-22b8-44bc-be42-4d62a7a0a7c3.png' />
-                  </DateWrapper>
+                  </ImageWrapper>
+                  </Group>
                </TabsAndDateWrapper>
                <Footer>
                   <BackButtonWrapper>
@@ -77,7 +93,8 @@ class PreferenceCard extends React.Component {
                      </Button>
                   </BackButtonWrapper>
                   <SaveButtonWrapper>
-                     <Button width='100%' onClick={onSaveMealPreference}>
+                     <Button width='100%' onClick={onSaveMealPreference}
+                     isLoading={isLoadingOnSave}>
                         {strings.preferenceCard.save}
                      </Button>
                   </SaveButtonWrapper>

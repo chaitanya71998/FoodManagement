@@ -7,11 +7,16 @@ import {
 }
 from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import { setAccessToken, clearUserSession } from '../../utils/StorageUtils'
+import {
+   setAccessToken,
+   clearUserSession
+}
+from '../../../Common/utils/StorageUtils'
 
 class AuthStore {
-   @observable getUserSignInAPIStatus
-   @observable getUserSignInAPIError
+   @observable userSignInAPIStatus
+   @observable userSignInAPIError
+   @observable isAdmin
    constructor(SignInAPIService) {
       this.signInAPIService = SignInAPIService
       this.init()
@@ -19,36 +24,42 @@ class AuthStore {
 
    @action.bound
    init() {
-      this.getUserSignInAPIStatus = API_INITIAL
-      this.getUserSignInAPIError = null
+      this.userSignInAPIStatus = API_INITIAL
+      this.userSignInAPIError = null
+      this.isAdmin = false
    }
 
    @action.bound
-   userSignIn(requestObject, onSuccess) {
-      const userSignInAPI = this.signInAPIService.getUserSignInAPI(requestObject)
+   userSignIn(requestObject, onSuccess, onFailure) {
+      const userSignInAPI = this.signInAPIService.getUserSignInAPI(
+         requestObject
+      )
       return bindPromiseWithOnSuccess(userSignInAPI)
-         .to(this.setGetUserSignInAPIStatus, response => {
-            this.setGetUserSignInAPIResponse(response)
+         .to(this.setUserSignInAPIStatus, response => {
+            this.setUserSignInAPIResponse(response)
             onSuccess()
          })
-         .catch(this.setGetUserSignInAPIError)
-   }
-
-
-
-   @action.bound
-   setGetUserSignInAPIResponse(response) {
-      setAccessToken(response[0].access_token)
+         .catch(error => {
+            this.setUserSignInAPIError(error)
+            onFailure()
+         })
    }
 
    @action.bound
-   setGetUserSignInAPIError(error) {
-      this.getUserSignInAPIError = error
+   setUserSignInAPIResponse(response) {
+      this.isAdmin = response.is_admin
+      setAccessToken(response.access_token)
    }
 
    @action.bound
-   setGetUserSignInAPIStatus(status) {
-      this.getUserSignInAPIStatus = status
+   setUserSignInAPIError(error) {
+      this.userSignInAPIError = error
+   }
+
+   @action.bound
+   setUserSignInAPIStatus(status) {
+      console.log('status', status)
+      this.userSignInAPIStatus = status
    }
 
    @action.bound

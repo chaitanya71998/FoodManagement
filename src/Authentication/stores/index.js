@@ -5,5 +5,5 @@ const authServices = new AuthServices()
 const authStore = new AuthStore(authServices)
 
 export default {
-    authStore
+   authStore
 }

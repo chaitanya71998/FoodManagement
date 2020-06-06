@@ -1,0 +1,14 @@
+{
+    "headCountpage": {
+        "items": "Items",
+        "quantity": "Quantity",
+        "headCount": "headCount",
+        "summary": "Summary",
+        "totalMealHeadCount": "Total Meal Head Count",
+        "completedMealHeadCount": "CompletedMealHeadCount",
+        "fullMealHeadCount": "Full Meal Head Count",
+        "halfMealHeadCount": "Half Meal Head Count",
+        "customMealHeadCount": "Custom Meal Head Count",
+        "skipMealHeadCount": "Skip Meal Head Count"
+    }
+}

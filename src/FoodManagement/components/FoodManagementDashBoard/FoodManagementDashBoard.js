@@ -1,12 +1,12 @@
 import React from 'react'
-import { SetDate } from '../../../common/components/SetDate'
-import { SetTimer } from '../../../common/components/SetTimer'
-import { SetCarousel } from '../../../common/components/SetCarousel'
+import { observer } from 'mobx-react'
+
+import LoadingWrapperWithFailure from '../../../Common/components/LoadingWrapperWithFailure'
+import NoDataView from '../../../Common/components/NoDataView'
+import { SetDate } from '../../../Common/components/SetDate'
+import { SetCarousel } from '../../../Common/components/SetCarousel'
 import { Header } from '../../common/components/Header'
 import { MealCard } from '../MealCard'
-import { Provider, observer } from 'mobx-react'
-import LoadingWrapperWithFailure from '../../../common/LoadingWrapperWithFailure'
-import { Toastify } from '../../../common/components/Toastify'
 import {
    Container,
    Banner,
@@ -27,29 +27,40 @@ class FoodManagementDashBoard extends React.Component {
          'https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/3315d5ae-a054-4661-ad90-11dc19202c51.svg',
          'https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/2956a7eb-d60c-4031-a589-15d79145210b.svg'
       ]
-
    }
 
-
    renderMealCards = () => {
-
-      const { mealInformation, onClickEditPreference, timeLeftForEditPreference, selectedDate } = this.props
+      const {
+         mealInformation,
+         onClickEditPreference,
+         timeLeftForEditPreference,
+         selectedDate,
+         onClickReviewButton,
+         selectedMealTypeInfoAPIStatus,
+         onClickIAteIt,
+         onClickISkipped,
+         doNetworkCalls
+      } = this.props
       const mealInfo = [...mealInformation]
       return mealInfo.map((mealTypeInfo, index) => {
-         return <MealCard 
-         mealTypeInfo={mealTypeInfo} 
-         mealIcon={this.icons[index]}
-         onClickEditPreference={onClickEditPreference}
-         timeLeftForEditPreference={timeLeftForEditPreference}
-         selectedDate={selectedDate}></MealCard>
+         return (
+            <MealCard
+               mealTypeInfo={mealTypeInfo}
+               mealIcon={this.icons[index]}
+               onClickEditPreference={onClickEditPreference}
+               timeLeftForEditPreference={timeLeftForEditPreference}
+               selectedDate={selectedDate}
+               onClickReviewButton={onClickReviewButton}
+               selectedMealTypeInfoAPIStatus={selectedMealTypeInfoAPIStatus}
+               onClickIAteIt={onClickIAteIt}
+               onClickISkipped={onClickISkipped}
+               doNetworkCalls={doNetworkCalls}
+            ></MealCard>
+         )
       })
    }
    renderMealInfo = observer(() => {
-      const {
-         mealInformation,
-         selectedDate,
-         onChangeDate
-      } = this.props
+      const { mealInformation } = this.props
       const mealInfo = [...mealInformation]
       if (mealInfo.length === 0) {
          return <NoDataView />
@@ -57,16 +68,7 @@ class FoodManagementDashBoard extends React.Component {
       else {
          return (
             <SuccessWrapper>
-               <Banner>
-                  <SetCarousel />
-               </Banner>
-               <DateWrapper>
-                  <SetDate selectedDate={selectedDate} onChangeDate={onChangeDate} />
-               </DateWrapper>
-                  <MealCards>
-                     {this.renderMealCards()}
-                  </MealCards>
-               <Toastify />
+               <MealCards>{this.renderMealCards()}</MealCards>
             </SuccessWrapper>
          )
       }
@@ -78,14 +80,25 @@ class FoodManagementDashBoard extends React.Component {
          mealInfoAPIError,
          doNetworkCalls,
          gotoHome,
-         onClickSignOut
+         onClickSignOut,
+         selectedDate,
+         onChangeDate
       } = this.props
 
       return (
          <Container>
             <HeaderWrapper>
-               <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
-            </HeaderWrapper>
+                                       <Header gotoHome={gotoHome} onClickSignOut={onClickSignOut} />
+                                    </HeaderWrapper>
+            <Banner>
+                  <SetCarousel />
+               </Banner>
+               <DateWrapper>
+                  <SetDate
+                     selectedDate={selectedDate}
+                     onChangeDate={onChangeDate}
+                  />
+               </DateWrapper>
             <LoadingWrapper>
                <LoadingWrapperWithFailure
                   apiStatus={mealInfoAPIStatus}
@@ -98,6 +111,5 @@ class FoodManagementDashBoard extends React.Component {
       )
    }
 }
-
 
 export { FoodManagementDashBoard }

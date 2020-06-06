@@ -1,30 +1,45 @@
-import mealInfo from '../../fixtures/MealInfo.json'
-import mealPreferenceInfo from '../../fixtures/PreferncePageInfo'
+import mealInfo from '../../fixtures/mealInfo.json'
+import mealPreferenceInfo from '../../fixtures/preferncePageInfo'
+import reviewInfo from '../../fixtures/reviewInfo'
 class MealInfoAPIServiceFixture {
    getMealInfoAPI(date) {
-      console.log("date", date)
       return new Promise((resolve, reject) => {
-         resolve(mealInfo)
+         setTimeout(function() { resolve(mealInfo) }, 1000);
       })
    }
    getmealTypeInfoAPI(date, mealType) {
-      console.log("getmealTypeInfoAPI", date, mealType)
       return new Promise((resolve, reject) => {
-         resolve(mealPreferenceInfo)
+         setTimeout(function() { resolve(mealPreferenceInfo) }, 1000);
       })
    }
 
-   setSelectedPreferenceAsFullOrHalfMeal(selectedPreferenceInfo) {
-      console.log("setSelectedPreferenceAsFullOrHalfMeal", selectedPreferenceInfo)
+   setSelectedPreference(selectedPreferenceInfo) {
       return new Promise((resolve, reject) => {
-         resolve('Successfully Updated')
+         setTimeout(function() { resolve('Successfully Updated') }, 1000);
       })
    }
 
    setSelectedPreferenceAsCustomMeal(selectedPreferenceInfo) {
-      console.log("setSelectedPreferenceAsCustomMeal", selectedPreferenceInfo)
       return new Promise((resolve, reject) => {
-         resolve('Successfully Updated')
+         setTimeout(function() { resolve('Successfully Updated') }, 1000);
+      })
+   }
+
+   getmealTypeReviewInfoAPI(date, mealType) {
+      return new Promise(resolve => {
+         setTimeout(function() { resolve(reviewInfo) }, 1000);
+      })
+   }
+
+   setReviewInfo(reviewInfo) {
+      return new Promise(resolve => {
+         setTimeout(function() { resolve('updated') }, 1000);
+      })
+   }
+
+   setUserMealStatusAPI(isEaten, id) {
+      return new Promise(resolve => {
+         setTimeout(function() { resolve('updated') }, 1000);
       })
    }
 }

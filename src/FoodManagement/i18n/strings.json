@@ -1,6 +1,10 @@
 {
     "mealCard": {
-        "edit": "Edit"
+        "edit": "Edit",
+        "iAteIt": "I Ate It",
+        "iSkipped": "I Skipped",
+        "review": "Review",
+        "left": " left"
     },
     "preferenceCard": {
         "skipMeal": "Skip Meal",

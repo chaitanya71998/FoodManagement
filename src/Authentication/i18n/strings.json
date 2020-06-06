@@ -4,6 +4,7 @@
         "login": "LOGIN",
         "hiTherePleaseSignUp": "Hi there, please sign up",
         "userName": "USERNAME",
-        "password": "PASSWORD"
+        "password": "PASSWORD",
+        "errorMessage": "Invalid username or password"
     }
 }

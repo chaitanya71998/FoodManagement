@@ -2,8 +2,8 @@ import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import strings from '../../i18n/strings.json'
-import { Input } from '../../../common/components/Input'
-import { Button } from '../../../common/components/Button'
+import { Input } from '../../../Common/components/Input'
+import { Button } from '../../../Common/components/Button'
 import { brightBlue } from '../../themes/Colors'
 import {
    Container,
@@ -18,29 +18,47 @@ import {
    ErrorMessage,
    ButtonText,
    InputContainer
-}
-from './styledComponent'
+} from './styledComponent'
 
 @observer
 class SignInPage extends React.Component {
-   static defaultProps = {
-      errorMessageForPassword: '',
-      errorMessageForUserName: ''
+   @observable username = ''
+   @observable password = ''
+   @observable errorMessageForUserName = ''
+   @observable errorMessageForPassword = ''
+   @observable isErrorFromTheServer = false
+   userNameRef = React.createRef()
+   passwordRef = React.createRef()
+
+   onChangeUsername = event => {
+      this.username = event.target.value
+      this.errorMessageForUserName = ''
+   }
+
+   onChangePassword = event => {
+      this.password = event.target.value
+      this.errorMessageForPassword = ''
+   }
+
+   onClickLoginIn = event => {
+      const { onClickLoginIn } = this.props
+      event.preventDefault()
+      if (this.username !== '' && this.password !== '') {
+         this.errorMessageForUserName = ''
+         const requestObject = {
+            username: this.username,
+            password: this.password
+         }
+         onClickLoginIn(requestObject)
+      } else if (this.username === '') {
+         this.errorMessageForUserName = 'Please enter username'
+      } else {
+         this.errorMessageForPassword = 'Please enter password'
+      }
    }
 
    render() {
-      const {
-         errorMessageForUserName,
-         errorMessageForPassword,
-         onChangeUsername,
-         onChangePassword,
-         onClickLoginIn,
-         username,
-         password,
-         getUserSignInAPIStatus //not use get
-
-
-      } = this.props
+      const { userSignInAPIStatus, isErrorFromTheServer } = this.props
       return (
          <Container>
             <SignInContainer>
@@ -50,9 +68,7 @@ class SignInPage extends React.Component {
                />
 
                <HeadingContainer>
-                  <Heading>
-                     {strings.signInPage.hiTherePleaseSignUp}
-                  </Heading>
+                  <Heading>{strings.signInPage.hiTherePleaseSignUp}</Heading>
                </HeadingContainer>
 
                <UserNameField>
@@ -61,13 +77,13 @@ class SignInPage extends React.Component {
                      <Input
                         type='text'
                         placeholder='UserName'
-                        ref={this.userNameRef}
-                        value={username}
-                        onChange={onChangeUsername}
+                        value={this.username}
+                        onChange={this.onChangeUsername}
                      />
                   </InputContainer>
-                  {(errorMessageForUserName!="")&&
-                  <ErrorMessage>{errorMessageForUserName}</ErrorMessage>}
+                  {this.errorMessageForUserName != '' && (
+                     <ErrorMessage>{this.errorMessageForUserName}</ErrorMessage>
+                  )}
                </UserNameField>
 
                <PasswordFeild>
@@ -75,24 +91,27 @@ class SignInPage extends React.Component {
                   <Input
                      type='password'
                      placeholder='Password'
-                     ref={this.passwordRef}
-                     value={password}
-                     onChange={onChangePassword}
+                     value={this.password}
+                     onChange={this.onChangePassword}
                   />
-                  {(errorMessageForPassword!="")&&
-                  <ErrorMessage>{errorMessageForPassword}</ErrorMessage>}
+                  {this.errorMessageForPassword != '' && (
+                     <ErrorMessage>{this.errorMessageForPassword}</ErrorMessage>
+                  )}
                </PasswordFeild>
 
                <ButtonContainer>
                   <Button
                      backgroundColor={brightBlue}
                      width='100%'
-                     onClick={onClickLoginIn}
-                     getAPIStatus={getUserSignInAPIStatus}
+                     onClick={this.onClickLoginIn}
+                     getAPIStatus={userSignInAPIStatus}
                   >
                      <ButtonText>{strings.signInPage.login}</ButtonText>
                   </Button>
                </ButtonContainer>
+               {isErrorFromTheServer && (
+                  <ErrorMessage>{strings.signInPage.errorMessage}</ErrorMessage>
+               )}
             </SignInContainer>
          </Container>
       )

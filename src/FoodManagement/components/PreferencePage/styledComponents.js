@@ -37,8 +37,7 @@ const LoadingWrapper = styled.div `
 `
 const PreferenceCardWrapper = styled.div `
    ${tw``}
-   width: 702px;
-   height: 530px;
+   width: 50%;
    border-radius: 6px;
    box-shadow: 0 4px 40px 0 ${darkBlueGrey16};
    border: solid 1px ${lightBlueGrey};

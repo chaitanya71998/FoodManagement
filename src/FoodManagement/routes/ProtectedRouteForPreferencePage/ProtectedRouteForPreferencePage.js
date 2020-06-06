@@ -8,7 +8,7 @@ export const ProtectedRouteForPreferencePage = ({
    component: Component,
    ...other
 }) => {
-   if (getAccessToken() === 'f5af9f51-07e6-4332-8f1a-c0c11c1e3434') {
+   if (getAccessToken()) {
       return <Route component={Component} {...other} />
    } else {
       return <Redirect to={{ pathname: '/sign-in-page' }} />
