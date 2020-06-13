@@ -6,7 +6,7 @@ class MealInfoAPIServiceFixture {
    constructor() {
       this.api = create({
          //baseURL: 'https://5ea1a14db9f5ca00166c1f27.mockapi.io/api/'
-         baseURL: 'https://e36f2278a8e8.ngrok.io/api/food_management'
+         baseURL: 'https://2fb6723c4661.ngrok.io/api/food_management'
       })
    }
 
@@ -14,8 +14,7 @@ class MealInfoAPIServiceFixture {
       console.log('date', date)
       return networkCallWithApisauce(
          this.api,
-         `/admin/meal/head_count/v1/?date=${date}&meal_type=${mealType}`,
-         {},
+         `/admin/meal/head_count/v1/?date=${date}&meal_type=${mealType}`, {},
          apiMethods.get
       )
    }

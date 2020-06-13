@@ -1,2 +1,2 @@
-import MealInfoAPIService from './MealInfoAPIService'
+import MealInfoAPIService from './MealInfoAPIServiceFixture'
 export { MealInfoAPIService }

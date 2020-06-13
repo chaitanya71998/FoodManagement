@@ -8,6 +8,7 @@ import AdminStore from './Admin/stores'
 import { SignInPageRoute } from './Authentication/routes'
 import { ProtectedRouteForDashBoard } from './FoodManagement/routes/ProtectedRouteForDashBoard'
 import { ProtectedRouteForPreferencePage } from './FoodManagement/routes/ProtectedRouteForPreferencePage'
+import { ProtectedRouteForReviewPage } from './FoodManagement/routes/ProtectedRouteForReviewPage'
 import { FoodManagementDashBoardRoute } from './FoodManagement/routes/FoodManageMentDashBoardRoute'
 import { PreferencePageRoute } from './FoodManagement/routes/PreferencePageRoute'
 import { ReviewPageRoute } from './FoodManagement/routes/ReviewPageRoute'
@@ -33,12 +34,14 @@ const App = () => {
                   component={FoodManagementDashBoardRoute}
                />
                <ProtectedRouteForPreferencePage
+                  // exact
+                  // path={`/set-meal-preference?date=:date&meal_type=:mealType`}
+
                   exact
                   path={`/food-management-dashboard/:mealType`}
-                  //path={`/set-meal-preference?date=data&meal_type=breakfast`}
                   component={PreferencePageRoute}
                />
-               <ProtectedRouteForPreferencePage
+               <ProtectedRouteForReviewPage
                   exact
                   path={`/food-management-dashboard/review/:mealType`}
                   component={ReviewPageRoute}

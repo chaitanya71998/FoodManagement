@@ -13,7 +13,8 @@ import {
    ServingSizes,
    CounterWrapper,
    Container
-} from './styledComponents'
+}
+from './styledComponents'
 
 const color = 'blue'
 @observer
@@ -22,15 +23,19 @@ class MealTabs extends React.Component {
    panes = []
 
    renderPreferenceDetails = mealInfo => {
+      const { renderCustomDetails: RenderCustomDetails } = this
       if (
          mealInfo.mealPreference === 'FullMeal' ||
          mealInfo.mealPreference === 'HalfMeal'
       ) {
          return this.renderFullOrHalfMealDetails(mealInfo)
-      } else {
-         return this.renderCustomDetails(mealInfo)
+      }
+      else {
+         //return this.renderCustomDetails(mealInfo)
+         return <RenderCustomDetails mealInfo={mealInfo}/>
       }
    }
+
    renderFullOrHalfMealDetails = mealInfo => {
       return mealInfo.mealItems.map(item => {
          return (
@@ -48,7 +53,7 @@ class MealTabs extends React.Component {
       })
    }
 
-   renderCustomDetails = mealInfo => {
+   renderCustomDetails = observer(({ mealInfo }) => {
       return mealInfo.mealItems.map(item => {
          return (
             <Wrapper key={item.mealPreferenceId}>
@@ -61,6 +66,8 @@ class MealTabs extends React.Component {
                      <CounterApp
                         key={item.mealPreferenceId}
                         onChangeQuantity={item.onChangeQuantity}
+                        
+                        quantity={item.quantity}
                      />
                   </CounterWrapper>
                   <ServingSizes>{item.servingSizeUnit}</ServingSizes>
@@ -68,7 +75,7 @@ class MealTabs extends React.Component {
             </Wrapper>
          )
       })
-   }
+   });
 
    renderTabs = () => {
       const { selectedMealInformation } = this.props

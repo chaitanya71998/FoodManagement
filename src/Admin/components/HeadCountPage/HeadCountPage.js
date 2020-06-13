@@ -31,8 +31,12 @@ import {
    HeaderWrapper,
    Summary,
    TotalHeadCount,
-   CompletedMealHeadCount
-} from './styeldComponents'
+   CompletedMealHeadCount,
+   SummaryWrapper,
+   TotalHeadCountWrapper,
+   CompletedMealHeadCountWrapper
+}
+from './styeldComponents'
 import strings from '../../i18n/strings.json'
 
 const color = 'blue'
@@ -119,22 +123,28 @@ class HeadCountPage extends Component {
    renderSummaryInfo = () => {
       const { selectedMealTypeheadCount } = this.props
       return (
-         <React.Fragment>
-            <Summary>Summary</Summary>
+         <SummaryWrapper>
+            <Summary>{strings.headCountpage.summary}</Summary>
+            <TotalHeadCountWrapper>
             <TotalHeadCount>
-               {selectedMealTypeheadCount.summary.total_meal_head_count}
+               {strings.headCountpage.totalMealHeadCount}
             </TotalHeadCount>
+            <Count>{selectedMealTypeheadCount.summary.total_meal_head_count}</Count>
+            </TotalHeadCountWrapper>
+            <CompletedMealHeadCountWrapper>
             <CompletedMealHeadCount>
-               {selectedMealTypeheadCount.summary.completed_meal_head_count}
+               {strings.headCountpage.completedMealHeadCount}
             </CompletedMealHeadCount>
-         </React.Fragment>
+            <Count>{selectedMealTypeheadCount.summary.completed_meal_head_count}</Count>
+            </CompletedMealHeadCountWrapper>
+         </SummaryWrapper>
       )
    }
 
    renderHeadCountInfo = () => {
       return (
          <CountInfoWrapper>
-            <Heading>HeadCount</Heading>
+            <Heading>{strings.headCountpage.headCount}</Heading>
             {this.renderPreferenceBaseInfo()}
          </CountInfoWrapper>
       )

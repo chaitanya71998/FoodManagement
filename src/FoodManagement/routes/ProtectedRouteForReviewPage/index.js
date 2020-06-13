@@ -1,2 +1,2 @@
-import { ProtectedRouteForPreferencePage } from './ProtectedRouteForPreferencePage'
-export { ProtectedRouteForPreferencePage }
+import { ProtectedRouteForReviewPage } from './ProtectedRouteForReviewPage'
+export { ProtectedRouteForReviewPage }

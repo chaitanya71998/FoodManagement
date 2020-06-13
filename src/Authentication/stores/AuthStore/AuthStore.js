@@ -4,12 +4,14 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-} from '@ib/api-constants'
+}
+from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import {
    setAccessToken,
    clearUserSession
-} from '../../../Common/utils/StorageUtils'
+}
+from '../../../Common/utils/StorageUtils'
 
 class AuthStore {
    @observable userSignInAPIStatus
@@ -45,12 +47,14 @@ class AuthStore {
 
    @action.bound
    setUserSignInAPIResponse(response) {
+      console.log("response", response[0].access_token)
       this.isAdmin = response.is_admin
-      setAccessToken(response.access_token)
+      setAccessToken(response[0].access_token)
    }
 
    @action.bound
    setUserSignInAPIError(error) {
+      console.log("error", error)
       this.userSignInAPIError = error
    }
 

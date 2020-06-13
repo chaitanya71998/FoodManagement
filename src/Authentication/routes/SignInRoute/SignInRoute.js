@@ -25,8 +25,12 @@ class SignInRoute extends React.Component {
       const { history } = this.props
       if (this.getAuthStore().isAdmin) {
          history.replace('/admin-page')
-      } else {
+
+      }
+      else {
          history.replace('/food-management-dashboard')
+
+
       }
       //history.replace('/admin-page')
    }
