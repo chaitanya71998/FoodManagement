@@ -1,2 +1,2 @@
-import SignInPageRoute from './routes'
-export { SignInPageRoute }
+import signInPageRoute from './routes'
+export { signInPageRoute }

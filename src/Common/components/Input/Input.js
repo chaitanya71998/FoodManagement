@@ -13,9 +13,7 @@ class Input extends React.Component {
          value,
          onChange,
          onKeyDown,
-         userNameRef
       } = this.props
-      console.log('ref', userNameRef)
       return (
          <InputFiled
             type={type}

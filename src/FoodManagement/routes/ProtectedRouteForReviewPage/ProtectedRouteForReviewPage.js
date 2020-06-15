@@ -9,8 +9,7 @@ export const ProtectedRouteForReviewPage = ({
 }) => {
    if (getAccessToken()) {
       return <Route component={Component} {...other} />
-   }
-   else {
+   } else {
       return <Redirect to={{ pathname: '/sign-in-page' }} />
    }
 }

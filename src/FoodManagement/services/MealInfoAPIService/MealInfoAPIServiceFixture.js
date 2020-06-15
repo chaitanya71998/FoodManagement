@@ -56,6 +56,10 @@ class MealInfoAPIServiceFixture {
          }, 1000)
       })
    }
+
 }
+
+
+
 
 export default MealInfoAPIServiceFixture

@@ -8,13 +8,13 @@ import { RiTimer2Line } from 'react-icons/ri'
 import {
    getTimeDistanceInWords,
    isTimeBeforeDeadLine
-} from '../../../Common/utils/TimeUtils'
+}
+from '../../../Common/utils/TimeUtils'
 import { Button } from '../../../Common/components/Button'
 import { brightBlue, white, darkBlueGrey } from '../../themes/Colors'
 import strings from '../../i18n/strings.json'
 import {
    Container,
-   MenuBar,
    MealTypeInfo,
    Icon,
    HeadingAndTime,
@@ -29,7 +29,8 @@ import {
    AteOrSkippedButtonWrapper,
    ReviewWrapper,
    TimerIcon
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class MealCard extends React.Component {
@@ -68,11 +69,9 @@ class MealCard extends React.Component {
    setTimerForShowingDisabledStates = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingDisabledStates = setInterval(() => {
-         if (
-            !isTimeBeforeDeadLine(
+         if (!isTimeBeforeDeadLine(
                `${selectedDate} ${mealTypeInfo.mealStarttime}`
-            )
-         ) {
+            )) {
             this.isTimeForEating = true
             clearInterval(this.intervalForShowingDisabledStates)
          }
@@ -82,9 +81,7 @@ class MealCard extends React.Component {
    setTimerForEnablingIAteItAndSkippedButtons = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingEnablingTheStates = setInterval(() => {
-         if (
-            !isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)
-         ) {
+         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
             this.isTimeForEating = false
             this.isTimeForReview = true
             clearInterval(this.intervalForShowingEnablingTheStates)
@@ -131,7 +128,8 @@ class MealCard extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      } else {
+      }
+      else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -158,7 +156,6 @@ class MealCard extends React.Component {
       } = this.props
       return (
          <Container>
-            <MenuBar></MenuBar>
             <MealTypeInfo>
                <Icon src={mealIcon} />
                <HeadingAndTime>

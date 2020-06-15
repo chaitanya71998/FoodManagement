@@ -15,7 +15,8 @@ class AuthServices {
       console.log('service', requestObject)
       return networkCallWithApisauce(
          this.api,
-         '/v1/signin/', {},
+         '/v1/signin/',
+         {},
          apiMethods.get
       )
    }

@@ -18,7 +18,8 @@ import {
    ErrorMessage,
    ButtonText,
    InputContainer
-} from './styledComponent'
+}
+from './styledComponent'
 
 @observer
 class SignInPage extends React.Component {
@@ -50,9 +51,11 @@ class SignInPage extends React.Component {
             password: this.password
          }
          onClickLoginIn(requestObject)
-      } else if (this.username === '') {
+      }
+      else if (this.username === '') {
          this.errorMessageForUserName = 'Please enter username'
-      } else {
+      }
+      else {
          this.errorMessageForPassword = 'Please enter password'
       }
    }

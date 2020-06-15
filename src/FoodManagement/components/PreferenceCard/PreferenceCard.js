@@ -21,14 +21,15 @@ import {
    Image,
    Group,
    ImageWrapper
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class PreferenceCard extends React.Component {
    constructor(props) {
       super(props)
       const { match } = this.props
-      this.mealType = match.params.mealType.slice(1)
+      this.mealType = match.params.mealType
    }
    render() {
       const {
@@ -102,7 +103,8 @@ class PreferenceCard extends React.Component {
                </Footer>
             </Container>
          )
-      } else {
+      }
+      else {
          return null
       }
    }

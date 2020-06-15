@@ -8,18 +8,17 @@ import 'react-toastify/dist/ReactToastify.css'
 import { clearUserSession } from '../../../Authentication/utils/StorageUtils'
 import { PreferencePage } from '../../components/PreferencePage'
 import strings from '../../i18n/strings.json'
-const queryString = require('query-string');
+const queryString = require('query-string')
 
 @inject('mealInfoStore')
 @observer
 class PreferencePageRoute extends React.Component {
    @observable status
    componentDidMount() {
-      console.log('preferencePageRouteCalled')
       const { match } = this.props
       this.mealType = match.params.mealType.slice(1)
-      //this.mealType = match.params.mealType
-      //this.selectedDate = match.params.date
+      // this.mealType = match.params.mealType
+      // this.selectedDate = match.params.date
       this.doNetworkCalls()
    }
 

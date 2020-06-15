@@ -20,11 +20,10 @@ class FoodManagementDashBoardRoute extends React.Component {
       return this.props.mealInfoStore
    }
    onClickEditPreference = mealType => {
-      const date = '13-04-2018'
       const { history } = this.props
-      history.push({ pathname: `/food-management-dashboard/:${mealType}` })
-      // history.push({ pathname: `/set-meal-preference?date=${date}&meal_type=${mealType}
-      //  ` })
+      const selectedDate = this.getMealInfoStore().selectedDate
+      history.push({ pathname: `/food-management-dashboard/${mealType}` })
+      //history.push({ pathname: `/set-meal-preference?date=${selectedDate}&meal_type=${mealType}` })
    }
 
    onClickReviewButton = mealType => {

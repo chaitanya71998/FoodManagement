@@ -14,7 +14,8 @@ class MealInfoAPIServiceFixture {
       console.log('date', date)
       return networkCallWithApisauce(
          this.api,
-         `/admin/meal/head_count/v1/?date=${date}&meal_type=${mealType}`, {},
+         `/admin/meal/head_count/v1/?date=${date}&meal_type=${mealType}`,
+         {},
          apiMethods.get
       )
    }

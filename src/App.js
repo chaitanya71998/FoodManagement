@@ -5,17 +5,15 @@ import HomePage from './components/HomePage'
 import AuthStore from './Authentication/stores'
 import FoodManagementDashBoardStore from './FoodManagement/stores'
 import AdminStore from './Admin/stores'
-import { SignInPageRoute } from './Authentication/routes'
+import { signInPageRoute } from './Authentication/routes'
 import { ProtectedRouteForDashBoard } from './FoodManagement/routes/ProtectedRouteForDashBoard'
 import { ProtectedRouteForPreferencePage } from './FoodManagement/routes/ProtectedRouteForPreferencePage'
 import { ProtectedRouteForReviewPage } from './FoodManagement/routes/ProtectedRouteForReviewPage'
 import { FoodManagementDashBoardRoute } from './FoodManagement/routes/FoodManageMentDashBoardRoute'
 import { PreferencePageRoute } from './FoodManagement/routes/PreferencePageRoute'
 import { ReviewPageRoute } from './FoodManagement/routes/ReviewPageRoute'
-import { ProtectedRouteForAdminPage } from './Admin/routes/ProtectedRouteForAdminPage'
-import { AdminHomePageRoute } from './Admin/routes/AdminHomePageRoute'
 import { Toastify } from './Common/components/Toastify'
-
+import { adminRoutes } from './Admin/routes'
 import './App.css'
 
 const App = () => {
@@ -27,29 +25,22 @@ const App = () => {
       >
          <Router basename={process.env.PUBLIC_URL}>
             <Switch>
-               {SignInPageRoute}
+               {signInPageRoute}
+               {adminRoutes}
                <ProtectedRouteForDashBoard
                   exact
                   path='/food-management-dashboard'
                   component={FoodManagementDashBoardRoute}
                />
                <ProtectedRouteForPreferencePage
-                  // exact
-                  // path={`/set-meal-preference?date=:date&meal_type=:mealType`}
-
                   exact
-                  path={`/food-management-dashboard/:mealType`}
+                  path='/food-management-dashboard/:mealType'
                   component={PreferencePageRoute}
                />
                <ProtectedRouteForReviewPage
                   exact
                   path={`/food-management-dashboard/review/:mealType`}
                   component={ReviewPageRoute}
-               />
-               <ProtectedRouteForAdminPage
-                  exact
-                  path={`/admin-Page`}
-                  component={AdminHomePageRoute}
                />
                <Route path='/'>
                   <HomePage />
@@ -62,17 +53,3 @@ const App = () => {
 }
 
 export default App
-/*
-<ProtectedRouteForAdminPage
-                  exact
-                  path={`/admin-Page`}
-                  component={AdminHomePageRoute}
-               />*/
-/*
-<Route path='/admin-page'>
-   <AdminHomePageRoute />
-</Route>*/
-/*
-<Route path='/admin-page'>
-                  <AdminHomePageRoute />
-               </Route>*/

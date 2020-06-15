@@ -3,14 +3,15 @@
 /*global getByTestId */
 import React from 'react'
 import { render, fireEvent, waitFor } from '@testing-library/react'
-import { Router, Route, withRouter } from 'react-router-dom'
+import { Router, Route, withRouter } from "react-router-dom";
 import { Provider } from 'mobx-react'
 import { createMemoryHistory } from 'history'
 
 import {
    SIGN_IN_PATH,
    FOOD_MANAGEMENT_DASHBOARD
-} from '../../../constants/APIConstants'
+}
+from '../../constants/APIConstants'
 import { AuthServices } from '../../services/AuthServices'
 import { AuthStore } from '../../stores/AuthStore'
 import '@testing-library/jest-dom/extend-expect'
@@ -51,8 +52,8 @@ describe('SignInRoute Tests', () => {
    it('should render password empty error message', () => {
       const { getByText, getByPlaceholderText, getByRole } = render(
          <Router history={createMemoryHistory()}>
-            <SignInRoute authStore={authStore} />
-         </Router>
+                     <SignInRoute authStore={authStore} />
+                  </Router>
       )
       const username = 'test-user'
       const usernameField = getByPlaceholderText('UserName')
@@ -63,11 +64,11 @@ describe('SignInRoute Tests', () => {
 
       getByText(/Please enter password/i)
    })
-   it('should submit sign-in on press enter', async () => {
+   it('should submit sign-in on press enter', async() => {
       const { getByLabelText, getByPlaceholderText, getByRole, debug } = render(
          <Router history={createMemoryHistory()}>
-            <SignInRoute authStore={authStore} />
-         </Router>
+                        <SignInRoute authStore={authStore} />
+                     </Router>
       )
       const username = 'test-user'
       const password = 'test-password'
@@ -81,10 +82,8 @@ describe('SignInRoute Tests', () => {
       fireEvent.click(signInButton)
       await waitFor(() => getByLabelText('audio-loading'))
    })
-
-   it('should render signInRoute loading state', async () => {
+   it('should render signInRoute loading state', async() => {
       const {
-         getByTestId,
          getByPlaceholderText,
          getByRole,
          getByLabelText
@@ -100,7 +99,7 @@ describe('SignInRoute Tests', () => {
       const passwordField = getByPlaceholderText('Password')
       const signInButton = getByRole('button', { name: 'LOGIN' })
 
-      const mockLoadingPromise = new Promise(function(resolve, reject) {})
+      const mockLoadingPromise = new Promise(() => {})
       const mockSignInAPI = jest.fn()
       mockSignInAPI.mockReturnValue(mockLoadingPromise)
       authServices.signInAPI = mockSignInAPI
@@ -108,13 +107,12 @@ describe('SignInRoute Tests', () => {
       fireEvent.change(usernameField, { target: { value: username } })
       fireEvent.change(passwordField, { target: { value: password } })
       fireEvent.click(signInButton)
-      expect(authStore.getUserSignInAPIStatus).toBe(100)
+      expect(authStore.userSignInAPIStatus).toBe(100)
       getByLabelText('audio-loading')
-      //getByRole("button", { disabled: true });
    })
 
-   it('should render signInRoute failure state', async () => {
-      const { getByText, getByPlaceholderText, getByRole, debug } = render(
+   it('should render signInRoute failure state', async() => {
+      const { getByPlaceholderText, getByRole } = render(
          <Router history={createMemoryHistory()}>
             <SignInRoute authStore={authStore} />
          </Router>
@@ -126,7 +124,7 @@ describe('SignInRoute Tests', () => {
       const usernameField = getByPlaceholderText('UserName')
       const passwordField = getByPlaceholderText('Password')
       const signInButton = getByRole('button', { name: 'LOGIN' })
-      const mockFailurePromise = new Promise(function(resolve, reject) {
+      const mockFailurePromise = new Promise((_, reject) => {
          reject()
       }).catch(() => {})
       const mockSignInAPI = jest.fn()
@@ -136,56 +134,53 @@ describe('SignInRoute Tests', () => {
       fireEvent.change(usernameField, { target: { value: username } })
       fireEvent.change(passwordField, { target: { value: password } })
       fireEvent.click(signInButton)
-      await waitFor(() => expect(authStore.getUserSignInAPIStatus).toBe(400))
-      //await waitFor(() => getByText(/server-error/i));
+      await waitFor(() => expect(authStore.userSignInAPIStatus).toBe(400))
    })
 
-   it('should render signInRoute success state', async () => {
+   it('should render signInRoute success state', async() => {
       const history = createMemoryHistory()
       const route = SIGN_IN_PATH
       history.push(route)
-
-      const { getByPlaceholderText, getByRole } = render(
+      const {
+         getByPlaceholderText,
+         getByRole,
+         queryByRole,
+         getByTestId
+      } = render(
          <Provider authStore={authStore}>
-            <Router history={history}>
-               <Route path={SIGN_IN_PATH}>
-                  <SignInRoute />
-               </Route>
-               <Route path={FOOD_MANAGEMENT_DASHBOARD}>
-                  <LocationDisplay />
-               </Route>
-            </Router>
+         <Router history={history}>
+         <Route path={SIGN_IN_PATH}>
+            <SignInRoute />
+            </Route>
+            <Route path={FOOD_MANAGEMENT_DASHBOARD}>
+      <LocationDisplay />
+      </Route>
+         </Router>
+         
          </Provider>
       )
       const username = 'test-user'
       const password = 'test-password'
       const usernameField = getByPlaceholderText('UserName')
       const passwordField = getByPlaceholderText('Password')
-      const mockSuccessPromise = new Promise(function(resolve, reject) {
-         reject()
+      const mockSuccessPromise = new Promise((resolve) => {
+         resolve(getUserSignInResponse)
       })
       const mockSignInAPI = jest.fn()
       mockSignInAPI.mockReturnValue(mockSuccessPromise)
       authServices.getUserSignInAPI = mockSignInAPI
-
       const signInButton = getByRole('button', { name: 'LOGIN' })
       fireEvent.change(usernameField, { target: { value: username } })
       fireEvent.change(passwordField, { target: { value: password } })
-      expect(mockSignInAPI).toHaveBeenCalledTimes(0)
       fireEvent.click(signInButton)
-      expect(mockSignInAPI).toHaveBeenCalledTimes(1)
-      //await authStore.userSignIn
-      //expect(authStore.getUserSignInAPIStatus).toBe(200)
-      //await expect(authStore.userSignIn).toHaveBeenCalledTimes(2)
-      //waitFor(() => expect(authStore.getUserSignInAPIStatus).toBe(200));
-      // await waitFor(() => {
-      //     expect(authStore.getUserSignInAPIStatus).toBe(200);
-      //     expect(
-      //         queryByRole("button", { name: "LOGIN" })
-      //     ).toBeInTheDocument();
-      //     // expect(getByTestId("location-display")).toHaveTextContent(
-      //     //     E_COMMERCE_PRODUCTS_PATH
-      //     // );
-      // });
+      await waitFor(() => {
+         expect(authStore.userSignInAPIStatus).toBe(200);
+         expect(
+            queryByRole("button", { name: "LOGIN" })
+         ).not.toBeInTheDocument();
+         expect(getByTestId("location-display")).toHaveTextContent(
+            FOOD_MANAGEMENT_DASHBOARD
+         );
+      });
    })
 })

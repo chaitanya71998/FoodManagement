@@ -47,20 +47,17 @@ class AuthStore {
 
    @action.bound
    setUserSignInAPIResponse(response) {
-      console.log("response", response[0].access_token)
       this.isAdmin = response.is_admin
       setAccessToken(response[0].access_token)
    }
 
    @action.bound
    setUserSignInAPIError(error) {
-      console.log("error", error)
       this.userSignInAPIError = error
    }
 
    @action.bound
    setUserSignInAPIStatus(status) {
-      console.log('status', status)
       this.userSignInAPIStatus = status
    }
 

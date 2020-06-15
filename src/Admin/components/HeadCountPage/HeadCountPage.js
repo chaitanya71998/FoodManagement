@@ -35,8 +35,7 @@ import {
    SummaryWrapper,
    TotalHeadCountWrapper,
    CompletedMealHeadCountWrapper
-}
-from './styeldComponents'
+} from './styeldComponents'
 import strings from '../../i18n/strings.json'
 
 const color = 'blue'
@@ -126,16 +125,20 @@ class HeadCountPage extends Component {
          <SummaryWrapper>
             <Summary>{strings.headCountpage.summary}</Summary>
             <TotalHeadCountWrapper>
-            <TotalHeadCount>
-               {strings.headCountpage.totalMealHeadCount}
-            </TotalHeadCount>
-            <Count>{selectedMealTypeheadCount.summary.total_meal_head_count}</Count>
+               <TotalHeadCount>
+                  {strings.headCountpage.totalMealHeadCount}
+               </TotalHeadCount>
+               <Count>
+                  {selectedMealTypeheadCount.summary.total_meal_head_count}
+               </Count>
             </TotalHeadCountWrapper>
             <CompletedMealHeadCountWrapper>
-            <CompletedMealHeadCount>
-               {strings.headCountpage.completedMealHeadCount}
-            </CompletedMealHeadCount>
-            <Count>{selectedMealTypeheadCount.summary.completed_meal_head_count}</Count>
+               <CompletedMealHeadCount>
+                  {strings.headCountpage.completedMealHeadCount}
+               </CompletedMealHeadCount>
+               <Count>
+                  {selectedMealTypeheadCount.summary.completed_meal_head_count}
+               </Count>
             </CompletedMealHeadCountWrapper>
          </SummaryWrapper>
       )

@@ -23,6 +23,10 @@ class MealInfoStore {
    @observable userMealAPIError
    @observable userPreferenceAPIError
    @observable userPreferenceAPIStatus
+   @observable loading1Status = API_INITIAL
+   @observable loading1Error = null
+   @observable loading2Status = API_INITIAL
+   @observable loading2Error = null
 
    constructor(mealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService
@@ -205,6 +209,8 @@ class MealInfoStore {
    clearStore() {
       this.init()
    }
+
+
 }
 
 export { MealInfoStore }
