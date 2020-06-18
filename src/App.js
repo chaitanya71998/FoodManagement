@@ -7,9 +7,7 @@ import FoodManagementDashBoardStore from './FoodManagement/stores'
 import AdminStore from './Admin/stores'
 import { signInPageRoute } from './Authentication/routes'
 import { ProtectedRouteForDashBoard } from './FoodManagement/routes/ProtectedRouteForDashBoard'
-import { ProtectedRouteForPreferencePage } from './FoodManagement/routes/ProtectedRouteForPreferencePage'
-import { ProtectedRouteForReviewPage } from './FoodManagement/routes/ProtectedRouteForReviewPage'
-import { FoodManagementDashBoardRoute } from './FoodManagement/routes/FoodManageMentDashBoardRoute'
+import { FoodManagementDashBoardRoute } from './FoodManagement/routes/FoodManagementDashBoardRoute'
 import { PreferencePageRoute } from './FoodManagement/routes/PreferencePageRoute'
 import { ReviewPageRoute } from './FoodManagement/routes/ReviewPageRoute'
 import { Toastify } from './Common/components/Toastify'
@@ -32,12 +30,14 @@ const App = () => {
                   path='/food-management-dashboard'
                   component={FoodManagementDashBoardRoute}
                />
-               <ProtectedRouteForPreferencePage
+               <ProtectedRouteForDashBoard
                   exact
-                  path='/food-management-dashboard/:mealType'
+                  path='/set-meal-preference'
+                  // exact
+                  // path = '/food-management-dashboard/:mealType'
                   component={PreferencePageRoute}
                />
-               <ProtectedRouteForReviewPage
+               <ProtectedRouteForDashBoard
                   exact
                   path={`/food-management-dashboard/review/:mealType`}
                   component={ReviewPageRoute}

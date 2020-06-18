@@ -12,7 +12,8 @@ import {
    SuccessWrapper,
    LoadingWrapper,
    ReviewCardWrapper
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class ReviewPage extends React.Component {
@@ -20,11 +21,13 @@ class ReviewPage extends React.Component {
       const {
          selectedMealTypeInfoReview,
          onSaveMealReview,
-         isLoadingOnDone
+         isLoadingOnDone,
+         onChangeReviewOfMealType
       } = this.props
       if (!selectedMealTypeInfoReview) {
          return <NoDataView />
-      } else {
+      }
+      else {
          return (
             <SuccessWrapper>
                <ReviewCardWrapper>
@@ -32,6 +35,7 @@ class ReviewPage extends React.Component {
                      selectedMealTypeInfoReview={selectedMealTypeInfoReview}
                      onSaveMealReview={onSaveMealReview}
                      isLoadingOnDone={isLoadingOnDone}
+                     onChangeReviewOfMealType={onChangeReviewOfMealType}
                   />
                </ReviewCardWrapper>
             </SuccessWrapper>

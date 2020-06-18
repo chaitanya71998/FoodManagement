@@ -6,7 +6,8 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-} from '@ib/api-constants'
+}
+from '@ib/api-constants'
 class MealPreference {
    @observable preferencesInfo = []
    @observable selectedPreference
@@ -70,6 +71,7 @@ class MealPreference {
 
    @action.bound
    setSelectedMealTypeInfoAPIResponse(response) {
+      this.clearPreferencesInfo()
       response.map(preference => {
          let mealItems = []
          preference.meal_items.map(item => {
@@ -112,7 +114,8 @@ class MealPreference {
             onFailure,
             button
          )
-      } else {
+      }
+      else {
          selectedPreferenceInfo.meal_type = this.mealType
          selectedPreferenceInfo.meal_items = []
          mealItemsInfo.forEach(itemInfo => {
@@ -147,11 +150,12 @@ class MealPreference {
       return bindPromiseWithOnSuccess(setSelectedPreference)
          .to(
             status => {
-               this.setUpdatedPreferenceAPIStatus
+               this.setUpdatedPreferenceAPIStatus(status)
                if (status === API_FETCHING) {
                   if (button === 'Skipped') {
                      this.isLoadingOnSkipped = true
-                  } else {
+                  }
+                  else {
                      this.isLoadingOnSave = true
                   }
                }
@@ -202,7 +206,8 @@ class MealPreference {
                if (status === API_FETCHING) {
                   if (button === 'Skipped') {
                      this.isLoadingOnSkipped = true
-                  } else {
+                  }
+                  else {
                      this.isLoadingOnSave = true
                   }
                }

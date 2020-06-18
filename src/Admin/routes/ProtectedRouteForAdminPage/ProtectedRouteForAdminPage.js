@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { getAccessToken } from '../../../Authentication/utils/StorageUtils'
+import { getAccessToken } from '../../../Common/utils/StorageUtils'
 import { Redirect } from 'react-router-dom'
 
 export const ProtectedRouteForAdminPage = ({
@@ -9,7 +9,8 @@ export const ProtectedRouteForAdminPage = ({
 }) => {
    if (getAccessToken()) {
       return <Route component={Component} {...other} />
-   } else {
+   }
+   else {
       return <Redirect to={{ pathname: '/sign-in-page' }} />
    }
 }

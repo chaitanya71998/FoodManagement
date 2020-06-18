@@ -1,14 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { getAccessToken } from '../../../Authentication/utils/StorageUtils'
+import { isLoginned } from '../../../Common/utils/LoginUtils'
 import { Redirect } from 'react-router-dom'
-import SignInPageRoute from '../../../Authentication/routes'
 
 export const ProtectedRouteForDashBoard = ({
    component: Component,
    ...other
 }) => {
-   if (getAccessToken()) {
+   if (isLoginned()) {
       return <Route component={Component} {...other} />
    }
    else {

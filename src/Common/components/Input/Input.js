@@ -7,13 +7,7 @@ class Input extends React.Component {
       value: ''
    }
    render() {
-      const {
-         type,
-         placeholder,
-         value,
-         onChange,
-         onKeyDown,
-      } = this.props
+      const { type, placeholder, value, onChange, onKeyDown } = this.props
       return (
          <InputFiled
             type={type}

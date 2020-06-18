@@ -1,3 +1,4 @@
+/*global location*/
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
@@ -7,6 +8,7 @@ import { SetDate } from '../../../Common/components/SetDate'
 import strings from '../../i18n/strings.json'
 import { white, darkBlueGrey } from '../../themes/Colors'
 import { MealTabs } from '../MealTabs'
+const queryString = require('query-string')
 import {
    Container,
    Header,
@@ -28,8 +30,9 @@ from './styledComponents'
 class PreferenceCard extends React.Component {
    constructor(props) {
       super(props)
+      const parsed = queryString.parse(location.search);
       const { match } = this.props
-      this.mealType = match.params.mealType
+      this.mealType = parsed.meal_type
    }
    render() {
       const {

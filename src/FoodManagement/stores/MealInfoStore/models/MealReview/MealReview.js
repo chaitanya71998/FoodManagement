@@ -6,7 +6,8 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-} from '@ib/api-constants'
+}
+from '@ib/api-constants'
 class MealReview {
    @observable mealType
    @observable selectedMealTypeReviewInfoAPIStatus
@@ -47,7 +48,6 @@ class MealReview {
 
    @action.bound
    setSelectedMealTypeReviewInfoAPIStatus(status) {
-      console.log('status', status)
       this.selectedMealTypeReviewInfoAPIStatus = status
    }
 

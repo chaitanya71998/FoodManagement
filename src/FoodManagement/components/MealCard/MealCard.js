@@ -180,7 +180,7 @@ class MealCard extends React.Component {
                         }
                         getAPIStatus={selectedMealTypeInfoAPIStatus}
                      >
-                        <EditButtonText>
+                        <EditButtonText data-testid="Edit">
                            {strings.mealCard.edit}
                            <TimerWrapper>
                               <TimerIcon>

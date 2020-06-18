@@ -4,14 +4,12 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import {
    setAccessToken,
    clearUserSession
-}
-from '../../../Common/utils/StorageUtils'
+} from '../../../Common/utils/StorageUtils'
 
 class AuthStore {
    @observable userSignInAPIStatus

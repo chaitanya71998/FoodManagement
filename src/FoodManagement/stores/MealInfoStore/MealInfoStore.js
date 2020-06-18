@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, reaction } from 'mobx'
 import {
    API_INITIAL,
    API_FETCHING,
@@ -50,12 +50,11 @@ class MealInfoStore {
    @action.bound
    onChangeDateInDashBoard(value) {
       this.selectedDate = value
-      this.getMealInfoAsPerDate()
+
    }
 
    @action.bound
    getMealInfoAsPerDate() {
-      this.clearMealInfo()
       const mealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(
          this.selectedDate
       )
@@ -71,8 +70,8 @@ class MealInfoStore {
 
    @action.bound
    setMealInfoResponse(response) {
-      console.log(response)
       const mealInfo = response
+      this.clearMealInfo()
       mealInfo.map(mealTypeInfo => this.getMealTypeInfo(mealTypeInfo))
    }
 
@@ -105,12 +104,13 @@ class MealInfoStore {
    }
 
    @action.bound
-   onClickEditPreference(mealType) {
+   onClickEditPreference(mealType, date) {
       this.mealType = mealType
+      this.selectedDate = date
       this.selectedMealInfo = new MealPreference(
          this.mealInfoAPIService,
          this.selectedDate,
-         mealType
+         this.mealType
       )
       this.selectedMealInfo.getSelectedMealTypeInfo()
    }
@@ -209,8 +209,12 @@ class MealInfoStore {
    clearStore() {
       this.init()
    }
-
-
+   isDateChanges = reaction(
+      () => this.selectedDate,
+      date => {
+         this.getMealInfoAsPerDate();
+      }
+   )
 }
 
 export { MealInfoStore }

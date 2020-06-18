@@ -46,7 +46,7 @@ class FoodManagementDashBoard extends React.Component {
       return mealInfo.map((mealTypeInfo, index) => {
          return (
             <MealCard
-            key={mealTypeInfo.mealId}
+               key = { mealTypeInfo.mealId }
                mealTypeInfo={mealTypeInfo}
                mealIcon={this.icons[index]}
                onClickEditPreference={onClickEditPreference}

@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { clearUserSession } from '../../../Authentication/utils/StorageUtils'
+import { clearUserSession } from '../../../Common/utils/StorageUtils'
 import { ReviewPage } from '../../components/ReviewPage'
 import strings from '../../i18n/strings.json'
 
@@ -63,7 +63,8 @@ class ReviewPageRoute extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      } else {
+      }
+      else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -96,9 +97,11 @@ class ReviewPageRoute extends React.Component {
                isLoadingOnDone={
                   this.getMealInfoStore().selectedMealInfoReview.isLoadingOnDone
                }
+               onChangeReviewOfMealType={this.getMealInfoStore().selectedMealInfoReview.onChangeReviewOfMealType}
             />
          )
-      } else {
+      }
+      else {
          return null
       }
    }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
 import { HeadCountPage } from '../../components/HeadCountPage'
-import { clearUserSession } from '../../../Authentication/utils/StorageUtils'
+import { clearUserSession } from '../../../Common/utils/StorageUtils'
 
 @inject('headCountStore')
 @observer
@@ -55,7 +55,8 @@ class AdminHomePageRoute extends React.Component {
                selectedDate={this.getheadCountStore().selectedDate}
             />
          )
-      } else {
+      }
+      else {
          return null
       }
    }

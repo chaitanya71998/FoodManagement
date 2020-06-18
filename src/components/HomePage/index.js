@@ -19,6 +19,7 @@ function App() {
                Learn React
             </a>
             <Link to='/food-management-dashboard'>FoodManagementDashBoard</Link>
+            <Link to="/set-meal-preference?date=:selectedDate&meal_type=:mealType">PreferencePage</Link>
          </header>
       </div>
    )

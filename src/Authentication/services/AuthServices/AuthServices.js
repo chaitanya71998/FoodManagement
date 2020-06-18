@@ -1,5 +1,5 @@
 import { create } from 'apisauce'
-import { networkCallWithApisauce } from '../../../Common/utils/APIUtils'
+import { networkCallWithApisauce } from '../../utils/AuthUtils'
 import { apiMethods } from '../../constants/APIConstants'
 
 class AuthServices {
@@ -12,14 +12,13 @@ class AuthServices {
    }
 
    getUserSignInAPI(requestObject) {
-      console.log('service', requestObject)
       return networkCallWithApisauce(
          this.api,
-         '/v1/signin/',
-         {},
+         '/v1/signin/', {},
          apiMethods.get
       )
    }
+
 }
 
 export { AuthServices }

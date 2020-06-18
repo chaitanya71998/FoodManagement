@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { clearUserSession } from '../../../Authentication/utils/StorageUtils'
+import { clearUserSession } from '../../../Common/utils/StorageUtils'
 import { PreferencePage } from '../../components/PreferencePage'
 import strings from '../../i18n/strings.json'
 const queryString = require('query-string')
@@ -15,15 +15,15 @@ const queryString = require('query-string')
 class PreferencePageRoute extends React.Component {
    @observable status
    componentDidMount() {
-      const { match } = this.props
-      this.mealType = match.params.mealType.slice(1)
-      // this.mealType = match.params.mealType
-      // this.selectedDate = match.params.date
+      const parsed = queryString.parse(location.search);
+      // this.mealType = match.params.mealType.slice(1)
+      this.mealType = parsed.meal_type
+      this.selectedDate = parsed.date
       this.doNetworkCalls()
    }
 
    doNetworkCalls = () => {
-      this.getMealInfoStore().onClickEditPreference(this.mealType)
+      this.getMealInfoStore().onClickEditPreference(this.mealType, this.selectedDate)
    }
 
    getMealInfoStore = () => {
