@@ -55,8 +55,7 @@ class AdminHomePageRoute extends React.Component {
                selectedDate={this.getheadCountStore().selectedDate}
             />
          )
-      }
-      else {
+      } else {
          return null
       }
    }

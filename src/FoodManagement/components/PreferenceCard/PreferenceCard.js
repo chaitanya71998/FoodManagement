@@ -23,14 +23,13 @@ import {
    Image,
    Group,
    ImageWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 @observer
 class PreferenceCard extends React.Component {
    constructor(props) {
       super(props)
-      const parsed = queryString.parse(location.search);
+      const parsed = queryString.parse(location.search)
       const { match } = this.props
       this.mealType = parsed.meal_type
    }
@@ -106,8 +105,7 @@ class PreferenceCard extends React.Component {
                </Footer>
             </Container>
          )
-      }
-      else {
+      } else {
          return null
       }
    }

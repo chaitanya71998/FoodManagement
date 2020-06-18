@@ -4,15 +4,31 @@ import isBefore from 'date-fns/isBefore'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import format from 'date-fns/format'
 
-export function getTimeDistanceInWords(deadLine) {
-   let result = formatDistanceToNow(new Date(deadLine))
-   return result
-}
+// export function getTimeDistanceInWords(deadLine) {
+//    let result = formatDistanceToNow(new Date(deadLine))
+//    return result
+// }
 
-export function isTimeBeforeDeadLine(deadLine) {
-   return isBefore(new Date(), new Date(deadLine))
-}
+// export function isTimeBeforeDeadLine(deadLine) {
+//    return isBefore(new Date(), new Date(deadLine))
+// }
 
 export function setDateFormate(date) {
    return format(new Date(date), 'yyyy-MM-dd')
+}
+
+export function getTimeDistanceInWords(fromTime, toTime) {
+   let result = formatDistance(
+      new Date(fromTime),
+      new Date(toTime), { addSuffix: true }
+   )
+   console.log("result", result)
+   return result
+}
+
+export function isTimeBeforeDeadLine(time, deadLine) {
+   console.log("time", time)
+   console.log("deadLine", deadLine)
+   console.log("isBefore", isBefore(new Date(time), new Date(deadLine)))
+   return isBefore(new Date(time), new Date(deadLine))
 }

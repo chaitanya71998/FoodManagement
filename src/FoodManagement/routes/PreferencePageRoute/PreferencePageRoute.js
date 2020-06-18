@@ -15,7 +15,7 @@ const queryString = require('query-string')
 class PreferencePageRoute extends React.Component {
    @observable status
    componentDidMount() {
-      const parsed = queryString.parse(location.search);
+      const parsed = queryString.parse(location.search)
       // this.mealType = match.params.mealType.slice(1)
       this.mealType = parsed.meal_type
       this.selectedDate = parsed.date
@@ -23,7 +23,10 @@ class PreferencePageRoute extends React.Component {
    }
 
    doNetworkCalls = () => {
-      this.getMealInfoStore().onClickEditPreference(this.mealType, this.selectedDate)
+      this.getMealInfoStore().onClickEditPreference(
+         this.mealType,
+         this.selectedDate
+      )
    }
 
    getMealInfoStore = () => {
@@ -78,8 +81,7 @@ class PreferencePageRoute extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -128,8 +130,7 @@ class PreferencePageRoute extends React.Component {
                }
             />
          )
-      }
-      else {
+      } else {
          return null
       }
    }

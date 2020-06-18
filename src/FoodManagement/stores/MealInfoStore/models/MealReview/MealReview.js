@@ -6,8 +6,7 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-}
-from '@ib/api-constants'
+} from '@ib/api-constants'
 class MealReview {
    @observable mealType
    @observable selectedMealTypeReviewInfoAPIStatus

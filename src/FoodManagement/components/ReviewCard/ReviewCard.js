@@ -17,11 +17,9 @@ import {
    TasteRating,
    TextAreaForReview,
    DoneButtonWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 class ReviewCard extends Component {
-
    renderEachItemReview = () => {
       const { selectedMealTypeInfoReview } = this.props
       return selectedMealTypeInfoReview.mealItems.map(item => {
@@ -39,7 +37,7 @@ class ReviewCard extends Component {
       })
    }
 
-   onChangeReview = (event) => {
+   onChangeReview = event => {
       const { onChangeReviewOfMealType } = this.props
       onChangeReviewOfMealType(event.target.value)
    }
@@ -60,7 +58,7 @@ class ReviewCard extends Component {
                row='3'
                cols='50'
                placeholder='write review'
-               onChange = { this.onChangeReview }
+               onChange={this.onChangeReview}
             ></TextAreaForReview>
             <DoneButtonWrapper>
                <Button

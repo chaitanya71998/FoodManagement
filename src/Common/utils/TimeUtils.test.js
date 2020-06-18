@@ -4,7 +4,8 @@ import {
    getTimeDistanceInWords,
    setDateFormate,
    isTimeBeforeDeadLine
-} from './TimeUtils'
+}
+from './TimeUtils'
 
 describe('ProductStore Tests', () => {
    it('should test setDateFormates', () => {
@@ -12,10 +13,14 @@ describe('ProductStore Tests', () => {
    })
 
    it('should test isTimeBeforeDeadLine', () => {
-      expect(isTimeBeforeDeadLine('2000-06-09 12:00:00')).toBe(false)
+      const time = "2000-06-09 11:00:00"
+      const deadLine = "2000-06-09 12:00:00"
+      expect(isTimeBeforeDeadLine(time, deadLine)).toBe(true)
    })
 
    it('should test getTimeDistanceInWords', () => {
-      expect(getTimeDistanceInWords('2020/06/03')).toMatch(/days/)
+      const toTime = '2000-06-09 12:00:00'
+      const fromTime = '2000-06-09 11:00:00'
+      expect(getTimeDistanceInWords(toTime, fromTime)).toMatch(/in about 1 hour/)
    })
 })

@@ -15,8 +15,7 @@ import {
    MealCards,
    SuccessWrapper,
    LoadingWrapper
-}
-from './styledComponents'
+} from './styledComponents'
 
 @observer
 class FoodManagementDashBoard extends React.Component {
@@ -46,7 +45,7 @@ class FoodManagementDashBoard extends React.Component {
       return mealInfo.map((mealTypeInfo, index) => {
          return (
             <MealCard
-               key = { mealTypeInfo.mealId }
+               key={mealTypeInfo.mealId}
                mealTypeInfo={mealTypeInfo}
                mealIcon={this.icons[index]}
                onClickEditPreference={onClickEditPreference}
@@ -66,8 +65,7 @@ class FoodManagementDashBoard extends React.Component {
       const mealInfo = [...mealInformation]
       if (mealInfo.length === 0) {
          return <NoDataView />
-      }
-      else {
+      } else {
          return (
             <SuccessWrapper>
                <MealCards>{this.renderMealCards()}</MealCards>

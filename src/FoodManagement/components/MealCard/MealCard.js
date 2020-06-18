@@ -40,6 +40,7 @@ class MealCard extends React.Component {
    @observable isDisabledIAteItButton = true
    @observable isDisabledISkippedButton = true
    @observable isTimeForReview = false
+   @observable presentTime
 
    componentDidMount() {
       this.setTimerForShowingEditButton()
@@ -53,13 +54,18 @@ class MealCard extends React.Component {
       clearInterval(this.intervalForShowingEnablingTheStates)
    }
 
+   getPresentDate = () => {
+      this.presentTime = new Date()
+   }
+
    setTimerForShowingEditButton = () => {
       const { mealTypeInfo } = this.props
       this.intervalForShowingEditButton = setInterval(() => {
+         this.getPresentDate()
          this.timeLeftForEditPreference = getTimeDistanceInWords(
-            mealTypeInfo.mealPreferenceDeadline
+            mealTypeInfo.mealPreferenceDeadline, this.presentTime
          )
-         if (!isTimeBeforeDeadLine(mealTypeInfo.mealPreferenceDeadline)) {
+         if (!isTimeBeforeDeadLine(this.presentTime, mealTypeInfo.mealPreferenceDeadline)) {
             this.isTimeLeftForEditing = false
             clearInterval(this.intervalForShowingEditButton)
          }
@@ -69,7 +75,8 @@ class MealCard extends React.Component {
    setTimerForShowingDisabledStates = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingDisabledStates = setInterval(() => {
-         if (!isTimeBeforeDeadLine(
+         this.getPresentDate()
+         if (!isTimeBeforeDeadLine(this.presentTime,
                `${selectedDate} ${mealTypeInfo.mealStarttime}`
             )) {
             this.isTimeForEating = true
@@ -81,7 +88,8 @@ class MealCard extends React.Component {
    setTimerForEnablingIAteItAndSkippedButtons = () => {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingEnablingTheStates = setInterval(() => {
-         if (!isTimeBeforeDeadLine(`${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
+         this.getPresentDate()
+         if (!isTimeBeforeDeadLine(this.presentTime, `${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
             this.isTimeForEating = false
             this.isTimeForReview = true
             clearInterval(this.intervalForShowingEnablingTheStates)
@@ -180,7 +188,7 @@ class MealCard extends React.Component {
                         }
                         getAPIStatus={selectedMealTypeInfoAPIStatus}
                      >
-                        <EditButtonText data-testid="Edit">
+                        <EditButtonText data-testid='Edit'>
                            {strings.mealCard.edit}
                            <TimerWrapper>
                               <TimerIcon>

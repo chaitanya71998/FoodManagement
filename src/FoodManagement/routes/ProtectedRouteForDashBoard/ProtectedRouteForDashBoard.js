@@ -9,8 +9,7 @@ export const ProtectedRouteForDashBoard = ({
 }) => {
    if (isLoginned()) {
       return <Route component={Component} {...other} />
-   }
-   else {
+   } else {
       return <Redirect to={{ pathname: '/sign-in-page' }} />
    }
 }

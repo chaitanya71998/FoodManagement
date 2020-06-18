@@ -63,8 +63,7 @@ class ReviewPageRoute extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -97,11 +96,13 @@ class ReviewPageRoute extends React.Component {
                isLoadingOnDone={
                   this.getMealInfoStore().selectedMealInfoReview.isLoadingOnDone
                }
-               onChangeReviewOfMealType={this.getMealInfoStore().selectedMealInfoReview.onChangeReviewOfMealType}
+               onChangeReviewOfMealType={
+                  this.getMealInfoStore().selectedMealInfoReview
+                     .onChangeReviewOfMealType
+               }
             />
          )
-      }
-      else {
+      } else {
          return null
       }
    }

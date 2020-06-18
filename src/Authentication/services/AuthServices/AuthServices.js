@@ -14,11 +14,11 @@ class AuthServices {
    getUserSignInAPI(requestObject) {
       return networkCallWithApisauce(
          this.api,
-         '/v1/signin/', {},
+         '/v1/signin/',
+         {},
          apiMethods.get
       )
    }
-
 }
 
 export { AuthServices }
