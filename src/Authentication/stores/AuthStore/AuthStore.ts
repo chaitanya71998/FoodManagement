@@ -10,13 +10,15 @@ import {
    setAccessToken,
    clearUserSession
 } from '../../../Common/utils/StorageUtils'
+import { AuthServices } from "../../services/AuthServices"
 
 class AuthStore {
-   @observable userSignInAPIStatus
-   @observable userSignInAPIError
-   @observable isAdmin
-   constructor(SignInAPIService) {
-      this.signInAPIService = SignInAPIService
+   @observable userSignInAPIStatus:number=API_INITIAL
+   @observable userSignInAPIError:null | string=null
+   @observable isAdmin:boolean=false
+   authServices:AuthServices
+   constructor(authServices:AuthServices) {
+      this.authServices = authServices
       this.init()
    }
 
@@ -29,7 +31,7 @@ class AuthStore {
 
    @action.bound
    userSignIn(requestObject, onSuccess, onFailure) {
-      const userSignInAPI = this.signInAPIService.getUserSignInAPI(
+      const userSignInAPI = this.authServices.getUserSignInAPI(
          requestObject
       )
       return bindPromiseWithOnSuccess(userSignInAPI)

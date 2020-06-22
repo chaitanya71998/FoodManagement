@@ -1,9 +1,10 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import strings from '../../i18n/strings.json'
+
 import { Input } from '../../../Common/components/Input'
 import { Button } from '../../../Common/components/Button'
+import strings from '../../i18n/strings.json'
 import { brightBlue } from '../../themes/Colors'
 import {
    Container,
@@ -21,8 +22,16 @@ import {
 }
 from './styledComponent'
 
+type objectType={
+   onClickLoginIn:Function,
+   userSignInAPIStatus:number,
+   isErrorFromTheServer:Boolean,
+
+
+}
+
 @observer
-class SignInPage extends React.Component {
+class SignInPage extends React.Component<objectType> {
    @observable username = ''
    @observable password = ''
    @observable errorMessageForUserName = ''

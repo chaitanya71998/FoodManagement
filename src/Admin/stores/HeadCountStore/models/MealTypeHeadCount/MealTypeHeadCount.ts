@@ -6,16 +6,19 @@ import {
    API_FAILED
 } from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
+import { MealInfoAPIService } from "../../../../services/MealInfoAPIService"
 class MealTypeHeadCount {
-   @observable headCountAPIStatus
-   @observable headCountAPIError
-   @observable selectedDate
-   @observable mealType
+   @observable headCountAPIStatus:number=API_INITIAL
+   @observable headCountAPIError:null | string=null
+   @observable selectedDate:string
+   @observable mealType:string
+   @observable mealInfo:Array<Object>=[]
    @observable headCountInfo
-   constructor(mealInfoAPIService, mealType, date) {
+   @observable mealInfoAPIService:MealInfoAPIService
+   constructor(mealInfoAPIService, date, mealType) {
       this.mealInfoAPIService = mealInfoAPIService
-      this.selectedDate = mealType
-      this.mealType = date
+      this.selectedDate = date
+      this.mealType = mealType
       this.init()
    }
 
@@ -35,7 +38,7 @@ class MealTypeHeadCount {
       )
       return bindPromiseWithOnSuccess(headCountInfoAPI)
          .to(this.setHeadCountAPIStatus, this.setHeadCountAPIResponse)
-         .catch(this.setheadCountAPIError)
+         .catch(this.setHeadCountAPIError)
    }
 
    @action.bound
@@ -45,7 +48,6 @@ class MealTypeHeadCount {
 
    @action.bound
    setHeadCountAPIResponse(response) {
-      console.log('response', response)
       this.headCountInfo = response
    }
 

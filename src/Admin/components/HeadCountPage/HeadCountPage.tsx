@@ -39,9 +39,53 @@ import {
 import strings from '../../i18n/strings.json'
 
 const color = 'blue'
+type Items={
+   name:string,
+   category:string,
+   quantity:number,
+   measuring_quantity:string
+}
+
+type HeadCount={
+   full_meal_head_count:number,
+   half_meal_head_count:number,
+   custom_meal_head_count:number,
+   skipped_meal_head_count:number
+}
+
+type Summary={
+   total_meal_head_count:number,
+   completed_meal_head_count:number
+}
+
+type SelectedMealTypeheadCount ={
+   items:Array<Items>,
+   head_count:HeadCount,
+   summary:Summary
+}
+
+type HeadCountPageProps={
+   selectedMealTypeheadCount:SelectedMealTypeheadCount,
+   onChangeMealTypeTab:(mealInfoTitle:string)=>void,
+   onChangeDate:(date:string)=>void,
+   selectedDate:string,
+   headCountAPIError:null | string,
+   headCountAPIStatus:number,
+   onRetry:()=>void,
+   gotoHome:()=>void,
+   onClickSignOut:()=>void
+
+
+}
+
+
+
+
 
 @observer
-class HeadCountPage extends Component {
+class HeadCountPage extends Component<HeadCountPageProps>{
+   mealInfoTitle:Array<string>
+   panes:Array<Object>=[]
    constructor(props) {
       super(props)
       this.mealInfoTitle = ['Breakfast', 'Lunch', 'Dinner']

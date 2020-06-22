@@ -7,13 +7,15 @@ import {
 } from '@ib/api-constants'
 import { setDateFormate } from '../../../Common/utils/TimeUtils'
 import { MealTypeHeadCount } from './models/MealTypeHeadCount'
+import { MealInfoAPIService } from "../../services/MealInfoAPIService"
+
 
 class HeadCountStore {
-   @observable selectedDate
-   @observable mealType
-   @observable selectedMealTypeheadCount
-
-   constructor(mealInfoAPIService) {
+   @observable selectedDate:string
+   @observable selectedMealType:string="Breakfast"
+   @observable selectedMealTypeheadCount:MealTypeHeadCount| any ={} //TODO
+   mealInfoAPIService:MealInfoAPIService
+   constructor(mealInfoAPIService:MealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService
       this.init()
       this.selectedDate = setDateFormate(new Date())

@@ -1,8 +1,9 @@
 import { create } from 'apisauce'
 import { networkCallWithApisauce } from '../../../Common/utils/APIUtils'
 import { apiMethods } from '../../../Common/constants/APIConstants'
-import headCountInfo from '../../fixtures/headCountInfo'
+
 class MealInfoAPIServiceFixture {
+   api:Object
    constructor() {
       this.api = create({
          //baseURL: 'https://5ea1a14db9f5ca00166c1f27.mockapi.io/api/'

@@ -1,13 +1,23 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
+import {History} from 'history'
 import { withRouter, Redirect } from 'react-router-dom'
+
 import { getAccessToken } from '../../../Common/utils/StorageUtils'
 import { SignInPage } from '../../components/SignInPage'
+import { AuthStore } from "../../stores/AuthStore"
 
+type SignRouteProps ={
+   authStore:AuthStore,
+   history:History,
+   isErrorFromTheServer:boolean
+
+
+}
 @inject('authStore')
 @observer
-class SignInRoute extends React.Component {
+class SignInRoute extends React.Component <SignRouteProps>{
    @observable isErrorFromTheServer = false
    getAuthStore = () => {
       return this.props.authStore
@@ -24,10 +34,10 @@ class SignInRoute extends React.Component {
    onSuccess = () => {
       const { history } = this.props
       if (this.getAuthStore().isAdmin) {
-         history.replace('/admin-page')
+         history.replace('/food-management-dashboard')
       }
       else {
-         history.replace('/food-management-dashboard')
+         history.replace('/admin-page')
       }
       //history.replace('/admin-page')
    }

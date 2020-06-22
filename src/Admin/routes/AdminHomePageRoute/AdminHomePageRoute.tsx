@@ -1,11 +1,18 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
-import { HeadCountPage } from '../../components/HeadCountPage'
-import { clearUserSession } from '../../../Common/utils/StorageUtils'
+import {History} from 'history'
 
+import { clearUserSession } from '../../../Common/utils/StorageUtils'
+import { HeadCountPage } from '../../components/HeadCountPage'
+import { HeadCountStore } from "../../stores/HeadCountStore"
+
+type AdminHomePageRouteProps={
+   headCountStore:HeadCountStore,
+   history:History
+}
 @inject('headCountStore')
 @observer
-class AdminHomePageRoute extends React.Component {
+class AdminHomePageRoute extends React.Component <AdminHomePageRouteProps>{
    componentDidMount() {
       this.doNetworkCalls()
    }

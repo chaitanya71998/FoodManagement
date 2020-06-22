@@ -3,6 +3,7 @@ import { networkCallWithApisauce } from '../../utils/AuthUtils'
 import { apiMethods } from '../../constants/APIConstants'
 
 class AuthServices {
+   api:object
    constructor() {
       this.api = create({
          baseURL: 'https://5ea1a14db9f5ca00166c1f27.mockapi.io/api/'
