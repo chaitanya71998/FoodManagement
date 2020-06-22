@@ -1,5 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+import { jsx, css, Global, ClassNames } from '@emotion/core'
 
 import LoadingWrapperWithFailure from '../../../Common/components/LoadingWrapperWithFailure'
 import NoDataView from '../../../Common/components/NoDataView'
@@ -15,7 +16,8 @@ import {
    MealCards,
    SuccessWrapper,
    LoadingWrapper
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class FoodManagementDashBoard extends React.Component {
@@ -65,7 +67,8 @@ class FoodManagementDashBoard extends React.Component {
       const mealInfo = [...mealInformation]
       if (mealInfo.length === 0) {
          return <NoDataView />
-      } else {
+      }
+      else {
          return (
             <SuccessWrapper>
                <MealCards>{this.renderMealCards()}</MealCards>

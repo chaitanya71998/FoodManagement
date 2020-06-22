@@ -24,13 +24,14 @@ const App = () => {
          <Router basename={process.env.PUBLIC_URL}>
             <Switch>
                {signInPageRoute}
-               {adminRoutes}
                <ProtectedRouteForDashBoard
+                  key='food-management-dashboard'
                   exact
                   path='/food-management-dashboard'
                   component={FoodManagementDashBoardRoute}
                />
                <ProtectedRouteForDashBoard
+                  key='set-meal-preference'
                   exact
                   path='/set-meal-preference'
                   // exact
@@ -38,6 +39,7 @@ const App = () => {
                   component={PreferencePageRoute}
                />
                <ProtectedRouteForDashBoard
+                  key='/food-management-dashboard/review/:mealType'
                   exact
                   path={`/food-management-dashboard/review/:mealType`}
                   component={ReviewPageRoute}
@@ -53,3 +55,25 @@ const App = () => {
 }
 
 export default App
+/*
+{adminRoutes}
+               <ProtectedRouteForDashBoard
+               key='food-management-dashboard'
+                  exact
+                  path='/food-management-dashboard'
+                  component={FoodManagementDashBoardRoute}
+               />
+               <ProtectedRouteForDashBoard
+               key='set-meal-preference'
+                  exact
+                  path='/set-meal-preference'
+                  // exact
+                  // path = '/food-management-dashboard/:mealType'
+                  component={PreferencePageRoute}
+               />
+               <ProtectedRouteForDashBoard
+               key='/food-management-dashboard/review/:mealType'
+                  exact
+                  path={`/food-management-dashboard/review/:mealType`}
+                  component={ReviewPageRoute}
+               />*/

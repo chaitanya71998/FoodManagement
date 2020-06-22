@@ -1,6 +1,7 @@
 import mealInfo from '../../fixtures/mealInfo.json'
 import mealPreferenceInfo from '../../fixtures/preferncePageInfo'
 import reviewInfo from '../../fixtures/reviewInfo'
+import listOfItems from '../../fixtures/listOfItems'
 class MealInfoAPIServiceFixture {
    getMealInfoAPI(date) {
       return new Promise((resolve, reject) => {
@@ -55,6 +56,24 @@ class MealInfoAPIServiceFixture {
             resolve('updated')
          }, 1000)
       })
+   }
+
+   getItems(requestObject) {
+      console.log("requestObject", requestObject)
+      return new Promise(resolve =>
+         setTimeout(
+            () =>
+            resolve({
+               list_of_projects: listOfItems[
+                     'list_of_projects'
+                  ]
+                  .slice()
+                  .splice(requestObject.offset, requestObject.limit),
+               number_of_projects: listOfItems['number_of_projects']
+            }),
+            2000
+         )
+      )
    }
 }
 

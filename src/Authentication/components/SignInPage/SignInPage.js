@@ -18,7 +18,8 @@ import {
    ErrorMessage,
    ButtonText,
    InputContainer
-} from './styledComponent'
+}
+from './styledComponent'
 
 @observer
 class SignInPage extends React.Component {
@@ -50,15 +51,18 @@ class SignInPage extends React.Component {
             password: this.password
          }
          onClickLoginIn(requestObject)
-      } else if (this.username === '') {
+      }
+      else if (this.username === '') {
          this.errorMessageForUserName = 'Please enter username'
-      } else {
+      }
+      else {
          this.errorMessageForPassword = 'Please enter password'
       }
    }
 
    render() {
       const { userSignInAPIStatus, isErrorFromTheServer } = this.props
+      console.log("sign in page")
       return (
          <Container>
             <SignInContainer>
@@ -85,7 +89,6 @@ class SignInPage extends React.Component {
                      <ErrorMessage>{this.errorMessageForUserName}</ErrorMessage>
                   )}
                </UserNameField>
-
                <PasswordFeild>
                   <Lable>{strings.signInPage.password}</Lable>
                   <Input
@@ -112,6 +115,7 @@ class SignInPage extends React.Component {
                {isErrorFromTheServer && (
                   <ErrorMessage>{strings.signInPage.errorMessage}</ErrorMessage>
                )}
+               
             </SignInContainer>
          </Container>
       )

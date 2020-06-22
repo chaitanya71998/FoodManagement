@@ -1,0 +1,429 @@
+{
+    "list_of_projects": [{
+            "project_id": 1,
+            "name": "Project Management Platform1",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects dgfikjwe quefiq queg  uiqaedh iuefidchfn"
+        },
+        {
+            "project_id": 2,
+            "name": "Project Management Platform2",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects FDGHJFGH DJ"
+        },
+        {
+            "project_id": 3,
+            "name": "Project Management Platform3",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "In Progress"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 4,
+            "name": "Project Management Platform4",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 5,
+            "name": "Project Management Platform5",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "To Be Reviewed"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 6,
+            "name": "Project Management Platform6",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 7,
+            "name": "Project Management Platform7",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "On Hold"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 8,
+            "name": "Project Management Platform8",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 9,
+            "name": "Project Management Platform9",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "To Be Reviewed"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 10,
+            "name": "Project Management Platform10",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "On Hold"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 11,
+            "name": "Project Management Platform11",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "In Progress"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 12,
+            "name": "Project Management Platform12",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 13,
+            "name": "Project Management Platform13",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 14,
+            "name": "Project Management Platform14",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 15,
+            "name": "Project Management Platform15",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "In Progress"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 16,
+            "name": "Project Management Platform16",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 17,
+            "name": "Project Management Platform17",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "On Hold"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 18,
+            "name": "Project Management Platform18",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 19,
+            "name": "Project Management Platform19",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "In Progress"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 20,
+            "name": "Project Management Platform20",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 21,
+            "name": "Project Management Platform21",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 22,
+            "name": "Project Management Platform22",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "To Be Reviewed"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 23,
+            "name": "Project Management Platform23",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Todo"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 24,
+            "name": "Project Management Platform24",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "Done"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        },
+        {
+            "project_id": 25,
+            "name": "Project Management Platform25",
+            "project_type": "classic software",
+            "created_by": {
+                "user_id": 1,
+                "user_name": "bhargav",
+                "is_admin": true,
+                "profile_pic": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/6429adab-071e-447b-aed9-e78ab56f4ce5@3x.png"
+            },
+            "workflow_type": {
+                "work_flow_id": 1,
+                "name": "In Progress"
+            },
+            "created_at": "28-05-2020 at 10:30:30",
+            "description": "creating a list of projects"
+        }
+    ],
+    "number_of_projects": 25
+}

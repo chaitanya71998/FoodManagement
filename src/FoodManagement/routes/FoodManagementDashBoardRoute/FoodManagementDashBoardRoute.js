@@ -18,7 +18,7 @@ class FoodManagementDashBoardRoute extends React.Component {
 
    componentWillUnmount() {
       this.getMealInfoStore().clearStore()
-      this.getMealInfoStore().isDateChanges()
+      // this.getMealInfoStore().isDateChanges()
    }
 
    getMealInfoStore = () => {
@@ -70,6 +70,7 @@ class FoodManagementDashBoardRoute extends React.Component {
             doNetworkCalls={this.doNetworkCalls}
          />
       )
+
    }
 }
 

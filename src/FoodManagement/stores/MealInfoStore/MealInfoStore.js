@@ -4,11 +4,13 @@ import {
    API_FETCHING,
    API_SUCCESS,
    API_FAILED
-} from '@ib/api-constants'
+}
+from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { MealPreference } from './models/MealPreference'
 import { MealReview } from './models/MealReview'
 import { setDateFormate } from '../../../Common/utils/TimeUtils'
+import { PaginationStore } from '../../../Common/stores/PaginationStore'
 
 class MealInfoStore {
    @observable mealInfoAPIStatus
@@ -26,10 +28,12 @@ class MealInfoStore {
    @observable loading1Error = null
    @observable loading2Status = API_INITIAL
    @observable loading2Error = null
-
+   @observable paginationResponse
+   itemsPerPage = 2
    constructor(mealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService
       this.selectedDate = setDateFormate(new Date())
+      console.log("date", this.selectedDate)
       this.init()
    }
 
@@ -49,10 +53,19 @@ class MealInfoStore {
    @action.bound
    onChangeDateInDashBoard(value) {
       this.selectedDate = value
+      this.getMealInfoAsPerDate()
+   }
+
+   @action.bound
+   getResponse() {
+      console.log("currentPageResponse", this.paginationResponse.currentPageResponse())
    }
 
    @action.bound
    getMealInfoAsPerDate() {
+      console.log('store')
+      this.paginationResponse = new PaginationStore(this.mealInfoAPIService.getItems, this.itemsPerPage)
+      this.paginationResponse.getItemsList()
       const mealInfoAPI = this.mealInfoAPIService.getMealInfoAPI(
          this.selectedDate
       )
@@ -207,12 +220,13 @@ class MealInfoStore {
    clearStore() {
       this.init()
    }
-   isDateChanges = reaction(
-      () => this.selectedDate,
-      date => {
-         this.getMealInfoAsPerDate()
-      }
-   )
+   // isDateChanges = reaction(
+   //    () => this.selectedDate,
+   //    date => {
+   //       this.getMealInfoAsPerDate()
+   //       console.log("reaction", this.selectedDate)
+   //    }
+   // )
 }
 
 export { MealInfoStore }

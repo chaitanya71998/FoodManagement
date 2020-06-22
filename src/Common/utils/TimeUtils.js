@@ -22,13 +22,9 @@ export function getTimeDistanceInWords(fromTime, toTime) {
       new Date(fromTime),
       new Date(toTime), { addSuffix: true }
    )
-   console.log("result", result)
    return result
 }
 
 export function isTimeBeforeDeadLine(time, deadLine) {
-   console.log("time", time)
-   console.log("deadLine", deadLine)
-   console.log("isBefore", isBefore(new Date(time), new Date(deadLine)))
    return isBefore(new Date(time), new Date(deadLine))
 }

@@ -6,7 +6,8 @@ import {
    API_FAILED,
    API_FETCHING,
    API_INITIAL
-} from '@ib/api-constants'
+}
+from '@ib/api-constants'
 import { waitFor } from '@testing-library/react'
 import { MealInfoAPIService } from '../../services/MealInfoAPIService'
 import { MealInfoStore } from './'

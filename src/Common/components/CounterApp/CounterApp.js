@@ -7,7 +7,8 @@ import {
    Input,
    DecrementButton,
    Group
-} from './styledComponents'
+}
+from './styledComponents'
 
 @observer
 class CounterApp extends React.Component {
@@ -21,12 +22,12 @@ class CounterApp extends React.Component {
    onIncrement = () => {
       const { onChangeQuantity } = this.props
       this.count++
-      onChangeQuantity(this.count)
+         onChangeQuantity(this.count)
    }
    onDecrement = () => {
       const { onChangeQuantity } = this.props
       this.count--
-      onChangeQuantity(this.count)
+         onChangeQuantity(this.count)
    }
 
    render() {

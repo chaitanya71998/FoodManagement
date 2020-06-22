@@ -1,0 +1,14 @@
+.containerClassName {
+    display: flex;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.pageClassName {
+    width: 50px;
+    height: 30px;
+}
+
+.activeClassName {
+    background-color: blue;
+}
