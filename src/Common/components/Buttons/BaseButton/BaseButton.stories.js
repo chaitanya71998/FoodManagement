@@ -6,10 +6,9 @@ import '../../../../styles/tailwind.css'
 import { BaseButton } from './BaseButton.js'
 
 export default {
-    component: BaseButton,
-    title: 'src/Common/components/BaseButton',
+   component: BaseButton,
+   title: 'src/Common/components/BaseButton'
 }
-
 
 export const defaultView = () => <BaseButton />
 

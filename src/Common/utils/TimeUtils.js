@@ -18,10 +18,9 @@ export function setDateFormate(date) {
 }
 
 export function getTimeDistanceInWords(fromTime, toTime) {
-   let result = formatDistance(
-      new Date(fromTime),
-      new Date(toTime), { addSuffix: true }
-   )
+   let result = formatDistance(new Date(fromTime), new Date(toTime), {
+      addSuffix: true
+   })
    return result
 }
 

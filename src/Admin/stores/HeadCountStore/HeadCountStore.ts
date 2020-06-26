@@ -12,8 +12,8 @@ import { MealInfoAPIService } from "../../services/MealInfoAPIService"
 
 class HeadCountStore {
    @observable selectedDate:string
-   @observable selectedMealType:string="Breakfast"
-   @observable selectedMealTypeheadCount:MealTypeHeadCount| any ={} //TODO
+   @observable selectedMealType!:string
+   @observable selectedMealTypeheadCount!:MealTypeHeadCount| any //TODO
    mealInfoAPIService:MealInfoAPIService
    constructor(mealInfoAPIService:MealInfoAPIService) {
       this.mealInfoAPIService = mealInfoAPIService

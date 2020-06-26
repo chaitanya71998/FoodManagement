@@ -13,9 +13,26 @@ import {
    LoadingWrapper,
    ReviewCardWrapper
 } from './styledComponents'
+import { MealReview } from '../../stores/MealInfoStore/models/MealReview'
+import { APIStatus } from '@ib/api-constants'
+
+export interface ReviewCardProps {
+   selectedMealTypeInfoReview: MealReview | any
+   onSaveMealReview: () => void
+   isLoadingOnDone: boolean
+   onChangeReviewOfMealType: (review: string) => void
+}
+
+interface ReviewPageProps extends ReviewCardProps {
+   selectedMealTypeReviewInfoAPIStatus: APIStatus
+   selectedMealTypeReviewInfoAPIError: Error | null
+   doNetworkCalls: () => void
+   gotoHome: () => void
+   onClickSignOut: () => void
+}
 
 @observer
-class ReviewPage extends React.Component {
+class ReviewPage extends React.Component<ReviewPageProps> {
    renderMealReviewInfo = observer(() => {
       const {
          selectedMealTypeInfoReview,

@@ -2,15 +2,15 @@ import styled from '@emotion/styled'
 import tw from 'tailwind.macro'
 import { Steel, White } from '../../../themes/Colors.js'
 
-const ButtonWrapper = styled.button `
+const ButtonWrapper = styled.button`
    ${tw`outline-none flex justify-center items-center flex-grow`}
    ${props => ({
       width: '100px',
       height: '40px',
       borderRadius: '4px',
       border: 'solid 1px #e4e9f0',
-      backgroundColor: "blue",
-      color: "black"
+      backgroundColor: 'blue',
+      color: 'black'
    })}
    ${props =>
       props.disabled
@@ -18,7 +18,7 @@ const ButtonWrapper = styled.button `
          : { cursor: 'pointer' }}
 `
 
-const ButtonText = styled.div `
+const ButtonText = styled.div`
    ${tw``}
    width:100%
 `

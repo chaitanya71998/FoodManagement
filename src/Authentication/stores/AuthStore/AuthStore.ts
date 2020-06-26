@@ -3,7 +3,8 @@ import {
    API_INITIAL,
    API_FETCHING,
    API_SUCCESS,
-   API_FAILED
+   API_FAILED,
+   APIStatus
 } from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import {
@@ -11,11 +12,12 @@ import {
    clearUserSession
 } from '../../../Common/utils/StorageUtils'
 import { AuthServices } from "../../services/AuthServices"
+import { RequestObject, AccessToken } from "../types"
 
 class AuthStore {
-   @observable userSignInAPIStatus:number=API_INITIAL
-   @observable userSignInAPIError:null | string=null
-   @observable isAdmin:boolean=false
+   @observable userSignInAPIStatus!:APIStatus
+   @observable userSignInAPIError!:null | Error
+   @observable isAdmin!:boolean
    authServices:AuthServices
    constructor(authServices:AuthServices) {
       this.authServices = authServices
@@ -30,7 +32,8 @@ class AuthStore {
    }
 
    @action.bound
-   userSignIn(requestObject, onSuccess, onFailure) {
+   //TODO
+   userSignIn(requestObject:RequestObject, onSuccess:Function, onFailure:Function) {
       const userSignInAPI = this.authServices.getUserSignInAPI(
          requestObject
       )
@@ -46,13 +49,17 @@ class AuthStore {
    }
 
    @action.bound
-   setUserSignInAPIResponse(response) {
-      this.isAdmin = response.is_admin
-      setAccessToken(response[0].access_token)
+   //TODO
+   setUserSignInAPIResponse(response:Array<AccessToken> | null) {
+      //this.isAdmin = response.is_admin
+      if(response){
+         setAccessToken(response[0].access_token)
+      }
+      
    }
 
    @action.bound
-   setUserSignInAPIError(error) {
+   setUserSignInAPIError(error:Error) {
       this.userSignInAPIError = error
    }
 

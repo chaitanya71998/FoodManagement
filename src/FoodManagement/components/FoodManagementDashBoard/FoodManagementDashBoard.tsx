@@ -1,13 +1,16 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { jsx, css, Global, ClassNames } from '@emotion/core'
 
 import LoadingWrapperWithFailure from '../../../Common/components/LoadingWrapperWithFailure'
 import NoDataView from '../../../Common/components/NoDataView'
 import { SetDate } from '../../../Common/components/SetDate'
 import { SetCarousel } from '../../../Common/components/SetCarousel'
+
 import { Header } from '../../common/components/Header'
+import { MealInfoType } from '../../stores/MealInfoStore/MealInfoStore'
 import { MealCard } from '../MealCard'
+import { MealPreference } from '../../stores/MealInfoStore/models/MealPreference'
+
 import {
    Container,
    Banner,
@@ -16,11 +19,29 @@ import {
    MealCards,
    SuccessWrapper,
    LoadingWrapper
+} from './styledComponents'
+
+interface FoodManagementDashBoardProps {
+   mealInformation: Array<MealInfoType>
+   onClickEditPreference: (mealType: string) => void
+   selectedDate: String
+   onClickReviewButton: Function
+   selectedMealTypeInfo: null | MealPreference
+   onClickIAteIt: Function
+   onClickISkipped: Function
+   doNetworkCalls: Function
+   mealInfoAPIStatus: number
+   mealInfoAPIError: string | null
+   gotoHome: () => void
+   onClickSignOut: () => void
+   onChangeDate: Function
 }
-from './styledComponents'
 
 @observer
-class FoodManagementDashBoard extends React.Component {
+class FoodManagementDashBoard extends React.Component<
+   FoodManagementDashBoardProps
+> {
+   icons: Array<string>
    constructor(props) {
       super(props)
       this.icons = [
@@ -34,10 +55,9 @@ class FoodManagementDashBoard extends React.Component {
       const {
          mealInformation,
          onClickEditPreference,
-         timeLeftForEditPreference,
          selectedDate,
          onClickReviewButton,
-         selectedMealTypeInfoAPIStatus,
+         selectedMealTypeInfo,
          onClickIAteIt,
          onClickISkipped,
          doNetworkCalls
@@ -51,10 +71,9 @@ class FoodManagementDashBoard extends React.Component {
                mealTypeInfo={mealTypeInfo}
                mealIcon={this.icons[index]}
                onClickEditPreference={onClickEditPreference}
-               timeLeftForEditPreference={timeLeftForEditPreference}
                selectedDate={selectedDate}
                onClickReviewButton={onClickReviewButton}
-               selectedMealTypeInfoAPIStatus={selectedMealTypeInfoAPIStatus}
+               selectedMealTypeInfo={selectedMealTypeInfo}
                onClickIAteIt={onClickIAteIt}
                onClickISkipped={onClickISkipped}
                doNetworkCalls={doNetworkCalls}
@@ -67,8 +86,7 @@ class FoodManagementDashBoard extends React.Component {
       const mealInfo = [...mealInformation]
       if (mealInfo.length === 0) {
          return <NoDataView />
-      }
-      else {
+      } else {
          return (
             <SuccessWrapper>
                <MealCards>{this.renderMealCards()}</MealCards>
@@ -115,4 +133,4 @@ class FoodManagementDashBoard extends React.Component {
    }
 }
 
-export { FoodManagementDashBoard }
+export default FoodManagementDashBoard

@@ -6,10 +6,14 @@ import { clearUserSession } from '../../../Common/utils/StorageUtils'
 import { HeadCountPage } from '../../components/HeadCountPage'
 import { HeadCountStore } from "../../stores/HeadCountStore"
 
-type AdminHomePageRouteProps={
-   headCountStore:HeadCountStore,
+interface AdminHomePageRouteProps{
    history:History
 }
+interface InjectedProps extends AdminHomePageRouteProps{
+   headCountStore:HeadCountStore,
+   
+}
+
 @inject('headCountStore')
 @observer
 class AdminHomePageRoute extends React.Component <AdminHomePageRouteProps>{
@@ -22,8 +26,10 @@ class AdminHomePageRoute extends React.Component <AdminHomePageRouteProps>{
       this.getheadCountStore().getSelectedMealTypeHeadCount()
    }
 
+   getInjectedProps =():InjectedProps=>this.props as InjectedProps
+
    getheadCountStore = () => {
-      return this.props.headCountStore
+      return this.getInjectedProps().headCountStore
    }
 
    gotoHome = () => {

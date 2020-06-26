@@ -1,26 +1,30 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import {History} from 'history'
-import { withRouter, Redirect } from 'react-router-dom'
+
+import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 
 import { getAccessToken } from '../../../Common/utils/StorageUtils'
 import { SignInPage } from '../../components/SignInPage'
-import { AuthStore } from "../../stores/AuthStore"
+import { AuthStore } from '../../stores/AuthStore'
 
-type SignRouteProps ={
-   authStore:AuthStore,
-   history:History,
-   isErrorFromTheServer:boolean
-
-
+interface SignRouteProps extends RouteComponentProps {
+   isErrorFromTheServer: boolean
 }
+
+interface InjectedProps extends SignRouteProps {
+   authStore: AuthStore
+}
+
 @inject('authStore')
 @observer
-class SignInRoute extends React.Component <SignRouteProps>{
-   @observable isErrorFromTheServer = false
+class SignInRoute extends React.Component<SignRouteProps> {
+   @observable isErrorFromTheServer: boolean = false
+
+   getInjectedProps = (): InjectedProps => this.props as InjectedProps
+
    getAuthStore = () => {
-      return this.props.authStore
+      return this.getInjectedProps().authStore
    }
 
    onClickLoginIn = requestObject => {
@@ -34,10 +38,9 @@ class SignInRoute extends React.Component <SignRouteProps>{
    onSuccess = () => {
       const { history } = this.props
       if (this.getAuthStore().isAdmin) {
-         history.replace('/food-management-dashboard')
-      }
-      else {
          history.replace('/admin-page')
+      } else {
+         history.replace('/food-management-dashboard')
       }
       //history.replace('/admin-page')
    }
@@ -45,7 +48,6 @@ class SignInRoute extends React.Component <SignRouteProps>{
       this.isErrorFromTheServer = true
    }
    render() {
-
       return (
          <SignInPage
             onClickLoginIn={this.onClickLoginIn}

@@ -1,26 +1,52 @@
 import { observable, action } from 'mobx'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import { ItemInfo } from '../ItemInfo'
 import {
    API_INITIAL,
    API_FETCHING,
    API_SUCCESS,
-   API_FAILED
+   API_FAILED,APIStatus
 } from '@ib/api-constants'
-class MealPreference {
-   @observable preferencesInfo = []
-   @observable selectedPreference
-   @observable selectedMealTypeInfoAPIStatus
-   @observable selectedMealTypeAPIInfoError
-   @observable updatedPreferenceFullOrHalfOrSkipMealAPIStatus
-   @observable updatedPreferenceFullOrHalfOrSkipMealAPIError
-   @observable updatedPreferenceCustomMealAPIStatus
-   @observable updatedPreferenceCustomMealAPIError
-   @observable mealType
-   @observable isLoadingOnSave = false
-   @observable isLoadingOnSkipped = false
 
-   constructor(mealInfoAPIService, selectedDate, mealType) {
+import { MealInfoAPIService } from "../../../../services/MealInfoAPIService"
+import { ItemInfo } from '../ItemInfo'
+import ArrayType from "@storybook/addon-knobs/dist/components/types/Array"
+import MealInfoService from '../../../../services'
+import { PreferenceMealItems,SelectedPreferenceAsCustomInfo } from '../../../types'
+
+type PreferenceInfo={
+   mealPreference:string,
+   mealItems:Array<ItemInfo>
+}
+
+type Item={
+   item_id: number,
+   quantity:number,
+   serving_size_unit:string
+
+}
+type SelectedPreferenceInfo={
+   meal_type:string,
+   meal_preference:string,
+   date:string,
+   meal_Items:Array<Item>
+   
+}
+
+class MealPreference {
+   @observable preferencesInfo:Array<PreferenceInfo> = []
+   @observable selectedPreference!:string
+   @observable selectedMealTypeInfoAPIStatus!:APIStatus
+   @observable selectedMealTypeAPIInfoError!:null | Error
+   @observable updatedPreferenceAPIStatus!:APIStatus
+   @observable updatedPreferenceAPIError!:null | Error
+   @observable updatedCustomMealAPIStatus!:APIStatus
+   @observable updatedCustomMealAPIError!:null | Error
+   @observable mealType:string
+   @observable isLoadingOnSave:boolean = false
+   @observable isLoadingOnSkipped:boolean = false
+   mealInfoAPIService:MealInfoService
+   selectedDate:string
+   constructor(mealInfoAPIService:MealInfoService, selectedDate:string, mealType:string) {
       this.mealInfoAPIService = mealInfoAPIService
       this.selectedDate = selectedDate
       this.mealType = mealType
@@ -55,16 +81,16 @@ class MealPreference {
    @action.bound
    onChangeDateInPreferenceCard(date) {
       this.selectedDate = date
-      this.getSelectedMealTypeInfo(this.mealType)
+      this.getSelectedMealTypeInfo()
    }
 
    @action.bound
-   setSelectedMealTypeInfoAPIStatus(status) {
+   setSelectedMealTypeInfoAPIStatus(status:APIStatus) {
       this.selectedMealTypeInfoAPIStatus = status
    }
 
    @action.bound
-   setSelectedMealTypeAPIInfoError(error) {
+   setSelectedMealTypeAPIInfoError(error:Error) {
       this.selectedMealTypeAPIInfoError = error
    }
 
@@ -72,12 +98,12 @@ class MealPreference {
    setSelectedMealTypeInfoAPIResponse(response) {
       this.clearPreferencesInfo()
       response.map(preference => {
-         let mealItems = []
+         let mealItems:Array<ItemInfo> = []
          preference.meal_items.map(item => {
             const itemInfo = new ItemInfo(item)
             mealItems.push(itemInfo)
          })
-         const preferenceInfo = {
+         const preferenceInfo:PreferenceInfo= {
             mealPreference: preference.meal_preference,
             mealItems: [...mealItems]
          }
@@ -92,21 +118,23 @@ class MealPreference {
 
    @action.bound
    onSaveMealPreference(onSuccess, onFailure, button) {
-      let mealItemsInfo = []
+      let mealItemsInfo:Array<ItemInfo> = []
       this.preferencesInfo.forEach(preference => {
          if (preference.mealPreference === 'Custom') {
             mealItemsInfo = [...preference.mealItems]
          }
       })
-      let selectedPreferenceInfo = {}
+
       if (
          this.selectedPreference === 'FullMeal' ||
          this.selectedPreference === 'HalfMeal' ||
          this.selectedPreference === 'Skipped'
       ) {
-         selectedPreferenceInfo.meal_type = this.mealType
-         selectedPreferenceInfo.meal_preference = this.selectedPreference
-         selectedPreferenceInfo.date = this.selectedDate
+         let selectedPreferenceInfo={
+           meal_type: this.mealType,
+         meal_preference:this.selectedPreference,
+         date: this.selectedDate
+         }
          this.setSelectedPreference(
             selectedPreferenceInfo,
             onSuccess,
@@ -114,19 +142,23 @@ class MealPreference {
             button
          )
       } else {
-         selectedPreferenceInfo.meal_type = this.mealType
-         selectedPreferenceInfo.meal_items = []
+         let selectedPreferenceAsCustomInfo:SelectedPreferenceAsCustomInfo={
+            meal_type : this.mealType,
+            meal_items:[],
+            date:this.selectedDate
+
+         }
+         
          mealItemsInfo.forEach(itemInfo => {
-            let item = {
+            let item:Item = {
                item_id: itemInfo.mealItemId,
                quantity: itemInfo.quantity,
                serving_size_unit: itemInfo.servingSizeUnit
             }
-            selectedPreferenceInfo.meal_items.push(item)
+            selectedPreferenceAsCustomInfo.meal_items.push(item)
          })
-         selectedPreferenceInfo.date = this.selectedDate
          this.setSelectedPreferenceAsCustomMeal(
-            selectedPreferenceInfo,
+            selectedPreferenceAsCustomInfo,
             onSuccess,
             onFailure,
             button
@@ -157,8 +189,8 @@ class MealPreference {
                   }
                }
             },
-            response => {
-               this.setUpdatedPreferenceAPIResponse(response)
+            () => {
+               this.setUpdatedPreferenceAPIResponse()
                onSuccess()
             }
          )
@@ -208,8 +240,8 @@ class MealPreference {
                   }
                }
             },
-            response => {
-               this.setUpdatedCustomMealAPIResponse(response)
+            ()=> {
+               this.setUpdatedCustomMealAPIResponse()
                onSuccess()
             }
          )

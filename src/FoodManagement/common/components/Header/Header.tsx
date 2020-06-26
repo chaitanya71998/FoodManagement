@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import strings from '../../i18n/strings.json'
 import {
    Container,
@@ -10,7 +10,12 @@ import {
    SignOut
 } from './styledComponents'
 
-class Header extends React.Component {
+interface HeaderProps extends RouteComponentProps {
+   onClickSignOut: () => void
+   gotoHome: () => void
+}
+
+class Header extends React.Component<HeaderProps> {
    render() {
       const { onClickSignOut, gotoHome } = this.props
       return (

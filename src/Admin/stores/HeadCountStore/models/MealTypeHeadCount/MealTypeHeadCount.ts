@@ -3,19 +3,22 @@ import {
    API_INITIAL,
    API_FETCHING,
    API_SUCCESS,
-   API_FAILED
+   API_FAILED,
+   APIStatus
 } from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { MealInfoAPIService } from "../../../../services/MealInfoAPIService"
+import { SelectedMealTypeheadCount } from "../../../types"
+import MealInfoService from "../../../../services"
 class MealTypeHeadCount {
-   @observable headCountAPIStatus:number=API_INITIAL
-   @observable headCountAPIError:null | string=null
+   @observable headCountAPIStatus!:APIStatus
+   @observable headCountAPIError!:Error | null
    @observable selectedDate:string
    @observable mealType:string
-   @observable mealInfo:Array<Object>=[]
+   @observable mealInfo!:Array<Object>
    @observable headCountInfo
-   @observable mealInfoAPIService:MealInfoAPIService
-   constructor(mealInfoAPIService, date, mealType) {
+   mealInfoAPIService:MealInfoService
+   constructor(mealInfoAPIService:MealInfoService, date, mealType) {
       this.mealInfoAPIService = mealInfoAPIService
       this.selectedDate = date
       this.mealType = mealType
@@ -42,17 +45,17 @@ class MealTypeHeadCount {
    }
 
    @action.bound
-   setHeadCountAPIStatus(status) {
+   setHeadCountAPIStatus(status:APIStatus) {
       this.headCountAPIStatus = status
    }
 
    @action.bound
-   setHeadCountAPIResponse(response) {
+   setHeadCountAPIResponse(response:SelectedMealTypeheadCount | null) {
       this.headCountInfo = response
    }
 
    @action.bound
-   setHeadCountAPIError(error) {
+   setHeadCountAPIError(error:Error) {
       this.headCountAPIError = error
    }
 }

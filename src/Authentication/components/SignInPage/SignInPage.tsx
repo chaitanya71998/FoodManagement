@@ -39,18 +39,18 @@ class SignInPage extends React.Component<objectType> {
    @observable isErrorFromTheServer = false
    userNameRef = React.createRef()
    passwordRef = React.createRef()
-
-   onChangeUsername = event => {
+   
+   onChangeUsername = (event:React.ChangeEvent<HTMLInputElement>) => {
       this.username = event.target.value
       this.errorMessageForUserName = ''
    }
 
-   onChangePassword = event => {
+   onChangePassword =  (event:React.ChangeEvent<HTMLInputElement>) => {
       this.password = event.target.value
       this.errorMessageForPassword = ''
    }
 
-   onClickLoginIn = event => {
+   onClickLoginIn = (event:React.MouseEvent) => {
       const { onClickLoginIn } = this.props
       event.preventDefault()
       if (this.username !== '' && this.password !== '') {

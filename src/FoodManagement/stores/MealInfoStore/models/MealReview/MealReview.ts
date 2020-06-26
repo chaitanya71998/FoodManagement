@@ -5,18 +5,26 @@ import {
    API_INITIAL,
    API_FETCHING,
    API_SUCCESS,
-   API_FAILED
+   API_FAILED,
+   APIStatus
 } from '@ib/api-constants'
+import MealInfoService from '../../../../services'
+import {
+   ReviewInfo,
+   UpdateReviewItemInfo,
+   UpdateReviewInfo
+} from '../../../types'
 class MealReview {
-   @observable mealType
-   @observable selectedMealTypeReviewInfoAPIStatus
-   @observable selectedMealTypeReviewInfoAPIError
-   @observable updatedReviewAPIStatus
-   @observable updatedReviewAPIError
-   @observable mealTypeReview = {}
-   @observable isLoadingOnDone
-
-   constructor(mealInfoAPIService, selectedDate, mealType) {
+   @observable mealType: string
+   @observable selectedMealTypeReviewInfoAPIStatus!: APIStatus
+   @observable selectedMealTypeReviewInfoAPIError!: Error | null
+   @observable updatedReviewAPIStatus!: APIStatus
+   @observable updatedReviewAPIError!: Error | null
+   @observable mealTypeReview: ItemReviewInfo | any = {}
+   @observable isLoadingOnDone!: boolean
+   mealInfoAPIService: MealInfoService
+   selectedDate: string
+   constructor(mealInfoAPIService: MealInfoService, selectedDate, mealType) {
       this.mealInfoAPIService = mealInfoAPIService
       this.selectedDate = selectedDate
       this.mealType = mealType
@@ -56,15 +64,17 @@ class MealReview {
    }
 
    @action.bound
-   setSelectedMealTypeReviewInfoAPIResponse(response) {
-      const mealItems = []
-      this.mealTypeReview.mealId = response.meal_id
-      this.mealTypeReview.mealReview = response.meal_review
-      response.meal_items.map(item => {
-         const itemReviewInfo = new ItemReviewInfo(item)
-         mealItems.push(itemReviewInfo)
-      })
-      this.mealTypeReview.mealItems = [...mealItems]
+   setSelectedMealTypeReviewInfoAPIResponse(response: ReviewInfo | null) {
+      if (response) {
+         const mealItems: Array<ItemReviewInfo> = []
+         this.mealTypeReview.mealId = response.meal_id
+         this.mealTypeReview.mealReview = response.meal_review
+         response.meal_items.map(item => {
+            const itemReviewInfo = new ItemReviewInfo(item)
+            mealItems.push(itemReviewInfo)
+         })
+         this.mealTypeReview.mealItems = [...mealItems]
+      }
    }
 
    @action.bound
@@ -74,13 +84,13 @@ class MealReview {
 
    @action.bound
    onSaveMealReview(onSuccess, onFailure) {
-      let reviewInfo = {
+      let reviewInfo: UpdateReviewInfo = {
          meal_id: this.mealTypeReview.mealId,
          meal_review: this.mealTypeReview.mealReview,
          meal_items_rating: []
       }
       this.mealTypeReview.mealItems.forEach(itemReview => {
-         let review = {
+         let review: UpdateReviewItemInfo = {
             meal_item_id: itemReview.mealItemId,
             quality: itemReview.quality,
             taste: itemReview.taste

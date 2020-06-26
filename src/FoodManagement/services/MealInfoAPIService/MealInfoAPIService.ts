@@ -1,7 +1,9 @@
 import { create } from 'apisauce'
 import { networkCallWithApisauce } from '../../../Common/utils/APIUtils'
 import { apiMethods } from '../../constants/APIConstants'
-class MealInfoService {
+import MealInfoService from '..'
+class MealInfoAPIService implements MealInfoService {
+   api:Record<string,any>
    constructor() {
       this.api = create({
          //baseURL: 'https://5ea1a14db9f5ca00166c1f27.mockapi.io/api/'
@@ -71,4 +73,4 @@ class MealInfoService {
    }
 }
 
-export default MealInfoService
+export default MealInfoAPIService

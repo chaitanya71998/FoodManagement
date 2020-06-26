@@ -8,11 +8,13 @@ import { RiTimer2Line } from 'react-icons/ri'
 import {
    getTimeDistanceInWords,
    isTimeBeforeDeadLine
-}
-from '../../../Common/utils/TimeUtils'
+} from '../../../Common/utils/TimeUtils'
 import { Button } from '../../../Common/components/Button'
 import { brightBlue, white, darkBlueGrey } from '../../themes/Colors'
 import strings from '../../i18n/strings.json'
+import { MealInfoType } from '../../stores/MealInfoStore/MealInfoStore'
+import { MealPreference } from '../../stores/MealInfoStore/models/MealPreference'
+
 import {
    Container,
    MealTypeInfo,
@@ -20,7 +22,6 @@ import {
    HeadingAndTime,
    MealType,
    Time,
-   MealPreference,
    MealData,
    Item,
    EditButtonWrapper,
@@ -28,19 +29,34 @@ import {
    TimerWrapper,
    AteOrSkippedButtonWrapper,
    ReviewWrapper,
-   TimerIcon
+   TimerIcon,
+   MealPreferenceName
+} from './styledComponents'
+
+type MealCardProps = {
+   mealTypeInfo: MealInfoType
+   onClickEditPreference: (mealType: string) => void
+   selectedDate: String
+   onClickReviewButton: Function
+   selectedMealTypeInfo: null | MealPreference
+   onClickIAteIt: Function
+   onClickISkipped: Function
+   mealIcon: string
+   doNetworkCalls: Function
 }
-from './styledComponents'
 
 @observer
-class MealCard extends React.Component {
-   @observable isTimeForEating = false
-   @observable timeLeftForEditPreference = null
-   @observable isTimeLeftForEditing = true
-   @observable isDisabledIAteItButton = true
-   @observable isDisabledISkippedButton = true
-   @observable isTimeForReview = false
-   @observable presentTime
+class MealCard extends React.Component<MealCardProps> {
+   @observable isTimeForEating: boolean = false
+   @observable timeLeftForEditPreference: null | string = null
+   @observable isTimeLeftForEditing: boolean = true
+   @observable isDisabledIAteItButton: boolean = true
+   @observable isDisabledISkippedButton: boolean = true
+   @observable isTimeForReview: boolean = false
+   @observable presentTime!: Date
+   intervalForShowingEditButton!: NodeJS.Timeout
+   intervalForShowingDisabledStates!: NodeJS.Timeout
+   intervalForShowingEnablingTheStates!: number //ambiguty for Type
 
    componentDidMount() {
       this.setTimerForShowingEditButton()
@@ -63,9 +79,15 @@ class MealCard extends React.Component {
       this.intervalForShowingEditButton = setInterval(() => {
          this.getPresentDate()
          this.timeLeftForEditPreference = getTimeDistanceInWords(
-            mealTypeInfo.mealPreferenceDeadline, this.presentTime
+            mealTypeInfo.mealPreferenceDeadline,
+            this.presentTime
          )
-         if (!isTimeBeforeDeadLine(this.presentTime, mealTypeInfo.mealPreferenceDeadline)) {
+         if (
+            !isTimeBeforeDeadLine(
+               this.presentTime,
+               mealTypeInfo.mealPreferenceDeadline
+            )
+         ) {
             this.isTimeLeftForEditing = false
             clearInterval(this.intervalForShowingEditButton)
          }
@@ -76,9 +98,12 @@ class MealCard extends React.Component {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingDisabledStates = setInterval(() => {
          this.getPresentDate()
-         if (!isTimeBeforeDeadLine(this.presentTime,
+         if (
+            !isTimeBeforeDeadLine(
+               this.presentTime,
                `${selectedDate} ${mealTypeInfo.mealStarttime}`
-            )) {
+            )
+         ) {
             this.isTimeForEating = true
             clearInterval(this.intervalForShowingDisabledStates)
          }
@@ -89,7 +114,12 @@ class MealCard extends React.Component {
       const { selectedDate, mealTypeInfo } = this.props
       this.intervalForShowingEnablingTheStates = setInterval(() => {
          this.getPresentDate()
-         if (!isTimeBeforeDeadLine(this.presentTime, `${selectedDate} ${mealTypeInfo.mealEndtime}`)) {
+         if (
+            !isTimeBeforeDeadLine(
+               this.presentTime,
+               `${selectedDate} ${mealTypeInfo.mealEndtime}`
+            )
+         ) {
             this.isTimeForEating = false
             this.isTimeForReview = true
             clearInterval(this.intervalForShowingEnablingTheStates)
@@ -128,7 +158,7 @@ class MealCard extends React.Component {
       this.handelToast('failure')
    }
    handelToast = message => {
-      let messageInfo = null
+      let messageInfo: null | string = null
       if (message == 'failure') {
          messageInfo = strings.foodManagementDashBoard.somethingWentWrong
          toast.warn(messageInfo, {
@@ -136,8 +166,7 @@ class MealCard extends React.Component {
             hideProgressBar: true,
             closeButton: false
          })
-      }
-      else {
+      } else {
          messageInfo = strings.foodManagementDashBoard.yourResponseIsCaptured
          toast.success(messageInfo, {
             position: toast.POSITION.BOTTOM_CENTER,
@@ -150,7 +179,7 @@ class MealCard extends React.Component {
    renderMealItems = () => {
       const { mealTypeInfo } = this.props
       return mealTypeInfo.mealItems.map(item => {
-         return <Item key={item.itemId}>{item.itemName}</Item>
+         return <Item key={item.mealItemId}>{item.itemName}</Item>
       })
    }
 
@@ -160,7 +189,7 @@ class MealCard extends React.Component {
          onClickEditPreference,
          mealTypeInfo,
          onClickReviewButton,
-         selectedMealTypeInfoAPIStatus
+         selectedMealTypeInfo
       } = this.props
       return (
          <Container>
@@ -172,9 +201,9 @@ class MealCard extends React.Component {
                      {mealTypeInfo.mealStarttime}-{mealTypeInfo.mealEndtime}
                   </Time>
                </HeadingAndTime>
-               <MealPreference mealPreference={mealTypeInfo.mealPreference}>
+               <MealPreferenceName mealPreference={mealTypeInfo.mealPreference}>
                   {mealTypeInfo.mealPreference}
-               </MealPreference>
+               </MealPreferenceName>
             </MealTypeInfo>
             <MealData>{this.renderMealItems()}</MealData>
             {!this.isTimeForReview ? (
@@ -186,7 +215,11 @@ class MealCard extends React.Component {
                         onClick={() =>
                            onClickEditPreference(mealTypeInfo.mealType)
                         }
-                        getAPIStatus={selectedMealTypeInfoAPIStatus}
+                        getAPIStatus={
+                           selectedMealTypeInfo
+                              ? selectedMealTypeInfo.selectedMealTypeInfoAPIStatus
+                              : 0
+                        } //TODO GET STATUS
                      >
                         <EditButtonText data-testid='Edit'>
                            {strings.mealCard.edit}

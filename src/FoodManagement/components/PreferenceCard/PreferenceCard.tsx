@@ -1,7 +1,7 @@
 /*global location*/
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { Button } from '../../../Common/components/Button'
 import { SetDate } from '../../../Common/components/SetDate'
@@ -9,6 +9,7 @@ import strings from '../../i18n/strings.json'
 import { white, darkBlueGrey } from '../../themes/Colors'
 import { MealTabs } from '../MealTabs'
 const queryString = require('query-string')
+import { PreferenceCardProps } from '../PreferencePage/PreferencePage'
 import {
    Container,
    Header,
@@ -24,13 +25,14 @@ import {
    Group,
    ImageWrapper
 } from './styledComponents'
-
 @observer
-class PreferenceCard extends React.Component {
+class PreferenceCard extends React.Component<
+   PreferenceCardProps & RouteComponentProps
+> {
+   mealType: string
    constructor(props) {
       super(props)
       const parsed = queryString.parse(location.search)
-      const { match } = this.props
       this.mealType = parsed.meal_type
    }
    render() {

@@ -1,6 +1,10 @@
 import { action, observable } from 'mobx'
 class ItemInfo {
-   @observable quantity
+   mealItemId:number
+   itemName:string
+   category:string
+   servingSizeUnit:string
+   @observable quantity:number
    constructor(item) {
       ;(this.mealItemId = item.item_id),
          (this.itemName = item.item_name),

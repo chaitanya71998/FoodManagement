@@ -2,18 +2,26 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom' //TODO
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { clearUserSession } from '../../../Common/utils/StorageUtils'
 import { PreferencePage } from '../../components/PreferencePage'
 import strings from '../../i18n/strings.json'
+import { MealInfoStore } from '../../stores/MealInfoStore'
 const queryString = require('query-string')
 
+interface PreferencePageRouteProps extends RouteComponentProps {}
+
+interface InjectedProps extends PreferencePageRouteProps {
+   mealInfoStore: MealInfoStore
+}
 @inject('mealInfoStore')
 @observer
-class PreferencePageRoute extends React.Component {
-   @observable status
+class PreferencePageRoute extends React.Component<PreferencePageRouteProps> {
+   mealType!: string
+   selectedDate!: string
+
    componentDidMount() {
       const parsed = queryString.parse(location.search)
       // this.mealType = match.params.mealType.slice(1)
@@ -29,8 +37,9 @@ class PreferencePageRoute extends React.Component {
       )
    }
 
+   getInjectedProps = (): InjectedProps => this.props as InjectedProps
    getMealInfoStore = () => {
-      return this.props.mealInfoStore
+      return this.getInjectedProps().mealInfoStore
    }
    onSaveMealPreference = () => {
       this.getMealInfoStore().selectedMealInfo.onSaveMealPreference(
@@ -73,7 +82,7 @@ class PreferencePageRoute extends React.Component {
       this.handelToast('failure')
    }
    handelToast = message => {
-      let messageInfo = null
+      let messageInfo: null | string = null
       if (message == 'failure') {
          messageInfo = strings.foodManagementDashBoard.somethingWentWrong
          toast.warn(messageInfo, {

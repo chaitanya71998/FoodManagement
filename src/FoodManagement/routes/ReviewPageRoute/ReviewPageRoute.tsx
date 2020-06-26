@@ -1,17 +1,29 @@
 import React from 'react'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { clearUserSession } from '../../../Common/utils/StorageUtils'
 import { ReviewPage } from '../../components/ReviewPage'
 import strings from '../../i18n/strings.json'
+import { MealInfoStore } from '../../stores/MealInfoStore'
+
+interface ParamsProps {
+   mealType: string
+}
+
+interface ReviewPageRouteProps extends RouteComponentProps<ParamsProps> {}
+
+interface InjectedProps extends ReviewPageRouteProps {
+   mealInfoStore: MealInfoStore
+}
 
 @inject('mealInfoStore')
 @observer
-class ReviewPageRoute extends React.Component {
+class ReviewPageRoute extends React.Component<ReviewPageRouteProps> {
    @observable status
+   mealType!: string
    componentDidMount() {
       const { match } = this.props
       this.mealType = match.params.mealType.slice(1)
@@ -23,8 +35,10 @@ class ReviewPageRoute extends React.Component {
       this.getMealInfoStore().onClickReviewButton(this.mealType)
    }
 
+   getInjectedProps = (): InjectedProps => this.props as InjectedProps
+
    getMealInfoStore = () => {
-      return this.props.mealInfoStore
+      return this.getInjectedProps().mealInfoStore
    }
    onSaveMealReview = () => {
       this.getMealInfoStore().selectedMealInfoReview.onSaveMealReview(
@@ -55,7 +69,7 @@ class ReviewPageRoute extends React.Component {
       history.replace('/food-management-dashboard')
    }
    handelToast = message => {
-      let messageInfo = null
+      let messageInfo: null | string = null
       if (message == 'failure') {
          messageInfo = strings.foodManagementDashBoard.somethingWentWrong
          toast.warn(messageInfo, {
@@ -89,7 +103,6 @@ class ReviewPageRoute extends React.Component {
                      .selectedMealTypeReviewInfoAPIError
                }
                onSaveMealReview={this.onSaveMealReview}
-               onClickBackButton={this.onClickBackButton}
                doNetworkCalls={this.doNetworkCalls}
                gotoHome={this.gotoHome}
                onClickSignOut={this.onClickSignOut}

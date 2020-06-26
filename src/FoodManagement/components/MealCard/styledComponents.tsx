@@ -10,6 +10,10 @@ import {
    Typo12WhiteHKGrotesk
 } from '../../../styleGuide/Typos'
 
+type MealPreferenceProps = {
+   mealPreference: string
+}
+
 const Container = styled.div`
    ${tw` m-2 border border-solid border-gray-400`}
    width: 360px;
@@ -33,7 +37,7 @@ const HeadingAndTime = styled.div`
    ${tw`flex flex-col m-2`}
 `
 
-const MealPreference = styled(Typo12JadeInter)`
+const MealPreferenceName = styled(Typo12JadeInter)<MealPreferenceProps>`
    ${tw`h-6 flex justify-center items-center p-1 m-2 ml-auto`}
    ${props =>
       props.mealPreference === 'Custom'
@@ -46,7 +50,7 @@ const MealPreference = styled(Typo12JadeInter)`
 1px solid ${jade}
 `
            }}
-` //don't save
+`
 
 const MealData = styled.div`
    ${tw`flex flex-col flex-wrap`}
@@ -97,7 +101,7 @@ export {
    HeadingAndTime,
    MealType,
    Time,
-   MealPreference,
+   MealPreferenceName,
    MealData,
    Item,
    EditButtonWrapper,

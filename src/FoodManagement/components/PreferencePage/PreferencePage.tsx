@@ -13,9 +13,31 @@ import {
    LoadingWrapper,
    PreferenceCardWrapper
 } from './styledComponents'
+import { ItemInfo } from "../../stores/MealInfoStore/models/ItemInfo"
+
+export interface PreferenceCardProps {
+   selectedMealInfo:Array<ItemInfo>,
+   selectedDate:string,
+   onChangeDate:(date:string)=>void,
+   getSelectedPreference:(Preference:string)=>void,
+   onSaveMealPreference:()=>void,
+   onClickBackButton:()=>void,
+   onClickSkipButton:()=>void,
+   isLoadingOnSave:()=>void,
+   isLoadingOnSkipped:()=>void,
+}
+
+interface PreferencePageProps extends PreferenceCardProps {
+   selectedMealTypeInfoAPIError:null | string,
+   selectedMealTypeInfoAPIStatus:number,
+   doNetworkCalls:()=>void,
+   gotoHome:()=>void,
+   onClickSignOut:()=>void
+}
+
 
 @observer
-class PreferencePage extends React.Component {
+class PreferencePage extends React.Component<PreferencePageProps> {
    renderMealInfo = observer(() => {
       const {
          selectedMealInfo,

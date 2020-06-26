@@ -18,8 +18,9 @@ import {
    TextAreaForReview,
    DoneButtonWrapper
 } from './styledComponents'
+import { ReviewCardProps } from '../ReviewPage/Reviewpage'
 
-class ReviewCard extends Component {
+class ReviewCard extends Component<ReviewCardProps> {
    renderEachItemReview = () => {
       const { selectedMealTypeInfoReview } = this.props
       return selectedMealTypeInfoReview.mealItems.map(item => {
@@ -55,11 +56,9 @@ class ReviewCard extends Component {
                <ItemsFeedBack>{this.renderEachItemReview()}</ItemsFeedBack>
             </RatingWrapper>
             <TextAreaForReview
-               row='3'
-               cols='50'
                placeholder='write review'
                onChange={this.onChangeReview}
-            ></TextAreaForReview>
+            />
             <DoneButtonWrapper>
                <Button
                   width='73px'
