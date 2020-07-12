@@ -1,2 +1,2 @@
 import PreferencePageRoute from './PreferencePageRoute'
-export { PreferencePageRoute }
+export default PreferencePageRoute

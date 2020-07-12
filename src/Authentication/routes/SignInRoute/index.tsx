@@ -1,2 +1,2 @@
 import SignInRoute from './SignInRoute'
-export { SignInRoute }
+export default SignInRoute

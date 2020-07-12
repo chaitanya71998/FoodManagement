@@ -2,16 +2,15 @@ import styled from '@emotion/styled'
 import tw from 'tailwind.macro'
 import { Steel, White } from '../../../themes/Colors.js'
 
+//${tw`outline-none flex justify-center items-center flex-grow`};
 const ButtonWrapper = styled.button`
-   ${tw`outline-none flex justify-center items-center flex-grow`}
-   ${props => ({
-      width: '100px',
-      height: '40px',
-      borderRadius: '4px',
-      border: 'solid 1px #e4e9f0',
-      backgroundColor: 'blue',
-      color: 'black'
-   })}
+   width: 100px;
+   height: 40px;
+   border-radius: 4px;
+   border: solid 1px #e4e9f0;
+   background-color: red;
+   background-color: yellow;
+   color: black;
    ${props =>
       props.disabled
          ? { cursor: 'not-allowed', opacity: 0.2 }

@@ -6,6 +6,7 @@ import { Input } from '../../../Common/components/Input'
 import { Button } from '../../../Common/components/Button'
 import strings from '../../i18n/strings.json'
 import { brightBlue } from '../../themes/Colors'
+import { LogoComponent } from '../../../Common/components/Icons/Logo'
 import {
    Container,
    SignInContainer,
@@ -18,39 +19,43 @@ import {
    ButtonContainer,
    ErrorMessage,
    ButtonText,
-   InputContainer
-}
-from './styledComponent'
+   InputContainer,
+   InputBorder,
+   Boo
+} from './styledComponent'
+import { Buttons } from '../../../Common/components/Buttons'
 
-type objectType={
-   onClickLoginIn:Function,
-   userSignInAPIStatus:number,
-   isErrorFromTheServer:Boolean,
-
-
+type objectType = {
+   onClickLoginIn: Function
+   userSignInAPIStatus: number
+   isErrorFromTheServer: Boolean
 }
 
 @observer
 class SignInPage extends React.Component<objectType> {
-   @observable username = ''
-   @observable password = ''
-   @observable errorMessageForUserName = ''
-   @observable errorMessageForPassword = ''
-   @observable isErrorFromTheServer = false
-   userNameRef = React.createRef()
-   passwordRef = React.createRef()
-   
-   onChangeUsername = (event:React.ChangeEvent<HTMLInputElement>) => {
+   @observable username: string = ''
+   @observable password: string = ''
+   @observable errorMessageForUserName: string = ''
+   @observable errorMessageForPassword: string = ''
+   @observable isErrorFromTheServer: boolean = false
+   userNameRef: React.RefObject<HTMLInputElement> = React.createRef()
+   passwordRef: React.RefObject<HTMLInputElement> = React.createRef()
+
+   componentDidMount() {
+      this.userNameRef.current?.focus()
+   }
+
+   onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.username = event.target.value
       this.errorMessageForUserName = ''
    }
 
-   onChangePassword =  (event:React.ChangeEvent<HTMLInputElement>) => {
+   onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
       this.password = event.target.value
       this.errorMessageForPassword = ''
    }
 
-   onClickLoginIn = (event:React.MouseEvent) => {
+   onClickLoginIn = (event: React.MouseEvent) => {
       const { onClickLoginIn } = this.props
       event.preventDefault()
       if (this.username !== '' && this.password !== '') {
@@ -60,25 +65,21 @@ class SignInPage extends React.Component<objectType> {
             password: this.password
          }
          onClickLoginIn(requestObject)
-      }
-      else if (this.username === '') {
+      } else if (this.username === '') {
          this.errorMessageForUserName = 'Please enter username'
-      }
-      else {
+         this.userNameRef.current?.focus()
+      } else {
          this.errorMessageForPassword = 'Please enter password'
+         this.passwordRef.current?.focus()
       }
    }
 
    render() {
       const { userSignInAPIStatus, isErrorFromTheServer } = this.props
-      console.log("sign in page")
       return (
          <Container>
             <SignInContainer>
-               <Logo
-                  src='https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/ecca87bf-3005-41c9-aa87-d8a5dd3741ff.svg'
-                  alt='iBhubs_logo'
-               />
+               <LogoComponent />
 
                <HeadingContainer>
                   <Heading>{strings.signInPage.hiTherePleaseSignUp}</Heading>
@@ -92,6 +93,8 @@ class SignInPage extends React.Component<objectType> {
                         placeholder='UserName'
                         value={this.username}
                         onChange={this.onChangeUsername}
+                        forwardRef={this.userNameRef}
+                        inputBorder={InputBorder}
                      />
                   </InputContainer>
                   {this.errorMessageForUserName != '' && (
@@ -105,6 +108,8 @@ class SignInPage extends React.Component<objectType> {
                      placeholder='Password'
                      value={this.password}
                      onChange={this.onChangePassword}
+                     forwardRef={this.passwordRef}
+                     inputBorder={InputBorder}
                   />
                   {this.errorMessageForPassword != '' && (
                      <ErrorMessage>{this.errorMessageForPassword}</ErrorMessage>
@@ -124,7 +129,6 @@ class SignInPage extends React.Component<objectType> {
                {isErrorFromTheServer && (
                   <ErrorMessage>{strings.signInPage.errorMessage}</ErrorMessage>
                )}
-               
             </SignInContainer>
          </Container>
       )

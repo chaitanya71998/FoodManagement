@@ -60,21 +60,7 @@ class PaginationStore {
    @computed get totalPages() {
       return Math.ceil(this.totalNoOfItems / this.itemsPerPage)
    }
-   // @action.bound
-   // onBackwardClick() {
-   //     if (this.currentPage > 1) {
-   //         this.itemIndex = this.itemIndex - this.itemsPerPage;
-   //         --this.currentPage
-   //     }
-   // }
 
-   // @action.bound
-   // onFarwardButtonClick() {
-   //     if (this.currentPage < this.totalPages) {
-   //         this.itemIndex = this.itemIndex + this.itemsPerPage;
-   //         ++this.currentPage
-   //     }
-   // }
    @action.bound
    onPageChange(selectedPage) {
       this.currentPage = selectedPage

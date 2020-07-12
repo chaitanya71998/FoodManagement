@@ -1,2 +1,2 @@
 import { BaseButton } from './BaseButton'
-export { BaseButton }
+export default BaseButton

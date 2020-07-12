@@ -2,15 +2,15 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, text, color } from '@storybook/addon-knobs'
 
-import '../../../../styles/tailwind.css'
-import { BaseButton } from './BaseButton.js'
+import { Buttons } from '../Buttons'
+import { OutLineButton } from '../OutLineButton'
 
 export default {
-   component: BaseButton,
-   title: 'src/Common/components/BaseButton'
+   component: Buttons,
+   title: 'src/Common/components/Buttons'
 }
 
-export const defaultView = () => <BaseButton />
+export const defaultView = () => <Buttons buttonType='filled' />
 
 // export const loadingView = () => <BaseButton getUserSignInAPIStatus ={100} />
 

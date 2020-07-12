@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import 'semantic-ui-css/semantic.min.css'
 import { Tab } from 'semantic-ui-react'
 import { CounterApp } from '../../../Common/components/CounterApp'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import {
    Wrapper,
    ItemName,
@@ -95,6 +96,14 @@ class MealTabs extends React.Component {
       getSelectedPreference(
          selectedMealInformation[data.activeIndex].mealPreference
       )
+      const { history } = this.props
+      console.log('history', history)
+      history.push({
+         pathname: `/set-meal-preference`,
+         search: `?preference=${
+            selectedMealInformation[data.activeIndex].mealPreference
+         }`
+      })
    }
 
    render() {
@@ -111,4 +120,4 @@ class MealTabs extends React.Component {
    }
 }
 
-export default MealTabs
+export default withRouter(MealTabs)

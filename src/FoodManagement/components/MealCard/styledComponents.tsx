@@ -1,4 +1,5 @@
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 import tw from 'tailwind.macro'
 import { yellowOrange, jade, tomato } from '../../themes/Colors'
 import {
@@ -19,6 +20,11 @@ const Container = styled.div`
    width: 360px;
    height: 304px;
    object-fit: contain;
+   &:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      transform: scale(1.1) rotate(0.01deg);
+      transition-duration: 0.5s;
+   }
 `
 
 const MenuBar = styled.div`
@@ -93,6 +99,13 @@ const ReviewWrapper = styled.div`
    ${tw`flex justify-center items-center`}
 `
 
+const HoverInfo = styled.div`
+   display: none;
+   ${Container}:hover & {
+      display: block;
+   }
+`
+
 export {
    Container,
    MenuBar,
@@ -109,5 +122,6 @@ export {
    TimerWrapper,
    AteOrSkippedButtonWrapper,
    ReviewWrapper,
-   TimerIcon
+   TimerIcon,
+   HoverInfo
 }

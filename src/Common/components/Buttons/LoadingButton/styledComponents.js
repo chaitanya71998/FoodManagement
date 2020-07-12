@@ -7,4 +7,5 @@ const Button = styled(BaseButton)`
    background-color: white;
    color: black;
 `
+export const ButtonText = styled.span``
 export { Button }

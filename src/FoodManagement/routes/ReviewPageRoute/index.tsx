@@ -1,2 +1,2 @@
 import ReviewPageRoute from './ReviewPageRoute'
-export { ReviewPageRoute }
+export default ReviewPageRoute

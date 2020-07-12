@@ -1,2 +1,2 @@
 import signInPageRoute from './routes'
-export { signInPageRoute }
+export default signInPageRoute

@@ -1,2 +1,2 @@
 import FoodManagementDashBoardRoute from './FoodManagementDashBoardRoute'
-export { FoodManagementDashBoardRoute }
+export default FoodManagementDashBoardRoute

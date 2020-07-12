@@ -8,6 +8,10 @@ import {
    Typo14WhiteRubikMedium
 } from '../../../styleGuide/Typos'
 
+import { css } from '@emotion/core'
+import { Button } from '../../../Common/components/Button'
+
+const color = 'darkgreen'
 const Container = styled.div`
    ${tw`flex justify-center items-center h-screen w-screen `}
    ${{
@@ -67,6 +71,13 @@ const ErrorMessage = styled(Typo12NeonRedHKGrotesk)`
 const ButtonText = styled(Typo14WhiteRubikMedium)`
    ${tw``}
 `
+const InputBorder = css`
+   border: 1px solid skyblue;
+`
+
+const Boo = styled(Button)`
+   background-color: red;
+`
 
 export {
    Container,
@@ -80,5 +91,7 @@ export {
    ButtonContainer,
    ErrorMessage,
    ButtonText,
-   InputContainer
+   InputContainer,
+   InputBorder,
+   Boo
 }

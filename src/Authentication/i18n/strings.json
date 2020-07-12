@@ -1,10 +1,10 @@
 {
-    "signInPage": {
-        "signUp": "SIGNUP",
-        "login": "LOGIN",
-        "hiTherePleaseSignUp": "Hi there, please sign up",
-        "userName": "USERNAME",
-        "password": "PASSWORD",
-        "errorMessage": "Invalid username or password"
-    }
+   "signInPage": {
+      "signUp": "SIGNUP",
+      "login": "LOGIN",
+      "hiTherePleaseSignUp": "Hi there, please sign in",
+      "userName": "USERNAME",
+      "password": "PASSWORD",
+      "errorMessage": "Invalid username or password"
+   }
 }

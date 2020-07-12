@@ -20,7 +20,8 @@ class Button extends React.Component {
          onClick,
          getAPIStatus,
          isLoading,
-         disabled
+         disabled,
+         className
       } = this.props
       return (
          <ButtonKind
@@ -29,6 +30,7 @@ class Button extends React.Component {
             color={color}
             onClick={onClick}
             disabled={disabled}
+            className={className}
          >
             {getAPIStatus === 100 || isLoading ? (
                <Loader type='Oval' color='#333300' height={20} width={20} />

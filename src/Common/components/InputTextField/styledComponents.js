@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import tw from 'tailwind.macro'
 import { steel, white } from '../../themes/Colors.js'
+import { createHmac } from 'crypto'
 
 const InputFiled = styled.input`
    ${tw`outline-none `}
@@ -18,6 +19,7 @@ const InputFiledWrapper = styled.div`
 
 const ErrorMessage = styled.div`
    ${tw``}
+   color:red
 `
 
 export { InputFiled, InputFiledWrapper, ErrorMessage }

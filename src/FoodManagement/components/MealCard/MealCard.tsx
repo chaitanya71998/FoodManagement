@@ -30,7 +30,8 @@ import {
    AteOrSkippedButtonWrapper,
    ReviewWrapper,
    TimerIcon,
-   MealPreferenceName
+   MealPreferenceName,
+   HoverInfo
 } from './styledComponents'
 
 type MealCardProps = {
@@ -108,6 +109,10 @@ class MealCard extends React.Component<MealCardProps> {
             clearInterval(this.intervalForShowingDisabledStates)
          }
       }, 1000)
+      // console.log(
+      //    'intervalForShowingDisabledStates',
+      //    this.intervalForShowingDisabledStates
+      // ) //here console is not triggered
    }
 
    setTimerForEnablingIAteItAndSkippedButtons = () => {
